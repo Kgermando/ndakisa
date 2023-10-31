@@ -50,6 +50,8 @@ import { BanqueService } from './banques/banque.service';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
 import { BeneficiareEditComponent } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
 import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
+import { DashboardService } from './dashboard/dashboard.service';
+import { BeneficiareService } from './beneficiaires/beneficiare.service';
 
 @NgModule({
   declarations: [
@@ -116,7 +118,8 @@ import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/benefic
     AuthService,
     CohorteService,
     BanqueService,
-    
+    BeneficiareService,
+    DashboardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CredentialInterceptor,
