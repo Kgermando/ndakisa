@@ -1,1 +1,110 @@
-<p>user-view works!</p>
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+</div>
+<div *ngIf="!isLoading">
+    <div class="row mb-25" *ngIf="user">
+        <mat-card class="mb-25 personal-info-card tagus-card" [class.component-dark-theme]="themeService.isDark()">
+            <mat-card-header class="border-bottom">
+                <div class="d-flex align-items-center">
+                    <img [src]="user.photo" width="57" class="rounded-circle" alt="user" *ngIf="user.photo">
+                    <img src="assets/img/user/user22.jpg" width="57" class="rounded-circle" alt="user" *ngIf="!user.photo">
+                    <div class="ms-15">
+                        <h5 class="mb-5">{{ user.matricule.toUpperCase() }}</h5>
+                        <span class="d-block gray-color success" *ngIf="user.statut_user">Actif</span>
+                        <span class="d-block gray-color danger" *ngIf="!user.statut_user">Inactif</span>
+                    </div>
+                </div>
+                <div>
+                    <button mat-icon-button color="accent"  
+                        [routerLink]="['/layouts/users', user.id, 'user-edit']"
+                        *ngIf="currentUser.permission === 'RU' ||
+                            currentUser.permission === 'RCU' || 
+                            currentUser.permission === 'RUD' || 
+                            currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
+                            <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" 
+                            (click)="delete(user.id)"
+                        *ngIf="currentUser.permission === 'RD' ||
+                            currentUser.permission === 'RUD' ||
+                            currentUser.permission === 'CRUD'" matTooltip="Mettre dans le corbeil">
+                            <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-card-header>
+            <mat-card-content>
+                
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <ul class="list ps-0 mb-0">
+                                <li>
+                                    <span class="fw-semibold">Nom: </span>
+                                    <span class="gray-color">{{ user.nom }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Prenom: </span>
+                                    <span class="gray-color">{{ user.prenom }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Telephone: </span>
+                                    <span class="gray-color">{{ user.telephone }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Adresse: </span>
+                                    <span class="gray-color">{{ user.adresse }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Titre: </span>
+                                    <span class="gray-color">{{ user.title }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Permission: </span>
+                                    <span class="gray-color">{{ user.permission }}</span>
+                                </li> 
+                                <li>
+                                    <span class="fw-semibold">Signature: </span>
+                                    <span class="gray-color">{{ user.signature }}</span>
+                                </li> 
+                                <li>
+                                    <span class="fw-semibold">Date de creation: </span>
+                                    <span class="gray-color">{{ user.created | date: 'dd/MM/yyyy' }}</span>
+                                </li> 
+                                <li>
+                                    <span class="fw-semibold">Mise à jour le: </span>
+                                    <span class="gray-color">{{ user.update_created | date: 'dd/MM/yyyy HH:mm' }}</span>
+                                </li>   
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <ul class="list ps-0 mb-0">
+                                <li>
+                                    <span class="fw-semibold">Postnom: </span>
+                                    <span class="gray-color">{{ user.postnom }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Email: </span>
+                                    <span class="gray-color">{{ user.email }}</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Sexe: </span>
+                                    <span class="gray-color">{{ user.sexe }}</span>
+                                </li> 
+                                <li>
+                                    <span class="fw-semibold">Statut du utilisateur: </span> 
+                                    <span class="gray-color" *ngIf="user.statut_user"> Actif</span>
+                                    <span class="gray-color" *ngIf="!user.statut_user"> Inactif</span>
+                                </li>
+                                <li>
+                                    <span class="fw-semibold">Vous avez accès à: </span>
+                                    <div *ngFor="let role of user.roles; index as i">
+                                        <span class="gray-color">{{ i + 1 }}. {{ role }}</span>
+                                    </div> 
+                                </li> 
+                                
+                            </ul>
+                        </div> 
+                    </div>
+            </mat-card-content>
+        </mat-card> 
+    </div>
+</div>

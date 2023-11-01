@@ -17,7 +17,7 @@
         <span class="bottom-bar"></span>
     </div>
     <ng-scrollbar visibility="hover" style="height: 100vh;">
-        <div class="sidebar-inner">
+        <div class="sidebar-inner" *ngIf="currentUser">
             <div class="sidebar-menu">
                 <mat-accordion>
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Dashboard')">MAIN</span>

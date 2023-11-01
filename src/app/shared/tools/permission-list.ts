@@ -1,12 +1,9 @@
 export const permissionDataList: string[] = [
-    'C', 
-    'R', 
-    'U', 
-    'D', 
-    'CR',  
+    'R',
+    'RC',  
     'RU', 
     'RD', 
-    'CRU', // CU
+    'RCU',
     'RUD', 
     'CRUD',
   ]
