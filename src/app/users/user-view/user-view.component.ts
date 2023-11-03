@@ -46,7 +46,7 @@ export class UserViewComponent implements OnInit {
     }
 
     delete(id: number): void {
-      if (confirm('Êtes-vous sûr de vouloir mettre cet enregistrement dans le corbeil?')) {
+      if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
         this.userService
           .delete(id)
           .subscribe({

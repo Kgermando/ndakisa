@@ -5,6 +5,8 @@ import { provideToastr } from 'ngx-toastr';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { QuillModule } from 'ngx-quill';
 import { DatePipe } from '@angular/common'; 
+import { ErrorStateMatcher, MAT_DATE_LOCALE, ShowOnDirtyErrorStateMatcher } from '@angular/material/core'; 
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,18 +34,11 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { NumberFormatPipe } from './pipes/number-format.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component'; 
 import { AuthComponent } from './auth/auth.component';
-import { CohorteListComponent } from './cohortes/cohorte-list/cohorte-list.component';
-import { CohorteAddComponent } from './cohortes/cohorte-add/cohorte-add.component';
-import { ToastrModule } from 'ngx-toastr';
-import { BanqueListComponent } from './banques/banque-list/banque-list.component';
-import { CohorteViewComponent } from './cohortes/cohorte-view/cohorte-view.component';
+import { CohorteExportXLSXDialogBox, CohorteListComponent, CreateCohorteDialogBox } from './cohortes/cohorte-list/cohorte-list.component'; 
+import { BanqueListComponent, CreateBanqueDialogBox, EditBanqueDialogBox } from './banques/banque-list/banque-list.component';
+import { CohorteViewComponent, EditCohorteDialogBox } from './cohortes/cohorte-view/cohorte-view.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CredentialInterceptor } from './common/interceptors/credential.interceptor';
-import { ErrorStateMatcher, MAT_DATE_LOCALE, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { CohorteEditComponent } from './cohortes/cohorte-edit/cohorte-edit.component';
-import { BanqueAddComponent } from './banques/banque-add/banque-add.component';
-import { BanqueEditComponent } from './banques/banque-edit/banque-edit.component';
-import { BanqueViewComponent } from './banques/banque-view/banque-view.component';
 import { BeneficiareListComponent } from './beneficiaires/beneficiare-list/beneficiare-list.component';
 import { CohorteService } from './cohortes/cohorte.service';
 import { BanqueService } from './banques/banque.service';
@@ -52,6 +47,10 @@ import { BeneficiareEditComponent } from './beneficiaires/beneficiare-edit/benef
 import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
+import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component';
+import { RemboursementComponent } from './remboursements/remboursement/remboursement.component'; 
+import { RemboursementService } from './remboursements/remboursement.service';
+import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/beneficiare-input.component';
 
 @NgModule({
   declarations: [
@@ -84,18 +83,21 @@ import { BeneficiareService } from './beneficiaires/beneficiare.service';
     UpdateInfoDialogBox,
     UserUploadCSVDialogBox,
     UserExportXLSXDialogBox,
-    CohorteListComponent,
-    CohorteAddComponent,
+    CohorteListComponent, 
     BanqueListComponent,
     CohorteViewComponent,
-    CohorteEditComponent,
-    BanqueAddComponent,
-    BanqueEditComponent,
-    BanqueViewComponent,
     BeneficiareListComponent,
     BeneficiareViewComponent,
     BeneficiareEditComponent,
-    BeneficiareAddComponent
+    BeneficiareAddComponent,
+    CohorteProgressComponent,
+    CreateCohorteDialogBox,
+    EditCohorteDialogBox,
+    RemboursementComponent, 
+    CohorteExportXLSXDialogBox,
+    CreateBanqueDialogBox,
+    EditBanqueDialogBox,
+    BeneficiareInputComponent
   ],
   imports: [
     BrowserModule,
@@ -120,6 +122,7 @@ import { BeneficiareService } from './beneficiaires/beneficiare.service';
     BanqueService,
     BeneficiareService,
     DashboardService,
+    RemboursementService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CredentialInterceptor,

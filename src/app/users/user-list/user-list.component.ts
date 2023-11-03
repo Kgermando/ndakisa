@@ -20,7 +20,7 @@ import { UserService } from '../user.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent  implements OnInit {
+export class UserListComponent implements OnInit {
   displayedColumns: string[] = ['numero', 'matricule', 'fullname', 'email', 'telephone', 'sexe', 'id'];
   
   ELEMENT_DATA: UserModel[] = [];
@@ -33,10 +33,8 @@ export class UserListComponent  implements OnInit {
 
 
   isLoading = false;
-  currentUser: UserModel | any;
+  currentUser: UserModel | any; 
   
-
- 
   constructor(
       private _liveAnnouncer: LiveAnnouncer,
       public themeService: CustomizerSettingsService,
@@ -48,17 +46,13 @@ export class UserListComponent  implements OnInit {
   ) {}
 
 
-  toggleTheme() {
-    this.themeService.toggleTheme();
-  }
-
 
   ngOnInit() {
     this.isLoading = true;
     this.authService.user().subscribe({
         next: (user) => {
             this.currentUser = user; 
-            this.userService.getAll().subscribe(res => {
+          this.userService.getAll().subscribe(res => {
               this.ELEMENT_DATA = res; 
               this.dataSource = new MatTableDataSource<UserModel>(this.ELEMENT_DATA);
               this.dataSource.sort = this.sort;
@@ -91,9 +85,6 @@ export class UserListComponent  implements OnInit {
       }
   }
 
-  detail(id: number) {
-    this.router.navigate(['/layouts/personnels', id, 'personnel-edit'])
-  }
 
   openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(UserUploadCSVDialogBox, {
@@ -135,6 +126,12 @@ export class UserListComponent  implements OnInit {
       
     }
   } 
+
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
 
 }
 

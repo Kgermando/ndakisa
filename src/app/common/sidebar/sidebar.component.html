@@ -8,7 +8,7 @@
     <div class="logo bg-white">
         <a routerLink="/" class="d-flex align-items-center">
             <img src="assets/img/logo-icon.png" alt="logo">
-            <span>NDAKISA</span>
+            <span>Tagus</span>
         </a>
     </div>
     <div class="burger-menu" (click)="toggle()" [ngClass]="{'active': isToggled}">
@@ -26,6 +26,14 @@
                         *ngIf="currentUser.roles.includes('Dashboard')">
                         <i class="flaticon-menu-1"></i>
                         <span class="title">Dashboard</span>
+                    </a> 
+                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Beneficiaires')">PME</span> 
+                    
+                    <a routerLink="/layouts/beneficiaires/beneficiaire-list" class="sidebar-menu-link" routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact: true}"
+                        *ngIf="currentUser.roles.includes('Beneficiaires')">
+                        <i class="flaticon-user-1"></i>
+                        <span class="title">Beneficiaires</span>
                     </a>
 
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Cohortes')">PORTE FEUILLE</span>
@@ -36,83 +44,30 @@
                         <span class="title">Cohortes</span>
                     </a>
 
-                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">FINANCES</span>
+                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">INSTITUTIONS</span>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
                     *ngIf="currentUser.roles.includes('Banques')">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <i class="flaticon-envelope"></i>
                                 <span class="title">Banques</span>
-                                <span class="badge">7</span> 
+                                <span class="badge">{{ banqueList.length }}</span> 
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
+                        <ul class="sidebar-sub-menu"> 
                             <li class="sidemenu-item">
-                                <a routerLink="/layouts/banques/banque-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Banque 1
+                                <a  (click)="openCreateDialog('300ms', '100ms')" class="sidemenu-link">
+                                    Ajouter une banque
                                 </a>
                             </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/banques/banque-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Banque 2
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/banques/banque-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Banque 3
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/banques/banque-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Banque 4
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/banques/banque-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Banque 5
+                            <li class="sidemenu-item" *ngFor="let item of banqueList">
+                                <a  [routerLink]="['/layouts/banques', item.id, 'banque-list']"
+                                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    {{ item.name_banque }}
                                 </a>
                             </li>
                         </ul>
-                    </mat-expansion-panel> 
-
-                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Beneficiaires')">CLIENTS</span>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
-                    *ngIf="currentUser.roles.includes('Beneficiaires')">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i class="flaticon-phone-call"></i>
-                                <span class="title">Beneficiaires</span>
-                                <span class="badge two">4</span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/beneficiaires/beneficaire-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cohorte 1 
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/beneficiaires/beneficaire-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cohorte 2
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/beneficiaires/beneficaire-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cohorte 3
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/beneficiaires/beneficaire-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cohorte 4 
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/layouts/beneficiaires/beneficaire-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cohorte 5
-                                </a>
-                            </li> 
-                        </ul>
-                    </mat-expansion-panel>
+                    </mat-expansion-panel>  
                     
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('users')">PERSONNEL</span>
                     <a routerLink="/layouts/users/user-list" class="sidebar-menu-link" 

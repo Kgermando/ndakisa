@@ -1,1 +1,71 @@
-<p>cohorte-list works!</p>
+
+<div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+    <mat-progress-spinner [diameter]="30"
+        color="primary" 
+        mode="indeterminate">
+    </mat-progress-spinner>
+</div>
+
+<mat-card class="mb-25 tagus-card all-projects-box" 
+    [class.component-dark-theme]="themeService.isDark()" 
+    [class.card-border-radius]="themeService.isCardBorderRadius()" *ngIf="!isLoading">
+    <mat-card-header>
+        <h5 class="mb-0">TOUTES LES COHORTES</h5>
+        <div>
+            <button mat-flat-button class="default-btn tagus m-0 margin" (click)="openCreateDialog('300ms', '100ms')">
+                <i class="ri-add-fill"></i> Nouvelle cohorte
+            </button> 
+            <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
+                [matMenuTriggerFor]="monthMenu">
+                <i class="ri-more-fill"></i>
+            </button>
+            <mat-menu #monthMenu="matMenu" class="monthMenu" xPosition="before">
+                <button mat-menu-item type="button" class="bg-transparent border-none">Today</button>
+                <button mat-menu-item type="button" class="bg-transparent border-none">Last Month</button>
+                <button mat-menu-item type="button" class="bg-transparent border-none">Last Year</button> 
+            </mat-menu>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="all-projects-table table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="fw-semibold main-color">Nom de la cohorte</th>
+                        <th class="fw-semibold gray-color">Remboursement</th>
+                        <th class="fw-semibold gray-color">Montant global</th>
+                        <th class="fw-semibold gray-color">Beneficiaires</th>
+                        <th class="fw-semibold gray-color">Statut</th>
+                        <th class="fw-semibold gray-color">Mise à jour</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cohorteList">
+                        <td>
+                            <h4 class="mb-0 fw-semibold">
+                                <a [routerLink]="['/layouts/cohortes', item.id, 'cohorte-view']">
+                                    {{ item.name_cohorte }}
+                                </a>
+                            </h4>
+                        </td>
+                        <td class="gray-color text-start">
+                            <app-cohorte-progress [item]="item"></app-cohorte-progress> 
+                        </td>
+                        <td class="gray-color">
+                            {{ item.montant_global | numberFormat:'fr-FR' }} USD
+                        </td>
+                        <td class="members-list">
+                            {{ item.beneficiaires.length }}
+                        </td>
+                        <td class="gray-color">
+                            <span class="badge fw-medium" *ngIf="item.statut == 'Opened'">Ouverte</span>
+                            <span class="badge pending fw-medium" *ngIf="item.statut == 'Closed'">Fermée</span>
+                            <span class="badge completed fw-medium" *ngIf="item.statut == 'Complete'">Complète</span>
+                        </td>
+                        <td class="gray-color">{{ item.update_created | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

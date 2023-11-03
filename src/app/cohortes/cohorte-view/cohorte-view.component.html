@@ -1,1 +1,119 @@
-<p>cohorte-view works!</p>
+<mat-card
+    class="mb-25 tagus-card"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.card-border-radius]="themeService.isCardBorderRadius()" 
+>
+    <mat-card-content *ngIf="cohorte"> 
+        <div class="course-details-desc">
+            <div class="row align-items-center">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h5 class="mb-0">{{ cohorte.name_cohorte.toUpperCase() }}</h5> 
+                                <div class="d-md-flex meta mb-0 pb-0 justify-content-space-between align-items-center">
+                                    <p>Créé le {{ cohorte.created | date: 'dd/MM/yyyy' }} </p>
+                                    <p>Mise à jour le {{ cohorte.update_created | date: 'dd/MM/yyyy HH:mm' }} </p>
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
+                                    Total beneficiaire
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ cohorte.beneficiaires.length }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Total banques
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalBanque }} 
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Montant global
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ cohorte.montant_global | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Credit accordé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalCreditAccorde | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Total à debourser
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalADebourser | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li> 
+                            </ul> 
+                        </div>
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
+                                    Total remboursé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalRembourse | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Reste à rembouser
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ resteARembouser | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li> 
+                                <li class="gray-color fw-semibold">
+                                    Total interet
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalInteret | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li> 
+                                <li class="gray-color fw-semibold">
+                                    Statut
+                                    <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15);" *ngIf="cohorte.statut == 'Opened'">Ouverte</span>
+                                    <span class="badge pending fw-medium  d-block position-relative"  style="color: red;" *ngIf="cohorte.statut == 'Closed'">Fermée</span>
+                                    <span class="badge completed fw-medium  d-block position-relative" style="color: blue;" *ngIf="cohorte.statut == 'Complete'">Complète</span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Progession
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        <app-cohorte-progress [item]="cohorte"></app-cohorte-progress> 
+                                    </span>
+                                </li> 
+                            </ul>
+                        </div>
+                    </mat-expansion-panel> 
+                </mat-accordion>
+            </div>
+        </div>
+        <div class="d-md-flex justify-content-space-between align-items-center mb-25">
+            <h5 class="mb-0">Liste des beneficiaires </h5> 
+            <div>
+                <a mat-raised-button [routerLink]="['/layouts/beneficiaires', cohorte.id, 'beneficiaire-add']"
+                    class="tagus" *ngIf="currentUser.permission === 'RC' || currentUser.permission === 'RCU' ||
+                        currentUser.permission === 'CRUD'">
+                    Nouveau beneficiaire 
+                </a>
+                <button mat-icon-button color="warn" 
+                        (click)="delete(cohorte.id)"
+                    *ngIf="currentUser.permission === 'RD' ||
+                        currentUser.permission === 'RUD' ||
+                        currentUser.permission === 'CRUD'" matTooltip="Supprimer cette cohorte">
+                        <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="accent"  
+                    (click)="openEditDialog('300ms', '100ms', cohorte.id)"
+                    *ngIf="currentUser.permission === 'RU' ||
+                        currentUser.permission === 'RCU' || 
+                        currentUser.permission === 'RUD' || 
+                        currentUser.permission === 'CRUD'" matTooltip="Modifier cette cohorte">
+                        <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
+        <app-beneficiare-input [ELEMENT_DATA]="ELEMENT_DATA"></app-beneficiare-input>
+    </mat-card-content>
+</mat-card>

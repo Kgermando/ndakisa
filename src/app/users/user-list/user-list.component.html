@@ -1,4 +1,5 @@
-<mat-card class="mb-25 tagus-card" [class.component-dark-theme]="themeService.isDark()">
+<mat-card class="mb-25 tagus-card" [class.component-dark-theme]="themeService.isDark()"
+  [class.card-border-radius]="themeService.isCardBorderRadius()">
     <mat-card-header>
         <div>
             <h4 class="mb-0">Liste des utilisateurs</h4> 
@@ -13,15 +14,6 @@
                 <i class="ri-menu-line"></i>
             </button>
             <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu" xPosition="before">
-                <!-- <button mat-menu-item type="button" (click)="downloadModelReport()"
-                class="bg-transparent border-none position-relative"> 
-                    <i class="ri-file-download-line"></i> Modèle
-                </button>
-                <button mat-menu-item type="button" 
-                    class="bg-transparent border-none position-relative" 
-                    (click)="openEditDialog('300ms', '100ms')">
-                    <i class="ri-upload-2-line"></i> Importer
-                </button> -->
                 <button mat-menu-item type="button" 
                 class="bg-transparent border-none position-relative"
                 (click)="openExportDialog('300ms', '100ms')">
