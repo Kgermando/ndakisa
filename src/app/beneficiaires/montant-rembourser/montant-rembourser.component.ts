@@ -13,9 +13,10 @@ export class MontantRembourserComponent {
 
   ngOnInit(): void {
     if (this.item.remboursements) {
-      for(let beneficiaire of this.item.remboursements) {
-        this.total =+ parseFloat(beneficiaire.montant_payer);
-      }
+      this.total = this.item.remboursements.reduce(function(sum, value){
+        return sum + parseFloat(value.montant_payer); 
+       }, 0);
+      
     }
    
   }

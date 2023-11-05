@@ -1,10 +1,6 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Inject, Input, OnInit } from '@angular/core'; 
 import { PlanRemboursementModel } from '../../models/plan_remousement.model';
-import { BeneficiaireModel } from '../../models/beneficiaire.model';
-import { MatSort } from '@angular/material/sort';
-import { SelectionModel } from '@angular/cdk/collections';
+import { BeneficiaireModel } from '../../models/beneficiaire.model'; 
 import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -31,7 +27,7 @@ export class BeneficiaireRemboursementsComponent {
   planRemboursementList: PlanRemboursementModel[] = [];
   remboursementList: RemboursementModel[] = [];
 
-  id: any; 
+  id: any;
 
   step = 0;
 

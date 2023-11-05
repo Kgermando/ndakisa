@@ -38,31 +38,31 @@
                                 <li class="gray-color fw-semibold">
                                     Total garantie
                                     <span class="d-block fw-semibold position-relative"> 
-                                       15 223 155 usd
+                                        {{ totalGarantie | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Crédit accordé
                                     <span class="d-block fw-semibold position-relative"> 
-                                        15 223 155 usd
-                                    </span>
+                                        {{ totalCreditAccorde | numberFormat:'fr-FR' }} usd
+                                    </span> 
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     interêt
                                     <span class="d-block fw-semibold position-relative"> 
-                                        15 223 155 usd
+                                        {{ interet | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     montant à rembourser
                                     <span class="d-block fw-semibold position-relative"> 
-                                        15 223 155 usd
+                                        {{ montant_A_Rembourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Montant remboursé
                                     <span class="d-block fw-semibold position-relative"> 
-                                        15 223 155 usd
+                                        {{ montantRembourse | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li> 
                             </ul> 
@@ -72,13 +72,14 @@
                                 <li class="gray-color fw-semibold">
                                     Reste à rembourser
                                     <span class="d-block fw-semibold position-relative"> 
-                                        15 223 155 usd
+                                       {{ reste_A_Rembourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Progession
                                     <span class="d-block fw-semibold position-relative"> 
-                                        <app-banque-progess [item]="banque"></app-banque-progess>
+                                        <span class="fs-13 d-block mb-5">{{pourcent | numberFormat:'fr-FR' }} %</span>
+                                        <mat-progress-bar mode="determinate" value="{{pourcent}}"></mat-progress-bar>
                                     </span>
                                 </li>
                             </ul> 

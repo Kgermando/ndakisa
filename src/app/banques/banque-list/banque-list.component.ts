@@ -1,10 +1,5 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { SelectionModel } from '@angular/cdk/collections';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog'; 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -12,8 +7,9 @@ import { CustomizerSettingsService } from 'src/app/common/customizer-settings/cu
 import { BanqueService } from '../banque.service';
 import { BanqueModel } from '../models/banque.model';
 import { UserModel } from 'src/app/users/models/user.model'; 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';
+import { RemboursementModel } from 'src/app/beneficiaires/models/remboursement.model'; 
 
 @Component({
   selector: 'app-banque-list',
@@ -26,24 +22,28 @@ export class BanqueListComponent implements OnInit {
   banque: BanqueModel;
   
   ELEMENT_DATA: BeneficiaireModel[] = [];
-  dataSource = new MatTableDataSource<BeneficiaireModel>(this.ELEMENT_DATA);
-  selection = new SelectionModel<BeneficiaireModel>(true, []);
-
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  remvoursementList: RemboursementModel[] = [];
 
   isLoading = false; 
 
   currentUser: UserModel | any; 
+
+  totalCreditAccorde = 0; 
+  pourcent = 0;
+
+  totalGarantie = 0; 
+  interet = 0;
+  montant_A_Rembourser = 0;
+  montantRembourse = 0;
+  reste_A_Rembourser = 0;
+
   
-  constructor(
-      private _liveAnnouncer: LiveAnnouncer,
+  constructor( 
       public themeService: CustomizerSettingsService, 
       private route: ActivatedRoute, 
       private router: Router, 
       private authService: AuthService,
-      private banqueService: BanqueService, 
+      private banqueService: BanqueService,
       public dialog: MatDialog, 
       private toastr: ToastrService
   ) {}
@@ -54,7 +54,7 @@ export class BanqueListComponent implements OnInit {
     });
     this.authService.user().subscribe({
       next: (user) => {
-        this.currentUser = user; 
+        this.currentUser = user;  
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
@@ -66,30 +66,49 @@ export class BanqueListComponent implements OnInit {
   public loadData(id: any): void {
     this.isLoading = true;
     this.banqueService.get(Number(id)).subscribe(res => {
-      this.banque = res;
-      this.ELEMENT_DATA = this.banque.beneficiaires;  
-      this.dataSource = new MatTableDataSource<BeneficiaireModel>(this.ELEMENT_DATA);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+      this.banque = res; 
+      this.ELEMENT_DATA = this.banque.beneficiaires;
+      this.remvoursementList = this.banque.remboursements;
+      
+      // for(let beneficiaire of this.ELEMENT_DATA) {
+      //   this.totalGarantie =+ parseFloat(beneficiaire.montant_garantie);
+      //   this.totalCreditAccorde =+ parseFloat(beneficiaire.credit_accorde); 
+      //   this.interet =+ parseFloat(beneficiaire.interet);
+      //   this.montant_A_Rembourser =+ parseFloat(beneficiaire.montant_a_debourser);
+      // }
+
+      this.totalGarantie = this.ELEMENT_DATA.reduce(function(sum, value){
+        return sum + parseFloat(value.montant_garantie); 
+      }, 0);
+      this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
+        return sum + parseFloat(value.credit_accorde); 
+      }, 0);
+      this.interet = this.ELEMENT_DATA.reduce(function(sum, value){
+        return sum + parseFloat(value.interet); 
+      }, 0);
+      this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
+        return sum + parseFloat(value.montant_a_debourser);
+      }, 0);
+       
+
+      this.montantRembourse = this.remvoursementList.reduce(function(sum, value){
+        return sum + parseFloat(value.montant_payer); 
+       }, 0);
+
+      // for(let remboursement of this.remvoursementList) {
+      //   this.montantRembourse =+ parseFloat(remboursement.montant_payer); 
+      // }
+
+      var pourcents = this.montantRembourse * 100 / this.totalCreditAccorde;
+      this.pourcent = parseFloat(pourcents.toFixed(2));
+ 
+      this.reste_A_Rembourser = this.totalCreditAccorde - this.montantRembourse;
       this.isLoading = false;
     });
   }
 
  
-  applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  /** Announce the change in sort state for assistive technology. */
-    announceSortChange(sortState: Sort) { 
-      if (sortState.direction) {
-          this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-      } else {
-          this._liveAnnouncer.announce('Sorting cleared');
-      }
-  }  
-
+  
 
   delete(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {

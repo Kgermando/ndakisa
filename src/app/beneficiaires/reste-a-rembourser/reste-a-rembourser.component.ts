@@ -14,12 +14,14 @@ export class ResteARembourserComponent {
 
   ngOnInit(): void {
     if (this.item.remboursements) {
-      for(let beneficiaire of this.item.remboursements) {
-        this.totalPayE =+ parseFloat(beneficiaire.montant_payer); 
-      }
-      this.reste = parseFloat(this.item.montant_a_debourser) - this.totalPayE;
-      console.log('montant_a_debourser', this.item.montant_a_debourser);
-      console.log('totalPayE', this.totalPayE);
+      this.totalPayE = this.item.remboursements.reduce(function(sum, value){
+        return sum + parseFloat(value.montant_payer); 
+       }, 0);
+
+      // for(let beneficiaire of this.item.remboursements) {
+      //   this.totalPayE =+ parseFloat(beneficiaire.montant_payer); 
+      // }
+      this.reste = parseFloat(this.item.credit_accorde) - this.totalPayE; 
     }
    
   }

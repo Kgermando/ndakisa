@@ -96,19 +96,19 @@
                         </li>
                         <li class="d-flex align-items-center justify-content-space-between">
                             <span class="d-block gray-color fw-medium">Montant garantie:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_garantie }} $</span>
+                            <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_garantie | numberFormat:'fr-FR' }} $</span>
                         </li>
                         <li class="d-flex align-items-center justify-content-space-between">
                             <span class="d-block gray-color fw-medium">Credit accordé:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.credit_accorde }} $</span>
+                            <span class="d-block gray-color fw-medium">{{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} $</span>
                         </li>
                         <li class="d-flex align-items-center justify-content-space-between">
                             <span class="d-block gray-color fw-medium">Interet:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.interet }} $</span>
+                            <span class="d-block gray-color fw-medium">{{ beneficiaire.interet | numberFormat:'fr-FR' }} $</span>
                         </li>
                         <li class="d-flex align-items-center justify-content-space-between">
                             <span class="d-block gray-color fw-medium">Montant à rembourser:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_a_debourser }} $</span>
+                            <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_a_debourser | numberFormat:'fr-FR' }} $</span>
                         </li>
                     </ul>
                 </mat-expansion-panel>

@@ -12,4 +12,8 @@ export class RemboursementService extends ApiService {
   getAllData(id: number): Observable<any> {
     return this.http.get(`${this.endpoint}/get-all/${id}`);
   }
+
+  getAllDataBanque(id: number): Observable<any> {
+    return this.http.get(`${this.endpoint}/get-all-banque/${id}`);
+  }
 }

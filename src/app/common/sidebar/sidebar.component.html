@@ -32,7 +32,7 @@
                     <a routerLink="/layouts/beneficiaires/beneficiaire-list" class="sidebar-menu-link" routerLinkActive="active" 
                         [routerLinkActiveOptions]="{exact: true}"
                         *ngIf="currentUser.roles.includes('Beneficiaires')">
-                        <i class="flaticon-user-1"></i>
+                        <i class="ri-group-line"></i>
                         <span class="title">Beneficiaires</span>
                     </a>
 
@@ -40,7 +40,7 @@
                     <a routerLink="/layouts/cohortes/cohorte-list" class="sidebar-menu-link" routerLinkActive="active" 
                         [routerLinkActiveOptions]="{exact: true}"
                         *ngIf="currentUser.roles.includes('Cohortes')">
-                        <i class="flaticon-user-1"></i>
+                        <i class="ri-wallet-line"></i>
                         <span class="title">Cohortes</span>
                     </a>
 
@@ -49,7 +49,7 @@
                     *ngIf="currentUser.roles.includes('Banques')">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                <i class="flaticon-envelope"></i>
+                                <i class="ri-bank-line"></i>
                                 <span class="title">Banques</span>
                                 <span class="badge">{{ banqueList.length }}</span> 
                             </mat-panel-title>
@@ -73,7 +73,7 @@
                     <a routerLink="/layouts/users/user-list" class="sidebar-menu-link" 
                         routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                         *ngIf="currentUser.roles.includes('users')">
-                        <i class="flaticon-user-1"></i>
+                        <i class="ri-user-line"></i>
                         <span class="title">Utilisateurs</span>
                     </a>
                 </mat-accordion>
