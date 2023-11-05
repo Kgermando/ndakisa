@@ -1,28 +1,30 @@
 <mat-card class="mb-25 tagus-card" *ngIf="beneficiaire">
     <mat-card-header>
-        <h5 class="mb-0">Plan d'amortissements</h5>
-        <div>
-            <span *ngIf="beneficiaire.cohorte && beneficiaire.banque">
-                <button mat-flat-button class="default-btn tagus m-0 margin" 
-                    (click)="openEditDialog('300ms', '100ms', beneficiaire.id, beneficiaire.cohorte.id, beneficiaire.banque.id)">
-                    <i class="ri-add-fill"></i> Ajouter un remboursement
-                </button> 
-            </span> 
-            <button mat-icon-button color="warn" 
-                    (click)="delete(beneficiaire.id)"
-                *ngIf="currentUser.permission === 'RD' ||
-                    currentUser.permission === 'RUD' ||
-                    currentUser.permission === 'CRUD'" matTooltip="Supprimer ce document">
-                    <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-icon-button color="accent"  
-                (click)="edit(beneficiaire.id)"
-                *ngIf="currentUser.permission === 'RU' ||
-                    currentUser.permission === 'RCU' || 
-                    currentUser.permission === 'RUD' || 
-                    currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
-                    <mat-icon>edit</mat-icon>
-            </button>
+        <h5 class="mb-0">PLAN D'AMORTISSEMENTS</h5>
+        <div *ngIf="beneficiaire.statut === 'En cours'">
+            <div *ngIf="currentUser">
+                <span *ngIf="beneficiaire.cohorte && beneficiaire.banque">
+                    <button mat-flat-button class="default-btn tagus m-0 margin" 
+                        (click)="openEditDialog('300ms', '100ms', beneficiaire.id, beneficiaire.cohorte.id, beneficiaire.banque.id)">
+                        <i class="ri-add-fill"></i> Ajouter un remboursement
+                    </button> 
+                </span> 
+                <button mat-icon-button color="warn" 
+                        (click)="delete(beneficiaire.id)"
+                    *ngIf="currentUser.permission === 'RD' ||
+                        currentUser.permission === 'RUD' ||
+                        currentUser.permission === 'CRUD'" matTooltip="Supprimer ce document">
+                        <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="accent"  
+                    (click)="edit(beneficiaire.id)"
+                    *ngIf="currentUser.permission === 'RU' ||
+                        currentUser.permission === 'RCU' || 
+                        currentUser.permission === 'RUD' || 
+                        currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
+                        <mat-icon>edit</mat-icon>
+                </button>
+            </div>
         </div>
     </mat-card-header>
     <mat-card-content> 
@@ -37,7 +39,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="fw-semibold gray-color">N°</th>
+                                <th class="fw-semibold gray-color">Echéance</th>
                                 <th class="fw-semibold main-color">Date de remboursement </th>
                                 <th class="fw-semibold gray-color">Credit en debut periode</th>
                                 <th class="fw-semibold gray-color">Mensualité</th>
@@ -68,7 +70,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="fw-semibold gray-color">N°</th>
+                                <th class="fw-semibold gray-color">Echéance</th>
                                 <th class="fw-semibold main-color">Date de paie </th>
                                 <th class="fw-semibold gray-color">Montant payé </th> 
                                 <th class="fw-semibold gray-color">Observation </th> 

@@ -136,8 +136,8 @@ export class BeneficiareEditComponent implements OnInit {
       date_de_rembousement: ['', Validators.required],
       credit_en_debut_periode: ['', Validators.required],
       mensualite: ['', Validators.required],
-      interet: [''],
-      capital: [''],
+      interet: ['', Validators.required],
+      capital: ['', Validators.required],
     });
   }
 
@@ -262,7 +262,7 @@ export class BeneficiareEditComponent implements OnInit {
     }); 
   } 
 
-
+  
   compareFn(c1: BanqueModel, c2: BanqueModel): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
@@ -354,3 +354,5 @@ export class EditPlanRemboursementDialogBox implements OnInit{
   } 
 
 }
+
+

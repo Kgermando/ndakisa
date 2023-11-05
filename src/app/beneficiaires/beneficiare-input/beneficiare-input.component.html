@@ -1,3 +1,63 @@
+
+
+
+
+<div class="recent-files-table table-responsive mb-25">
+    <table class="table">
+        <thead>
+            <tr> 
+                <th class="fw-semibold main-color">Cohorte </th>
+                <th class="fw-semibold gray-color">Banque</th>
+                <th class="fw-semibold gray-color">Beneficiaire</th> 
+                <th class="fw-semibold gray-color">Sexe</th> 
+                <th class="fw-semibold gray-color">Province</th> 
+                <th class="fw-semibold gray-color">Identifiant</th>
+                <th class="fw-semibold gray-color">Email</th>
+                <th class="fw-semibold gray-color">Téléphone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let element of ELEMENT_DATA; let i = index"> 
+                <td class="gray-color">
+                    <a [routerLink]="['/layouts/cohortes', element.id, 'cohorte-view']">
+                        {{element.cohorte.name_cohorte }} 
+                    </a>
+                </td>
+                <td class="gray-color">
+                    {{element.banque.name_banque }} 
+                </td>
+                <td class="gray-color">
+                    <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                        {{element.name_beneficiaire.toUpperCase()}}
+                    </a>
+                </td>
+                <td class="gray-color">
+                    {{element.sexe }} 
+                </td>
+                <td class="gray-color">
+                    {{element.province }} 
+                </td>
+                <td class="gray-color">
+                    {{element.identifiant }} 
+                </td> 
+                <td class="gray-color">
+                    {{element.email }} 
+                </td> 
+                <td class="gray-color">
+                    {{element.telephone }} 
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div> 
+
+
+
+
+
+
+
+<!-- 
 <div class="tagus-form-group">
     <mat-form-field appearance="fill">
         <i class="ri-search-line"></i>
@@ -7,8 +67,7 @@
 </div>
 <div class="mat-elevation-z8 tagus-mat-table">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
-
-         <!-- Matricule Column -->
+ 
         <ng-container matColumnDef="name_beneficiaire">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Beneficiaire</th>
             <td mat-cell *matCellDef="let element">
@@ -17,8 +76,7 @@
                 </a>
             </td>
         </ng-container>
-
-         <!-- Nom Column -->
+ 
          <ng-container matColumnDef="cohorte">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohorte</th>
             <td mat-cell *matCellDef="let element">
@@ -55,4 +113,4 @@
 
     </table>
     <mat-paginator [pageSizeOptions]="[15, 30, 45]" showFirstLastButtons></mat-paginator>
-</div>
+</div> -->

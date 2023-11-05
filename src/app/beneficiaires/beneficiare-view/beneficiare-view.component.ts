@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/users/models/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-beneficiare-view',
@@ -66,6 +68,8 @@ export class BeneficiareViewComponent implements OnInit {
     }
 
 
+
+
   toggleTheme() {
       this.themeService.toggleTheme();
   }
@@ -78,3 +82,5 @@ export class BeneficiareViewComponent implements OnInit {
       this.themeService.toggleCardBorderRadiusTheme();
   }
 }
+
+

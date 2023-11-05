@@ -11,7 +11,7 @@
             *ngIf="!isLoading"
         > 
         </div>
-        <app-beneficiaire-info [beneficiaire]="beneficiaire"></app-beneficiaire-info>
+        <app-beneficiaire-info [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-info>
     </div>
     <div class="col-xxl-8">
         <app-beneficiaire-remboursements [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-remboursements>

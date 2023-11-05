@@ -51,7 +51,7 @@ import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progre
 import { RemboursementService } from './beneficiaires/remboursement.service';
 import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/beneficiare-input.component';
 import { PlanRemboursementService } from './beneficiaires/plan_remboursement.service';
-import { BeneficiaireInfoComponent } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
+import { BeneficiaireInfoComponent, EditStatutBeneficiaireDialogBox } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
 import { AddRemboursementDialogBox, BeneficiaireRemboursementsComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/beneficiaire-remboursements.component'; 
  
 
@@ -113,7 +113,8 @@ registerLocaleData(localeFr);
     AddRemboursementDialogBox,
     EditPlanRemboursementDialogBox,
     MontantRembourserComponent,
-    ResteARembourserComponent
+    ResteARembourserComponent,
+    EditStatutBeneficiaireDialogBox
   ],
   imports: [
     BrowserModule,

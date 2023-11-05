@@ -8,8 +8,16 @@
                 <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15); font-size: medium;" *ngIf="beneficiaire.statut == 'En cours'">En cours</span>
                 <span class="badge pending fw-medium d-block position-relative"  style="color: red; font-size: medium;" *ngIf="beneficiaire.statut == 'interrompu'">Interrompu</span>
                 <span class="badge completed fw-medium d-block position-relative" style="color: blue; font-size: medium;" *ngIf="beneficiaire.statut == 'Complete'">Complète</span> 
-            </div>
+            </div> 
         </div>
+        <button mat-icon-button color="primary"  
+            (click)="openEditStatutDialog('300ms', '100ms', beneficiaire.id)"
+            *ngIf="currentUser.permission === 'RU' ||
+                currentUser.permission === 'RCU' || 
+                currentUser.permission === 'RUD' || 
+                currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
+                <mat-icon>edit</mat-icon>
+        </button>
     </mat-card-header>
     <mat-card-content>
         <div class="course-details-desc">  

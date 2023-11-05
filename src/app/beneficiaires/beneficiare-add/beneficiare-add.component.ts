@@ -123,7 +123,7 @@ export class BeneficiareAddComponent implements OnInit {
             this.isLoading = false;
             this.formGroup.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.router.navigate(['/layouts/cohortes/cohorte-list']);
+            this.router.navigate(['/layouts/beneficiaires', res.id, 'beneficiaire-edit']);
           },
           error: (err) => {
             this.isLoading = false;

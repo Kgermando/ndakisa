@@ -33,7 +33,7 @@ export interface BeneficiaireModel {
     
     cohorte: CohorteModel; 
     banque: BanqueModel; 
-    statut: string; // En cours, interrompu Complete
+    statut: string; // En cours, interrompu, Complete
     remboursements: RemboursementModel[];
     plan_remboursements: PlanRemboursementModel[];
 }
