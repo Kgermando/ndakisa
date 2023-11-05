@@ -1,6 +1,7 @@
 import { BanqueModel } from "src/app/banques/models/banque.model";
-import { CohorteModel } from "src/app/cohortes/models/cohorte.model";
-import { RemboursementModel } from "src/app/remboursements/models/remboursement.model";
+import { CohorteModel } from "src/app/cohortes/models/cohorte.model"; 
+import { PlanRemboursementModel } from "./plan_remousement.model";
+import { RemboursementModel } from "./remboursement.model";
 
 export interface BeneficiaireModel {
     id: number;
@@ -17,7 +18,7 @@ export interface BeneficiaireModel {
     numero_impot: string; 
     id_nat: string;
     rccm: string; 
-    adresse: string; 
+    adresse: string;
     
     montant_garantie: string; 
     credit_accorde: string; 
@@ -29,9 +30,10 @@ export interface BeneficiaireModel {
     duree_credit: number; // La durée de validité que le beneficiaire devra payé 
     date_valeur: Date; // Date à la quel on donné le credit 
     date_maturite: Date; // Date du dernier remboursement donc écheance  
-    date_de_rembousement: Date; // Date de remboursement à la banque doit etre ajustable 
+    
     cohorte: CohorteModel; 
     banque: BanqueModel; 
-    statut: string; // En cours // Terminer
+    statut: string; // En cours, interrompu Complete
     remboursements: RemboursementModel[];
+    plan_remboursements: PlanRemboursementModel[];
 }

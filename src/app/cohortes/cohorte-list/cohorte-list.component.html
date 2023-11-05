@@ -16,14 +16,16 @@
                 <i class="ri-add-fill"></i> Nouvelle cohorte
             </button> 
             <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
-                [matMenuTriggerFor]="monthMenu">
-                <i class="ri-more-fill"></i>
-            </button>
-            <mat-menu #monthMenu="matMenu" class="monthMenu" xPosition="before">
-                <button mat-menu-item type="button" class="bg-transparent border-none">Today</button>
-                <button mat-menu-item type="button" class="bg-transparent border-none">Last Month</button>
-                <button mat-menu-item type="button" class="bg-transparent border-none">Last Year</button> 
-            </mat-menu>
+                    [matMenuTriggerFor]="iconMenu">
+                    <i class="ri-menu-line"></i>
+                </button>
+                <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu" xPosition="before">
+                    <button mat-menu-item type="button" 
+                    class="bg-transparent border-none position-relative"
+                     >
+                        <i class="ri-printer-line"></i> Exporter
+                    </button>
+                </mat-menu>
         </div>
     </mat-card-header>
     <mat-card-content>

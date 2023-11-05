@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -8,14 +8,19 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { ProvinceList } from 'src/app/shared/tools/province-list';
 import { BanqueModel } from 'src/app/banques/models/banque.model';
 import { BanqueService } from 'src/app/banques/banque.service';
+import { PlanRemboursementService } from '../plan_remboursement.service';
+import { PlanRemboursementModel } from '../models/plan_remousement.model';
 
 @Component({
   selector: 'app-beneficiare-add',
   templateUrl: './beneficiare-add.component.html',
-  styleUrls: ['./beneficiare-add.component.scss']
+  styleUrls: ['./beneficiare-add.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BeneficiareAddComponent implements OnInit {
-  isLoading: boolean = false; 
+  isLoading: boolean = false;
+  isLoadingPlanRemboursement: boolean = false; 
+
   formGroup!: FormGroup;
   formGroup2!: FormGroup;
   formGroup3!: FormGroup; 
@@ -28,6 +33,7 @@ export class BeneficiareAddComponent implements OnInit {
 
   provinceList: string[] = ProvinceList;
   banqueList: BanqueModel[] = [];
+  planRemboursementList: PlanRemboursementModel[] = [];
 
   id: any;
 
@@ -38,6 +44,7 @@ export class BeneficiareAddComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private authService: AuthService,
     private beneficiareService: BeneficiareService,
+    private planRemboursement: PlanRemboursementService,
     private banqueService: BanqueService,
     private toastr: ToastrService) {}
 
@@ -46,6 +53,10 @@ export class BeneficiareAddComponent implements OnInit {
     this.authService.user().subscribe({
       next: (user) => {
         this.currentUser = user;
+        this.planRemboursement.refreshDataList$.subscribe(() => {
+          this.getAllData();
+        });
+        this.getAllData();
         this.banqueService.getAll().subscribe((res) => {
           this.banqueList = res;
         });
@@ -72,23 +83,13 @@ export class BeneficiareAddComponent implements OnInit {
       rccm: ['', Validators.required],
       adresse: ['', Validators.required],
     });
+  }
 
-    this.formGroup2 = this._formBuilder.group({
-      banque: [''],
-      montant_garantie: [''],
-      credit_accorde: [''],
-      interet: [''],
-      montant_a_debourser: [''], 
-      delai_de_grace: [''],
-      duree_credit: [''],
-      date_valeur: [''],
-      date_maturite: [''],
-      delai_de_reajustement: [''],
-    });
-
-    this.formGroup3 = this._formBuilder.group({
-      date_de_rembousement: [''],
-    });
+  getAllData() {
+    this.planRemboursement.getAll().subscribe((res) => {
+        this.planRemboursementList = res;
+      }
+    );
   }
 
 
@@ -119,79 +120,8 @@ export class BeneficiareAddComponent implements OnInit {
         };
         this.beneficiareService.create(body).subscribe({
           next: (res) => {
-            this.id_beneficiaire = res.id;
-            console.log('id_beneficiaire', this.id_beneficiaire);
             this.isLoading = false;
             this.formGroup.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            // this.router.navigate(['/layouts/cohortes/cohorte-list']);
-          },
-          error: (err) => {
-            this.isLoading = false;
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            console.log(err);
-          }
-        });
-      } 
-    } catch (error) {
-      this.isLoading = false;
-      console.log(error);
-    }
-  }
-
-  onSubmit2() {
-    try {
-      if (this.formGroup2.valid) {
-        this.isLoading = true;
-        var body = {
-          montant_garantie: this.formGroup2.value.montant_garantie,
-          credit_accorde: this.formGroup2.value.credit_accorde,
-          interet: this.formGroup2.value.interet,
-          montant_a_debourser: this.formGroup2.value.montant_a_debourser, 
-          delai_de_grace: this.formGroup2.value.delai_de_grace,
-          duree_credit: this.formGroup2.value.duree_credit,
-          date_valeur: this.formGroup2.value.date_valeur,
-          date_maturite: this.formGroup2.value.date_maturite,
-          delai_de_reajustement: this.formGroup2.value.delai_de_reajustement,
-          banque: this.formGroup2.value.banque, 
-          signature: this.currentUser.matricule,
-          created: new Date(),
-          update_created: new Date(),
-        };
-        this.beneficiareService.update(this.id_beneficiaire, body).subscribe({
-          next: () => {
-            this.isLoading = false;
-            this.formGroup2.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            // this.router.navigate(['/layouts/cohortes/cohorte-list']);
-          },
-          error: (err) => {
-            this.isLoading = false;
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            console.log(err);
-          }
-        });
-      } 
-    } catch (error) {
-      this.isLoading = false;
-      console.log(error);
-    }
-  }
-
-  onSubmit3() {
-    try {
-      if (this.formGroup3.valid) {
-        this.isLoading = true;
-        var body = {
-          date_de_rembousement: this.formGroup3.value.date_de_rembousement, 
-          signature: this.currentUser.matricule,
-          created: new Date(),
-          update_created: new Date(),
-        };
-        this.beneficiareService.update(this.id_beneficiaire, body).subscribe({
-          next: () => {
-            this.isLoading = false;
-            this.formGroup3.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
             this.router.navigate(['/layouts/cohortes/cohorte-list']);
           },
@@ -206,7 +136,7 @@ export class BeneficiareAddComponent implements OnInit {
       this.isLoading = false;
       console.log(error);
     }
-  }
+  } 
 
   capitalizeTest(text: string): string {
     return (text && text[0].toUpperCase() + text.slice(1).toLowerCase()) || text;

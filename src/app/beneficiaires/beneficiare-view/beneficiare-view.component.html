@@ -1,1 +1,19 @@
-<p>beneficiare-view works!</p>
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+</div>
+
+<div class="row">
+    <div class="col-xxl-4">
+        <div class="profile-card-box border-radius bg-white box-shadow"
+            [class.component-dark-theme]="themeService.isDark()"
+            [class.card-borderd-theme]="themeService.isCardBorder()"
+            [class.card-border-radius]="themeService.isCardBorderRadius()" 
+            *ngIf="!isLoading"
+        > 
+        </div>
+        <app-beneficiaire-info [beneficiaire]="beneficiaire"></app-beneficiaire-info>
+    </div>
+    <div class="col-xxl-8">
+        <app-beneficiaire-remboursements [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-remboursements>
+    </div>
+</div>

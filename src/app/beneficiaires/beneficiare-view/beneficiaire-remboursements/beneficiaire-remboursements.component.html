@@ -1,0 +1,93 @@
+<mat-card class="mb-25 tagus-card" *ngIf="beneficiaire">
+    <mat-card-header>
+        <h5 class="mb-0">Plan d'amortissements</h5>
+        <div>
+            <span *ngIf="beneficiaire.cohorte && beneficiaire.banque">
+                <button mat-flat-button class="default-btn tagus m-0 margin" 
+                    (click)="openEditDialog('300ms', '100ms', beneficiaire.id, beneficiaire.cohorte.id, beneficiaire.banque.id)">
+                    <i class="ri-add-fill"></i> Ajouter un remboursement
+                </button> 
+            </span> 
+            <button mat-icon-button color="warn" 
+                    (click)="delete(beneficiaire.id)"
+                *ngIf="currentUser.permission === 'RD' ||
+                    currentUser.permission === 'RUD' ||
+                    currentUser.permission === 'CRUD'" matTooltip="Supprimer ce document">
+                    <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="accent"  
+                (click)="edit(beneficiaire.id)"
+                *ngIf="currentUser.permission === 'RU' ||
+                    currentUser.permission === 'RCU' || 
+                    currentUser.permission === 'RUD' || 
+                    currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
+                    <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content> 
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="d-flex flex-nowrap align-items-center justify-content-space-between">
+                        <h5>Plan de remboursements</h5>  
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="recent-files-table table-responsive mb-25">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="fw-semibold gray-color">N°</th>
+                                <th class="fw-semibold main-color">Date de remboursement </th>
+                                <th class="fw-semibold gray-color">Credit en debut periode</th>
+                                <th class="fw-semibold gray-color">Mensualité</th>
+                                <th class="fw-semibold gray-color">Interet</th> 
+                                <th class="fw-semibold gray-color">Capital</th>  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let plan_remboursement of beneficiaire.plan_remboursements; let i = index"> 
+                                <td class="gray-color">{{ i+1 }}</td>
+                                <td class="gray-color">{{ plan_remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
+                                <td class="gray-color">{{ plan_remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} $</td>
+                                <td class="gray-color">{{ plan_remboursement.mensualite | numberFormat:'fr-FR' }} $</td>
+                                <td class="gray-color">{{ plan_remboursement.interet | numberFormat:'fr-FR' }} $</td>
+                                <td class="gray-color">{{ plan_remboursement.capital | numberFormat:'fr-FR' }} $</td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="d-flex flex-nowrap align-items-center justify-content-space-between">
+                        <h5>Remboursements</h5>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="recent-files-table table-responsive mb-25">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="fw-semibold gray-color">N°</th>
+                                <th class="fw-semibold main-color">Date de paie </th>
+                                <th class="fw-semibold gray-color">Montant payé </th> 
+                                <th class="fw-semibold gray-color">Observation </th> 
+                                <th class="fw-semibold gray-color">Bordereau </th>  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let remboursement of remboursementList; let i = index"> 
+                                <td class="gray-color">{{ i+1 }}</td>
+                                <td class="gray-color">{{ remboursement.date_paiement | date: 'EEEE le dd/MM/yyyy' }}</td>
+                                <td class="gray-color">{{ remboursement.montant_payer | numberFormat:'fr-FR' }} $</td>
+                                <td class="gray-color">{{ remboursement.observation }}</td>
+                                <td class="gray-color" *ngIf="remboursement.file_scan">{{ remboursement.file_scan }}</td> 
+                                <td class="gray-color" *ngIf="!remboursement.file_scan">-</td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </mat-expansion-panel> 
+        </mat-accordion>
+    </mat-card-content> 
+</mat-card>

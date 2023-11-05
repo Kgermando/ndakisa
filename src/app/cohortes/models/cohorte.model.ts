@@ -1,5 +1,5 @@
-import { BeneficiaireModel } from "src/app/beneficiaires/models/beneficiaire.model";
-import { RemboursementModel } from "src/app/remboursements/models/remboursement.model";
+import { BeneficiaireModel } from "src/app/beneficiaires/models/beneficiaire.model"; 
+import { RemboursementModel } from "src/app/beneficiaires/models/remboursement.model";
 
 export interface CohorteModel {
     id: number;

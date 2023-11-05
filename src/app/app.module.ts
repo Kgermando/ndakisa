@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
@@ -43,14 +43,25 @@ import { BeneficiareListComponent } from './beneficiaires/beneficiare-list/benef
 import { CohorteService } from './cohortes/cohorte.service';
 import { BanqueService } from './banques/banque.service';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
-import { BeneficiareEditComponent } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
+import { BeneficiareEditComponent, EditPlanRemboursementDialogBox } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
 import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
 import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component';
-import { RemboursementComponent } from './remboursements/remboursement/remboursement.component'; 
-import { RemboursementService } from './remboursements/remboursement.service';
+import { RemboursementService } from './beneficiaires/remboursement.service';
 import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/beneficiare-input.component';
+import { PlanRemboursementService } from './beneficiaires/plan_remboursement.service';
+import { BeneficiaireInfoComponent } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
+import { AddRemboursementDialogBox, BeneficiaireRemboursementsComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/beneficiaire-remboursements.component'; 
+ 
+
+import { registerLocaleData } from '@angular/common';
+
+import localeFr from '@angular/common/locales/fr';
+import { MontantRembourserComponent } from './beneficiaires/montant-rembourser/montant-rembourser.component';
+import { ResteARembourserComponent } from './beneficiaires/reste-a-rembourser/reste-a-rembourser.component';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -93,11 +104,16 @@ import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/ben
     CohorteProgressComponent,
     CreateCohorteDialogBox,
     EditCohorteDialogBox,
-    RemboursementComponent, 
     CohorteExportXLSXDialogBox,
     CreateBanqueDialogBox,
     EditBanqueDialogBox,
-    BeneficiareInputComponent
+    BeneficiareInputComponent,
+    BeneficiaireInfoComponent,
+    BeneficiaireRemboursementsComponent, 
+    AddRemboursementDialogBox,
+    EditPlanRemboursementDialogBox,
+    MontantRembourserComponent,
+    ResteARembourserComponent
   ],
   imports: [
     BrowserModule,
@@ -123,12 +139,14 @@ import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/ben
     BeneficiareService,
     DashboardService,
     RemboursementService,
+    PlanRemboursementService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CredentialInterceptor,
       multi: true
     },
     { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+    {provide: LOCALE_ID, useValue: "fr-FR" },
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
     provideAnimations(), // required animations providers
     provideToastr(),

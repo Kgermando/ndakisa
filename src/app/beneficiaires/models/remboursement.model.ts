@@ -8,8 +8,9 @@ export interface RemboursementModel {
     banque: BanqueModel;
     beneficiare: BeneficiaireModel;
     montant_payer: string; 
-    Observation: string; 
-    file_scan: string; 
+    observation: string; 
+    date_paiement: Date; 
+    file_scan: string;
     signature: string; 
     created: Date; 
     update_created: Date;
