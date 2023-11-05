@@ -11,8 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
 import { BanqueService } from '../banque.service';
 import { BanqueModel } from '../models/banque.model';
-import { UserModel } from 'src/app/users/models/user.model';
-import { formatDate } from '@angular/common';
+import { UserModel } from 'src/app/users/models/user.model'; 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';
 
@@ -64,17 +63,17 @@ export class BanqueListComponent implements OnInit {
     });
   }
 
-    public loadData(id: any): void {
-      this.isLoading = true;
-      this.banqueService.get(Number(id)).subscribe(res => {
-        this.banque = res;
-        this.ELEMENT_DATA = this.banque.beneficiaires;  
-        this.dataSource = new MatTableDataSource<BeneficiaireModel>(this.ELEMENT_DATA);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.isLoading = false;
-      });
-    }
+  public loadData(id: any): void {
+    this.isLoading = true;
+    this.banqueService.get(Number(id)).subscribe(res => {
+      this.banque = res;
+      this.ELEMENT_DATA = this.banque.beneficiaires;  
+      this.dataSource = new MatTableDataSource<BeneficiaireModel>(this.ELEMENT_DATA);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.isLoading = false;
+    });
+  }
 
  
   applyFilter(event: Event) {

@@ -15,6 +15,7 @@ import { BeneficiareService } from '../../beneficiare.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RemboursementService } from 'src/app/beneficiaires/remboursement.service'; 
 import { RemboursementModel } from '../../models/remboursement.model';
+import { PlanRemboursementService } from '../../plan_remboursement.service';
 
 @Component({
   selector: 'app-beneficiaire-remboursements',
@@ -27,6 +28,7 @@ export class BeneficiaireRemboursementsComponent {
 
   displayedColumns: string[] = ['numero', 'date_de_rembousement', 'credit_en_debut_periode', 'mensualite', 'interet', 'capital'];
 
+  planRemboursementList: PlanRemboursementModel[] = [];
   remboursementList: RemboursementModel[] = [];
 
   id: any; 
@@ -50,6 +52,7 @@ export class BeneficiaireRemboursementsComponent {
     private router: Router,
     private route: ActivatedRoute,
     private beneficiareService: BeneficiareService,
+    private planRemboursement: PlanRemboursementService,
     private remboursementService: RemboursementService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
@@ -58,11 +61,23 @@ export class BeneficiaireRemboursementsComponent {
       this.id = this.route.snapshot.paramMap.get('id');
       this.beneficiareService.get(this.id).subscribe(item => {
         this.beneficiaire = item;
+        this.planRemboursement.refreshDataList$.subscribe(() => {
+          this.getAllDataPlan(this.beneficiaire.id);
+        });
+        this.getAllDataPlan(this.beneficiaire.id); 
+        
         this.remboursementService.refreshDataList$.subscribe(() => {
           this.getAllData(this.beneficiaire.id);
         });
         this.getAllData(this.beneficiaire.id);
       });
+    }
+
+    getAllDataPlan(id: number) {
+      this.planRemboursement.getAllData(id).subscribe((res) => {
+          this.planRemboursementList = res;
+        }
+      );
     }
 
     getAllData(id: number) {

@@ -19,7 +19,7 @@
         <tbody>
             <tr *ngFor="let element of ELEMENT_DATA; let i = index"> 
                 <td class="gray-color">
-                    <a [routerLink]="['/layouts/cohortes', element.id, 'cohorte-view']">
+                    <a [routerLink]="['/layouts/cohortes', element.cohorte.id, 'cohorte-view']">
                         {{element.cohorte.name_cohorte }} 
                     </a>
                 </td>

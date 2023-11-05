@@ -51,7 +51,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let plan_remboursement of beneficiaire.plan_remboursements; let i = index"> 
+                            <tr *ngFor="let plan_remboursement of planRemboursementList; let i = index"> 
                                 <td class="gray-color">{{ i+1 }}</td>
                                 <td class="gray-color">{{ plan_remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
                                 <td class="gray-color">{{ plan_remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} $</td>

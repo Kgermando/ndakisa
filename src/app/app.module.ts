@@ -60,6 +60,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { MontantRembourserComponent } from './beneficiaires/montant-rembourser/montant-rembourser.component';
 import { ResteARembourserComponent } from './beneficiaires/reste-a-rembourser/reste-a-rembourser.component';
+import { BanqueProgessComponent } from './banques/banque-progess/banque-progess.component';
 
 registerLocaleData(localeFr);
 
@@ -114,7 +115,8 @@ registerLocaleData(localeFr);
     EditPlanRemboursementDialogBox,
     MontantRembourserComponent,
     ResteARembourserComponent,
-    EditStatutBeneficiaireDialogBox
+    EditStatutBeneficiaireDialogBox,
+    BanqueProgessComponent
   ],
   imports: [
     BrowserModule,

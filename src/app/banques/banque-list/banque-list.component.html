@@ -1,6 +1,6 @@
 <mat-card class="mb-25 tagus-card" [class.component-dark-theme]="themeService.isDark()"
     [class.card-border-radius]="themeService.isCardBorderRadius()" >
-    <mat-card-content> 
+    <mat-card-content *ngIf="banque"> 
         <div class="course-details-desc">
             <div class="row align-items-center">
                 <mat-accordion>
@@ -9,7 +9,7 @@
                             <mat-panel-title>
                                 <div class="d-md-flex justify-content-space-between align-items-center">
                                     <div>
-                                        <h6  class="mb-0" *ngIf="banque">{{ banque.name_banque }} </h6>
+                                        <h6  class="mb-0">{{ banque.name_banque }} </h6>
                                         <h4 class="mb-0">Liste des beneficiaires par banque</h4> 
                                     </div> 
                                     <div> 
@@ -36,27 +36,49 @@
                         <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
                             <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                 <li class="gray-color fw-semibold">
-                                    Total banques
+                                    Total garantie
                                     <span class="d-block fw-semibold position-relative"> 
                                        15 223 155 usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Total garantie
+                                    Crédit accordé
                                     <span class="d-block fw-semibold position-relative"> 
                                         15 223 155 usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Credit accordé
+                                    interêt
                                     <span class="d-block fw-semibold position-relative"> 
                                         15 223 155 usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Interet
+                                    montant à rembourser
                                     <span class="d-block fw-semibold position-relative"> 
                                         15 223 155 usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Montant remboursé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        15 223 155 usd
+                                    </span>
+                                </li> 
+                            </ul> 
+                        </div> 
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
+                                    Reste à rembourser
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        15 223 155 usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Progession
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        <app-banque-progess [item]="banque"></app-banque-progess>
                                     </span>
                                 </li>
                             </ul> 

@@ -90,6 +90,10 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <ul class="mb-0 mt-0 ps-0 content-list">
+                        <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.banque">
+                            <span class="d-block gray-color fw-medium">Banque:</span>
+                            <span class="d-block gray-color fw-medium">{{ beneficiaire.banque.name_banque }} </span>
+                        </li>
                         <li class="d-flex align-items-center justify-content-space-between">
                             <span class="d-block gray-color fw-medium">Montant garantie:</span>
                             <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_garantie }} $</span>
