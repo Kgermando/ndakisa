@@ -21,8 +21,7 @@ export class ResteARembourserComponent {
       // for(let beneficiaire of this.item.remboursements) {
       //   this.totalPayE =+ parseFloat(beneficiaire.montant_payer); 
       // }
-      this.reste = parseFloat(this.item.credit_accorde) - this.totalPayE; 
+      this.reste = parseFloat(this.item.montant_a_debourser) - this.totalPayE; 
     }
-   
   }
 }

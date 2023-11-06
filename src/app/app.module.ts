@@ -7,6 +7,8 @@ import { QuillModule } from 'ngx-quill';
 import { DatePipe } from '@angular/common'; 
 import { ErrorStateMatcher, MAT_DATE_LOCALE, ShowOnDirtyErrorStateMatcher } from '@angular/material/core'; 
 import { ToastrModule } from 'ngx-toastr';
+import { registerLocaleData } from '@angular/common'
+import localeFr from '@angular/common/locales/fr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,14 +55,10 @@ import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/ben
 import { PlanRemboursementService } from './beneficiaires/plan_remboursement.service';
 import { BeneficiaireInfoComponent, EditStatutBeneficiaireDialogBox } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
 import { AddRemboursementDialogBox, BeneficiaireRemboursementsComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/beneficiaire-remboursements.component'; 
- 
-
-import { registerLocaleData } from '@angular/common';
-
-import localeFr from '@angular/common/locales/fr';
 import { MontantRembourserComponent } from './beneficiaires/montant-rembourser/montant-rembourser.component';
 import { ResteARembourserComponent } from './beneficiaires/reste-a-rembourser/reste-a-rembourser.component';
 import { BanqueProgessComponent } from './banques/banque-progess/banque-progess.component';
+import { RemboursementIndiceComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/remboursement-indice/remboursement-indice.component';
 
 registerLocaleData(localeFr);
 
@@ -116,7 +114,8 @@ registerLocaleData(localeFr);
     MontantRembourserComponent,
     ResteARembourserComponent,
     EditStatutBeneficiaireDialogBox,
-    BanqueProgessComponent
+    BanqueProgessComponent,
+    RemboursementIndiceComponent,
   ],
   imports: [
     BrowserModule,

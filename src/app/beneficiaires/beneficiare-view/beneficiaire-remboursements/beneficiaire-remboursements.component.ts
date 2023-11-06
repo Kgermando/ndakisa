@@ -21,9 +21,7 @@ import { PlanRemboursementService } from '../../plan_remboursement.service';
 export class BeneficiaireRemboursementsComponent {
   @Input() beneficiaire: BeneficiaireModel; 
   @Input() currentUser: UserModel; 
-
-  displayedColumns: string[] = ['numero', 'date_de_rembousement', 'credit_en_debut_periode', 'mensualite', 'interet', 'capital'];
-
+ 
   planRemboursementList: PlanRemboursementModel[] = [];
   remboursementList: RemboursementModel[] = [];
 
@@ -82,6 +80,7 @@ export class BeneficiaireRemboursementsComponent {
         }
       );
     }
+ 
   
 
   edit(id: number) {

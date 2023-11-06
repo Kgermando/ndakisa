@@ -38,7 +38,7 @@
                         </button> 
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="recent-files-table table-responsive mb-25">
+                <div class="reports-table table-responsive mb-25">
                     <table class="table">
                         <thead>
                             <tr>
@@ -47,7 +47,8 @@
                                 <th class="fw-semibold gray-color">Credit en debut periode</th>
                                 <th class="fw-semibold gray-color">Mensualité</th>
                                 <th class="fw-semibold gray-color">Interet</th> 
-                                <th class="fw-semibold gray-color">Capital</th>  
+                                <th class="fw-semibold gray-color">Capital</th> 
+                                <th class="fw-semibold gray-color">Indice</th>  
                             </tr>
                         </thead>
                         <tbody>
@@ -58,6 +59,11 @@
                                 <td class="gray-color">{{ plan_remboursement.mensualite | numberFormat:'fr-FR' }} $</td>
                                 <td class="gray-color">{{ plan_remboursement.interet | numberFormat:'fr-FR' }} $</td>
                                 <td class="gray-color">{{ plan_remboursement.capital | numberFormat:'fr-FR' }} $</td> 
+                                <td>
+                                    <span class="badge fw-semibold">
+                                        <app-remboursement-indice [plan_remboursement]="plan_remboursement"  [id]="id"></app-remboursement-indice>
+                                    </span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -72,7 +78,7 @@
                         </button> 
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="recent-files-table table-responsive mb-25">
+                <div class="reports-table table-responsive mb-25">
                     <table class="table">
                         <thead>
                             <tr>

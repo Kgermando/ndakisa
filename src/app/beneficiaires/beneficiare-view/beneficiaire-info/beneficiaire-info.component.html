@@ -110,6 +110,18 @@
                             <span class="d-block gray-color fw-medium">Montant à rembourser:</span>
                             <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_a_debourser | numberFormat:'fr-FR' }} $</span>
                         </li>
+                        <li class="d-flex align-items-center justify-content-space-between">
+                            <span class="d-block gray-color fw-medium">Montant remboursé:</span>
+                            <span class="d-block gray-color fw-medium">
+                                <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center justify-content-space-between">
+                            <span class="d-block gray-color fw-medium">Reste à rembourser:</span>
+                            <span class="d-block gray-color fw-medium">
+                                <app-reste-a-rembourser [item]="beneficiaire"></app-reste-a-rembourser>
+                            </span>
+                        </li>
                     </ul>
                 </mat-expansion-panel>
                 <mat-expansion-panel>
