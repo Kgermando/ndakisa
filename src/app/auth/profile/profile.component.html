@@ -2,6 +2,77 @@
 <div class="d-flex justify-content-center" *ngIf="isLoading">
     <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
 </div>
-<ng-container *ngIf="!isLoading">
- 
+<ng-container *ngIf="!isLoading && currentUser">
+    <mat-card class="mb-25 personal-info-card tagus-card" [class.component-dark-theme]="themeService.isDark()">
+        <mat-card-header class="border-bottom">
+            <h5 class="mb-0">Profil</h5>
+        </mat-card-header>
+        <mat-card-content> 
+            <ul class="list ps-0 mb-0">
+                <li>
+                    <span class="fw-semibold d-inline-block">Prenom:</span>
+                    <span class="gray-color">{{ currentUser.prenom }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Nom:</span>
+                    <span class="gray-color">{{ currentUser.nom }}</span>
+                </li> 
+                <li>
+                    <span class="fw-semibold d-inline-block">PostNom:</span>
+                    <span class="gray-color">{{ currentUser.postnom }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Sexe:</span>
+                    <span class="gray-color">{{ currentUser.sexe }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Adresse:</span>
+                    <span class="gray-color">{{ currentUser.adresse }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Matricule:</span>
+                    <span class="gray-color">{{ currentUser.matricule }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Mobile:</span>
+                    <span class="gray-color">{{ currentUser.telephone }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Email:</span>
+                    <span class="gray-color">{{ currentUser.email }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Titre:</span>
+                    <span class="gray-color">{{ currentUser.title }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Statut:</span>
+                    <span class="gray-color" *ngIf="currentUser.statut_user">Actif</span>
+                    <span class="gray-color" *ngIf="!currentUser.statut_user">Inactif</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Accréditation:</span>
+                    <span class="gray-color">
+                        <div *ngFor="let role of currentUser.roles">
+                            <span>
+                                {{ role }}
+                            </span>
+                        </div>
+                    </span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Permission:</span>
+                    <span class="gray-color">{{ currentUser.permission }}</span>
+                </li>
+                <li>
+                    <span class="fw-semibold d-inline-block">Date de creation: </span>
+                    <span class="gray-color">{{ currentUser.created | date: 'dd/MM/yyyy' }}</span>
+                </li> 
+                <li>
+                    <span class="fw-semibold d-inline-block">Mise à jour le: </span>
+                    <span class="gray-color">{{ currentUser.update_created | date: 'dd/MM/yyyy HH:mm' }}</span>
+                </li>  
+            </ul>
+        </mat-card-content>
+    </mat-card>
 </ng-container>
