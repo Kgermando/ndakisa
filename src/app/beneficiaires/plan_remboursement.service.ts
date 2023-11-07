@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PlanRemboursementService extends ApiService {
-  endpoint: string = `${environment.apiURL}/planremboursements`;
+  endpoint: string = `${environment.apiURL}/plan_remboursements`;
 
 
   getAllData(id: number): Observable<any> {

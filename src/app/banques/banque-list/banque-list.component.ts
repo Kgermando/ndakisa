@@ -8,8 +8,8 @@ import { BanqueService } from '../banque.service';
 import { BanqueModel } from '../models/banque.model';
 import { UserModel } from 'src/app/users/models/user.model'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';
-import { RemboursementModel } from 'src/app/beneficiaires/models/remboursement.model'; 
+import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model'; 
+import { PlanRemboursementModel } from 'src/app/beneficiaires/models/plan_remousement.model';
 
 @Component({
   selector: 'app-banque-list',
@@ -22,7 +22,7 @@ export class BanqueListComponent implements OnInit {
   banque: BanqueModel;
   
   ELEMENT_DATA: BeneficiaireModel[] = [];
-  remvoursementList: RemboursementModel[] = [];
+  remvoursementList: PlanRemboursementModel[] = [];
 
   isLoading = false; 
 
@@ -68,14 +68,8 @@ export class BanqueListComponent implements OnInit {
     this.banqueService.get(Number(id)).subscribe(res => {
       this.banque = res; 
       this.ELEMENT_DATA = this.banque.beneficiaires;
-      this.remvoursementList = this.banque.remboursements;
-      
-      // for(let beneficiaire of this.ELEMENT_DATA) {
-      //   this.totalGarantie =+ parseFloat(beneficiaire.montant_garantie);
-      //   this.totalCreditAccorde =+ parseFloat(beneficiaire.credit_accorde); 
-      //   this.interet =+ parseFloat(beneficiaire.interet);
-      //   this.montant_A_Rembourser =+ parseFloat(beneficiaire.montant_a_debourser);
-      // }
+      this.remvoursementList = this.banque.plan_remboursements;
+
 
       this.totalGarantie = this.ELEMENT_DATA.reduce(function(sum, value){
         return sum + parseFloat(value.montant_garantie); 
@@ -94,15 +88,11 @@ export class BanqueListComponent implements OnInit {
       this.montantRembourse = this.remvoursementList.reduce(function(sum, value){
         return sum + parseFloat(value.montant_payer); 
        }, 0);
-
-      // for(let remboursement of this.remvoursementList) {
-      //   this.montantRembourse =+ parseFloat(remboursement.montant_payer); 
-      // }
-
-      var pourcents = this.montantRembourse * 100 / this.totalCreditAccorde;
+ 
+      var pourcents = this.montantRembourse * 100 / this.montant_A_Rembourser;
       this.pourcent = parseFloat(pourcents.toFixed(2));
  
-      this.reste_A_Rembourser = this.totalCreditAccorde - this.montantRembourse;
+      this.reste_A_Rembourser = this.montant_A_Rembourser - this.montantRembourse;
       this.isLoading = false;
     });
   }

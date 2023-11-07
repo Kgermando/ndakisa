@@ -1,7 +1,6 @@
 import { BanqueModel } from "src/app/banques/models/banque.model";
 import { CohorteModel } from "src/app/cohortes/models/cohorte.model"; 
-import { PlanRemboursementModel } from "./plan_remousement.model";
-import { RemboursementModel } from "./remboursement.model";
+import { PlanRemboursementModel } from "./plan_remousement.model"; 
 
 export interface BeneficiaireModel {
     id: number;
@@ -23,7 +22,7 @@ export interface BeneficiaireModel {
     montant_garantie: string; 
     credit_accorde: string; 
     interet: string; 
-    montant_a_debourser: string; 
+    montant_a_debourser: string; // Montant à rembourser c'est le montan que les beneficieres doivent rembourser donc credit + interet
 
     delai_de_grace: Date;
     delai_de_reajustement: Date;
@@ -33,7 +32,7 @@ export interface BeneficiaireModel {
     
     cohorte: CohorteModel; 
     banque: BanqueModel; 
-    statut: string; // En cours, interrompu, Complete
-    remboursements: RemboursementModel[];
+    statut: string; // En cours, interrompu, Complete 
     plan_remboursements: PlanRemboursementModel[];
+    
 }

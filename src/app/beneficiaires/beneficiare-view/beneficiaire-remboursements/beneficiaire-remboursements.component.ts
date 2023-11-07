@@ -9,9 +9,9 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { UserModel } from 'src/app/users/models/user.model';
 import { BeneficiareService } from '../../beneficiare.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RemboursementService } from 'src/app/beneficiaires/remboursement.service'; 
-import { RemboursementModel } from '../../models/remboursement.model';
 import { PlanRemboursementService } from '../../plan_remboursement.service';
+import { Validators } from 'ngx-editor';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-beneficiaire-remboursements',
@@ -22,23 +22,22 @@ export class BeneficiaireRemboursementsComponent {
   @Input() beneficiaire: BeneficiaireModel; 
   @Input() currentUser: UserModel; 
  
-  planRemboursementList: PlanRemboursementModel[] = [];
-  remboursementList: RemboursementModel[] = [];
+  planRemboursementList: PlanRemboursementModel[] = []; 
 
   id: any;
 
   step = 0;
 
   setStep(index: number) {
-      this.step = index;
+    this.step = index;
   }
 
   nextStep() {
-      this.step++;
+    this.step++;
   }
 
   prevStep() {
-      this.step--;
+    this.step--;
   }
 
   constructor(
@@ -46,8 +45,7 @@ export class BeneficiaireRemboursementsComponent {
     private router: Router,
     private route: ActivatedRoute,
     private beneficiareService: BeneficiareService,
-    private planRemboursement: PlanRemboursementService,
-    private remboursementService: RemboursementService,
+    private planRemboursement: PlanRemboursementService, 
     public dialog: MatDialog,
     private toastr: ToastrService) {}
 
@@ -58,12 +56,7 @@ export class BeneficiaireRemboursementsComponent {
         this.planRemboursement.refreshDataList$.subscribe(() => {
           this.getAllDataPlan(this.beneficiaire.id);
         });
-        this.getAllDataPlan(this.beneficiaire.id); 
-        
-        this.remboursementService.refreshDataList$.subscribe(() => {
-          this.getAllData(this.beneficiaire.id);
-        });
-        this.getAllData(this.beneficiaire.id);
+        this.getAllDataPlan(this.beneficiaire.id);  
       });
     }
 
@@ -74,18 +67,22 @@ export class BeneficiaireRemboursementsComponent {
       );
     }
 
-    getAllData(id: number) {
-      this.remboursementService.getAllData(id).subscribe((res) => {
-          this.remboursementList = res;
-        }
-      );
+    isActivatedBtn(delai: Date) {
+      return formatDate(new Date(),'yyyy-MM','en_US') >= formatDate(new Date(delai),'yyyy-MM','en_US');
     }
- 
-  
 
-  edit(id: number) {
-    this.router.navigate(['/layouts/beneficiaires', id, 'beneficiaire-edit']);
-  }
+    isNotActivatedBtn(delai: Date) {
+      return formatDate(new Date(),'yyyy-MM','en_US') < formatDate(new Date(delai),'yyyy-MM','en_US');
+    }
+
+    isActivatedReajustementBtn(reajustement: Date) {
+      return formatDate(new Date(),'yyyy-MM','en_US') >= formatDate(new Date(reajustement),'yyyy-MM','en_US');
+    }
+
+    isNotActivatedReajustementBtn(reajustement: Date) {
+      return formatDate(new Date(),'yyyy-MM','en_US') < formatDate(new Date(reajustement),'yyyy-MM','en_US');
+    }
+  
 
   delete(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
@@ -105,20 +102,16 @@ export class BeneficiaireRemboursementsComponent {
   }
 
 
-  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string,
-    id: number, id_cohorte: number, id_banque: number): void {
+  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string,id: number): void {
     this.dialog.open(AddRemboursementDialogBox, {
       width: '600px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: {
-        id: id,
-        id_cohorte: id_cohorte,
-        id_banque: id_banque
+        id: id
       }
     }); 
   } 
- 
 
 }
 
@@ -143,20 +136,31 @@ export class AddRemboursementDialogBox implements OnInit {
       private router: Router,
       private authService: AuthService, 
       private toastr: ToastrService, 
-      private remboursementService: RemboursementService,
+      private remboursementService: PlanRemboursementService,
   ) {}
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({  
-      montant_payer: [''],
+      date_paiement: ['', Validators.required],
+      montant_payer: ['', Validators.required],
       observation: [''],
-      date_paiement: [''],
       file_scan: [''],
-    }); 
+    });
     
     this.authService.user().subscribe({
       next: (user) => {
-        this.currentUser = user;  
+        this.currentUser = user; 
+        this.remboursementService.get(this.data.id).subscribe(item => { 
+            this.formGroup.patchValue({
+              date_paiement: item.date_paiement,
+              montant_payer: item.montant_payer,
+              observation: item.observation,
+              file_scan: item.file_scan,
+              signature: this.currentUser.matricule, 
+              update_created: new Date(),
+            });
+          }
+        );
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
@@ -170,19 +174,15 @@ export class AddRemboursementDialogBox implements OnInit {
     try {
       if (this.formGroup.valid) {
         this.isLoading = true;
-        var body = {
-          montant_payer: this.formGroup.value.montant_payer,
-          observation: this.formGroup.value.observation, 
-          date_paiement: this.formGroup.value.date_paiement, 
-          file_scan: this.formGroup.value.file_scan,
-          cohorte: this.data.id_cohorte,
-          banque: this.data.id_banque,
-          beneficiaire: this.data.id,
-          signature: this.currentUser.matricule,
-          created: new Date(),
-          update_created: new Date(),
-        };
-        this.remboursementService.create(body).subscribe({
+        // var body = {
+        //   montant_payer: this.formGroup.value.montant_payer,
+        //   observation: this.formGroup.value.observation, 
+        //   date_paiement: this.formGroup.value.date_paiement, 
+        //   file_scan: this.formGroup.value.file_scan, 
+        //   signature: this.currentUser.matricule, 
+        //   update_created: new Date(),
+        // };
+        this.remboursementService.update(this.data.id, this.formGroup.getRawValue()).subscribe({
           next: () => {
             this.isLoading = false;
             this.formGroup.reset();

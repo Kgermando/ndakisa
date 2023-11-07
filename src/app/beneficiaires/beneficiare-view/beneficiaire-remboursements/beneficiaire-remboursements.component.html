@@ -1,107 +1,112 @@
-<mat-card class="mb-25 tagus-card" *ngIf="beneficiaire">
-    <mat-card-header>
-        <h5 class="mb-0">PLAN D'AMORTISSEMENTS</h5>
-        <div *ngIf="beneficiaire.statut === 'En cours'">
-            <div *ngIf="currentUser">
-                <span *ngIf="beneficiaire.cohorte && beneficiaire.banque">
-                    <button mat-flat-button class="default-btn tagus m-0 margin" 
-                        (click)="openEditDialog('300ms', '100ms', beneficiaire.id, beneficiaire.cohorte.id, beneficiaire.banque.id)">
-                        <i class="ri-add-fill"></i> Ajouter un remboursement
-                    </button> 
-                </span> 
-                <button mat-icon-button color="warn" 
-                        (click)="delete(beneficiaire.id)"
-                    *ngIf="currentUser.permission === 'RD' ||
-                        currentUser.permission === 'RUD' ||
-                        currentUser.permission === 'CRUD'" matTooltip="Supprimer ce document">
-                        <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button color="accent"  
-                    (click)="edit(beneficiaire.id)"
-                    *ngIf="currentUser.permission === 'RU' ||
-                        currentUser.permission === 'RCU' || 
-                        currentUser.permission === 'RUD' || 
-                        currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
-                        <mat-icon>edit</mat-icon>
-                </button>
-            </div>
-        </div>
-    </mat-card-header>
-    <mat-card-content> 
-        <mat-accordion class="example-headers-align">
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="d-flex flex-nowrap align-items-center justify-content-space-between">
-                        <h5>Plan de remboursements</h5>  
-                        <button mat-icon-button color="primary" matTooltip="Supprimer ce document">
-                            <i class="ri-printer-line"></i>
-                        </button> 
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="reports-table table-responsive mb-25">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="fw-semibold gray-color">Echéance</th>
-                                <th class="fw-semibold main-color">Date de remboursement </th>
-                                <th class="fw-semibold gray-color">Credit en debut periode</th>
-                                <th class="fw-semibold gray-color">Mensualité</th>
-                                <th class="fw-semibold gray-color">Interet</th> 
-                                <th class="fw-semibold gray-color">Capital</th> 
-                                <th class="fw-semibold gray-color">Indice</th>  
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let plan_remboursement of planRemboursementList; let i = index"> 
-                                <td class="gray-color">{{ i+1 }}</td>
-                                <td class="gray-color">{{ plan_remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
-                                <td class="gray-color">{{ plan_remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ plan_remboursement.mensualite | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ plan_remboursement.interet | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ plan_remboursement.capital | numberFormat:'fr-FR' }} $</td> 
-                                <td>
-                                    <span class="badge fw-semibold">
-                                        <app-remboursement-indice [plan_remboursement]="plan_remboursement"  [id]="id"></app-remboursement-indice>
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </mat-expansion-panel>
-            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="d-flex flex-nowrap align-items-center justify-content-space-between">
-                        <h5>Remboursements</h5>
-                        <button mat-icon-button color="primary" matTooltip="Supprimer ce document">
-                            <i class="ri-printer-line"></i>
-                        </button> 
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="reports-table table-responsive mb-25">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="fw-semibold gray-color">Echéance</th>
-                                <th class="fw-semibold main-color">Date de paie </th>
-                                <th class="fw-semibold gray-color">Montant payé </th> 
-                                <th class="fw-semibold gray-color">Observation </th> 
-                                <th class="fw-semibold gray-color">Bordereau </th>  
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let remboursement of remboursementList; let i = index"> 
-                                <td class="gray-color">{{ i+1 }}</td>
-                                <td class="gray-color">{{ remboursement.date_paiement | date: 'EEEE le dd/MM/yyyy' }}</td>
-                                <td class="gray-color">{{ remboursement.montant_payer | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ remboursement.observation }}</td>
-                                <td class="gray-color" *ngIf="remboursement.file_scan">{{ remboursement.file_scan }}</td> 
-                                <td class="gray-color" *ngIf="!remboursement.file_scan">-</td> 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </mat-expansion-panel> 
-        </mat-accordion>
-    </mat-card-content> 
-</mat-card>
+
+<div class="reports-table table-responsive mb-25" *ngIf="beneficiaire">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="fw-semibold gray-color">N°</th>
+                <th class="fw-semibold main-color">Date remboursement </th>
+                <th class="fw-semibold gray-color">Debut periode</th>
+                <th class="fw-semibold gray-color">Capital</th> 
+                <th class="fw-semibold gray-color">Interet</th> 
+                <th class="fw-semibold gray-color">Mensualité</th>
+                <th class="fw-semibold gray-color">Date paie</th>
+                <th class="fw-semibold gray-color">Montant payé</th>
+                <th class="fw-semibold gray-color">Indice</th>
+                <th class="fw-semibold gray-color">Bordereau</th>
+                <th class="fw-semibold gray-color">Observation</th>
+                <th class="fw-semibold gray-color">Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let plan_remboursement of planRemboursementList; let i = index"> 
+                <td class="gray-color">{{ i+1 }}</td>
+                <td class="gray-color">{{ plan_remboursement.date_de_rembousement | date: 'EE le dd/MM/yyyy' }}</td>
+                <td class="gray-color">{{ plan_remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} usd</td>
+                <td class="gray-color">{{ plan_remboursement.capital | numberFormat:'fr-FR' }} usd</td> 
+                <td class="gray-color">{{ plan_remboursement.interet | numberFormat:'fr-FR' }} usd</td>
+                <td class="gray-color">{{ +plan_remboursement.interet + +plan_remboursement.capital | numberFormat:'fr-FR' }} usd</td>
+                <td class="gray-color" *ngIf="plan_remboursement.date_paiement">
+                    {{ plan_remboursement.date_paiement | date: 'EE le dd/MM/yyyy' }}
+                </td>
+                <td class="gray-color" *ngIf="!plan_remboursement.date_paiement">
+                    -
+                </td>
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer != '0'">
+                    {{ plan_remboursement.montant_payer | numberFormat:'fr-FR' }} usd
+                </td>
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
+                    -
+                </td>
+                <td *ngIf="plan_remboursement.date_paiement">
+                    <app-remboursement-indice [plan_remboursement]="plan_remboursement" [id]="id"></app-remboursement-indice>
+                </td>
+                <td class="gray-color" *ngIf="!plan_remboursement.date_paiement">
+                    -
+                </td>
+                <td class="gray-color">
+                    <!-- {{ plan_remboursement.file_scan }} -->
+                    <button mat-icon-button matTooltip="Télécharger le bordereau de remboursement">
+                        <mat-icon>download</mat-icon>
+                    </button>
+                </td>
+                <td class="gray-color">{{ plan_remboursement.observation }}</td>
+                
+                <td *ngIf="beneficiaire.statut === 'En cours'">
+                    <div *ngIf="isActivatedBtn(beneficiaire.delai_de_grace)">
+                        <div *ngIf="isActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
+                            <button mat-icon-button color="primary" 
+                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)" 
+                                    *ngIf="currentUser.permission === 'RC' ||
+                                    currentUser.permission === 'RCU' ||
+                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0">
+                                    <mat-icon>add</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" 
+                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)"
+                                *ngIf="currentUser.permission === 'RU' ||
+                                    currentUser.permission === 'RCU' || 
+                                    currentUser.permission === 'RUD' || 
+                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0">
+                                    <mat-icon>edit</mat-icon>
+                            </button>
+                        </div> 
+                    </div>
+                    <div *ngIf="isNotActivatedBtn(beneficiaire.delai_de_grace)">
+                        <div *ngIf="isNotActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
+                            <button mat-icon-button color="accent">
+                                <mat-icon>fiber_manual_record</mat-icon>
+                            </button>
+                        </div>
+                        <div *ngIf="isActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
+                            <button mat-icon-button color="primary" 
+                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)"
+                                *ngIf="currentUser.permission === 'RC' ||
+                                    currentUser.permission === 'RCU' ||
+                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0">
+                                    <mat-icon>add</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" 
+                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)" 
+                                    *ngIf="currentUser.permission === 'RU' ||
+                                    currentUser.permission === 'RCU' || 
+                                    currentUser.permission === 'RUD' || 
+                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0">
+                                    <mat-icon>edit</mat-icon>
+                            </button>
+                        </div> 
+                    </div>
+                </td>
+                <td *ngIf="beneficiaire.statut === 'interrompu'">
+                    <button mat-icon-button color="accent">
+                            <mat-icon>info</mat-icon>
+                    </button>
+                </td>
+                <td *ngIf="beneficiaire.statut === 'Terminé'">
+                    <button mat-icon-button color="success">
+                            <mat-icon>verified</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> 

@@ -8,7 +8,7 @@ export const ProvinceList: string[] = [
     'Kasaï',
     'Kasaï Central',
     'Kasaï Oriental',
-    'Kinshsa',
+    'Kinshasa',
     'Kongo Central',
     'Kwango',
     'Kwilu', 

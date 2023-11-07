@@ -49,8 +49,7 @@ import { BeneficiareEditComponent, EditPlanRemboursementDialogBox } from './bene
 import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
-import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component';
-import { RemboursementService } from './beneficiaires/remboursement.service';
+import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component'; 
 import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/beneficiare-input.component';
 import { PlanRemboursementService } from './beneficiaires/plan_remboursement.service';
 import { BeneficiaireInfoComponent, EditStatutBeneficiaireDialogBox } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
@@ -59,6 +58,7 @@ import { MontantRembourserComponent } from './beneficiaires/montant-rembourser/m
 import { ResteARembourserComponent } from './beneficiaires/reste-a-rembourser/reste-a-rembourser.component';
 import { BanqueProgessComponent } from './banques/banque-progess/banque-progess.component';
 import { RemboursementIndiceComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/remboursement-indice/remboursement-indice.component';
+import { CohorteGarantieComponent } from './cohortes/cohorte-garantie/cohorte-garantie.component';
 
 registerLocaleData(localeFr);
 
@@ -116,6 +116,7 @@ registerLocaleData(localeFr);
     EditStatutBeneficiaireDialogBox,
     BanqueProgessComponent,
     RemboursementIndiceComponent,
+    CohorteGarantieComponent,
   ],
   imports: [
     BrowserModule,
@@ -140,7 +141,6 @@ registerLocaleData(localeFr);
     BanqueService,
     BeneficiareService,
     DashboardService,
-    RemboursementService,
     PlanRemboursementService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -14,11 +14,11 @@ export class BanqueProgessComponent implements OnInit {
   pourcent = 0;
 
   ngOnInit(): void {
-    if (this.item.remboursements) {
+    if (this.item.plan_remboursements) {
       for(let beneficiaire of this.item.beneficiaires) {
         this.montant_a_debourser =+ parseFloat(beneficiaire.montant_a_debourser); 
       }
-      for(let remboursement of this.item.remboursements) {
+      for(let remboursement of this.item.plan_remboursements) {
         this.total =+ parseFloat(remboursement.montant_payer); 
       }
       var pourcents = this.total * 100 / this.montant_a_debourser;

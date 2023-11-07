@@ -281,10 +281,7 @@
                                     <input matInput [matDatepicker]="pickerDelaiGrace" id="delai_de_grace" 
                                             formControlName="delai_de_grace" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDelaiGrace"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerDelaiGrace></mat-datepicker> 
-                                    <mat-error *ngIf="formGroup2.controls['delai_de_grace'].hasError('required')">
-                                        Ce champs est obligatoire
-                                    </mat-error>
+                                    <mat-datepicker #pickerDelaiGrace></mat-datepicker>  
                                 </mat-form-field> 
                             </div>
                         </div>
@@ -296,10 +293,7 @@
                                     <input matInput [matDatepicker]="pickerDelaiReajustement" id="delai_de_reajustement" 
                                             formControlName="delai_de_reajustement" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDelaiReajustement"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerDelaiReajustement></mat-datepicker> 
-                                    <mat-error *ngIf="formGroup2.controls['delai_de_reajustement'].hasError('required')">
-                                        Ce champs est obligatoire
-                                    </mat-error>
+                                    <mat-datepicker #pickerDelaiReajustement></mat-datepicker>
                                 </mat-form-field> 
                             </div>
                         </div>
@@ -322,9 +316,9 @@
                                 <th class="fw-semibold gray-color">Echéance</th>
                                 <th class="fw-semibold main-color">Date de remboursement </th>
                                 <th class="fw-semibold gray-color">Credit en debut periode</th>
-                                <th class="fw-semibold gray-color">Mensualité</th>
-                                <th class="fw-semibold gray-color">Interet</th> 
                                 <th class="fw-semibold gray-color">Capital</th> 
+                                <th class="fw-semibold gray-color">Interet</th> 
+                                <th class="fw-semibold gray-color">Mensualité</th>
                                 <th class="fw-semibold gray-color">Actions</th>
                             </tr>
                         </thead>
@@ -332,10 +326,10 @@
                             <tr *ngFor="let remboursement of planRemboursementList; let i = index"> 
                                 <td class="gray-color">{{ i+1 }}</td>
                                 <td class="gray-color">{{ remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
-                                <td class="gray-color">{{ remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ remboursement.mensualite | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ remboursement.interet | numberFormat:'fr-FR' }} $</td>
-                                <td class="gray-color">{{ remboursement.capital | numberFormat:'fr-FR' }} $</td>
+                                <td class="gray-color">{{ remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} usd</td>
+                                <td class="gray-color">{{ +remboursement.interet + +remboursement.capital | numberFormat:'fr-FR' }} usd</td>
+                                <td class="gray-color">{{ remboursement.interet | numberFormat:'fr-FR' }} usd</td>
+                                <td class="gray-color">{{ remboursement.capital | numberFormat:'fr-FR' }} usd</td>
                                 <td>
                                     <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" [matMenuTriggerFor]="actionMenu">
                                         <i class="ri-more-fill"></i>
@@ -358,7 +352,7 @@
 
                 <form [formGroup]="formGroup3" (ngSubmit)="onSubmit3()">
                     <div class="row mb-25"> 
-                        <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="tagus-form-group">
                                 <!-- <label class="d-block mb-12 fw-semibold gray-color">Date de rembousement </label> -->
                                 <mat-form-field appearance="fill" class="date-input">
@@ -373,7 +367,7 @@
                                 </mat-form-field> 
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
                             <!-- <label class="d-block mb-12 fw-semibold gray-color">Crédit en debut periode </label> -->
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
@@ -384,8 +378,8 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6">
-                            <!-- <label class="d-block mb-12 fw-semibold gray-color">Mensualite </label> -->
+                        <!-- <div class="col-lg-2 col-md-6 col-sm-6">
+                            <label class="d-block mb-12 fw-semibold gray-color">Mensualite </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Mensualité</mat-label>
@@ -394,7 +388,7 @@
                                     Ce champs est obligatoire
                                 </mat-error>
                             </mat-form-field>
-                        </div>
+                        </div> -->
                         <div class="col-lg-2 col-md-6 col-sm-6">
                             <!-- <label class="d-block mb-12 fw-semibold gray-color">Interêt </label> -->
                             <mat-form-field appearance="fill">

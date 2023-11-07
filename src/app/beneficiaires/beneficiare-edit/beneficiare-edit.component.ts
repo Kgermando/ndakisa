@@ -135,7 +135,7 @@ export class BeneficiareEditComponent implements OnInit {
     this.formGroup3 = this._formBuilder.group({
       date_de_rembousement: ['', Validators.required],
       credit_en_debut_periode: ['', Validators.required],
-      mensualite: ['', Validators.required],
+      // mensualite: ['', Validators.required],
       interet: ['', Validators.required],
       capital: ['', Validators.required],
     });
@@ -202,10 +202,11 @@ export class BeneficiareEditComponent implements OnInit {
       if (this.formGroup3.valid) {
         this.isLoadingPlanRemboursement = true;
         var body = {
+          cohorte: this.beneficiare.cohorte.id,
+          banque: this.beneficiare.banque.id,
           beneficiaire: this.id,
           date_de_rembousement: this.formGroup3.value.date_de_rembousement,
-          credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode,
-          mensualite: this.formGroup3.value.mensualite,
+          credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode, 
           interet: this.formGroup3.value.interet,
           capital: this.formGroup3.value.capital,
           signature: this.currentUser.matricule,
@@ -299,7 +300,7 @@ export class EditPlanRemboursementDialogBox implements OnInit{
     this.formGroup = this.formBuilder.group({  
       date_de_rembousement: [''],
       credit_en_debut_periode: [''],
-      mensualite: [''],
+      // mensualite: [''],
       interet: [''],
       capital: [''],
     }); 
@@ -310,7 +311,7 @@ export class EditPlanRemboursementDialogBox implements OnInit{
           this.formGroup.patchValue({
             date_de_rembousement: item.date_de_rembousement,
             credit_en_debut_periode: item.credit_en_debut_periode,
-            mensualite: item.mensualite,
+            // mensualite: item.mensualite,
             interet: item.interet,
             capital: item.capital,
             signature: this.currentUser.matricule, 

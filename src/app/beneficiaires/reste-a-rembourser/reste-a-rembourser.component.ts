@@ -13,8 +13,8 @@ export class ResteARembourserComponent {
   reste = 0; 
 
   ngOnInit(): void {
-    if (this.item.remboursements) {
-      this.totalPayE = this.item.remboursements.reduce(function(sum, value){
+    if (this.item.plan_remboursements) {
+      this.totalPayE = this.item.plan_remboursements.reduce(function(sum, value){
         return sum + parseFloat(value.montant_payer); 
        }, 0);
 

@@ -27,14 +27,6 @@
                         <i class="flaticon-menu-1"></i>
                         <span class="title">Dashboard</span>
                     </a> 
-                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Beneficiaires')">PME</span> 
-                    
-                    <a routerLink="/layouts/beneficiaires/beneficiaire-list" class="sidebar-menu-link" routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact: true}"
-                        *ngIf="currentUser.roles.includes('Beneficiaires')">
-                        <i class="ri-group-line"></i>
-                        <span class="title">Beneficiaires</span>
-                    </a>
 
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Cohortes')">PORTE FEUILLE</span>
                     <a routerLink="/layouts/cohortes/cohorte-list" class="sidebar-menu-link" routerLinkActive="active" 
@@ -42,6 +34,15 @@
                         *ngIf="currentUser.roles.includes('Cohortes')">
                         <i class="ri-wallet-line"></i>
                         <span class="title">Cohortes</span>
+                    </a>
+
+                    
+                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Beneficiaires')">PME</span> 
+                    <a routerLink="/layouts/beneficiaires/beneficiaire-list" class="sidebar-menu-link" routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact: true}"
+                        *ngIf="currentUser.roles.includes('Beneficiaires')">
+                        <i class="ri-group-line"></i>
+                        <span class="title">Beneficiaires</span>
                     </a>
 
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">INSTITUTIONS</span>

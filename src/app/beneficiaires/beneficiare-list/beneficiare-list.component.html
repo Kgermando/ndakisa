@@ -36,24 +36,24 @@
                 <ng-container matColumnDef="montant_garantie">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Montant garantie</th>
                     <td mat-cell *matCellDef="let element">
-                        {{element.montant_garantie | numberFormat:'fr-FR' }} $
+                        {{element.montant_garantie | numberFormat:'fr-FR' }} usd
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="credit_accorde">
                     <th mat-header-cell *matHeaderCellDef>Credit accordé</th>
-                    <td mat-cell *matCellDef="let element">{{element.credit_accorde | numberFormat:'fr-FR'}} $</td>
+                    <td mat-cell *matCellDef="let element">{{element.credit_accorde | numberFormat:'fr-FR'}} usd</td>
                 </ng-container>
 
                 <ng-container matColumnDef="interet">
                     <th mat-header-cell *matHeaderCellDef>Interêt</th>
-                    <td mat-cell *matCellDef="let element">{{element.interet | numberFormat:'fr-FR'}} $</td>
+                    <td mat-cell *matCellDef="let element">{{element.interet | numberFormat:'fr-FR'}} usd</td>
                 </ng-container>
 
                 <ng-container matColumnDef="montant_a_rembourser">
                     <th mat-header-cell *matHeaderCellDef>Montant à rembourser</th>
                     <td mat-cell *matCellDef="let element">
-                        {{element.montant_a_debourser | numberFormat:'fr-FR'}} $
+                        {{element.montant_a_debourser | numberFormat:'fr-FR'}} usd
                     </td>
                 </ng-container> 
 

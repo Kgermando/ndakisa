@@ -34,7 +34,7 @@
                                 <li class="gray-color fw-semibold">
                                     Montant global
                                     <span class="d-block fw-semibold position-relative"> 
-                                        {{ cohorte.montant_global | numberFormat:'fr-FR' }} usd
+                                        {{ montant_global | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
@@ -44,9 +44,9 @@
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Total à debourser
+                                    Total à rembouser
                                     <span class="d-block fw-semibold position-relative"> 
-                                        {{ totalADebourser | numberFormat:'fr-FR' }} usd
+                                        {{ montant_A_Rembourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li> 
                             </ul> 
@@ -78,7 +78,7 @@
                                     <span class="badge completed fw-medium  d-block position-relative" style="color: blue;" *ngIf="cohorte.statut == 'Complete'">Complète</span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Progession
+                                    Progession de remboursement
                                     <span class="d-block fw-semibold position-relative"> 
                                         <app-cohorte-progress [item]="cohorte"></app-cohorte-progress> 
                                     </span>

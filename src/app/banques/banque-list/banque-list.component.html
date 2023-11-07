@@ -77,9 +77,13 @@
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Progession
-                                    <span class="d-block fw-semibold position-relative"> 
+                                    <span class="d-block fw-semibold position-relative" *ngIf="pourcent"> 
                                         <span class="fs-13 d-block mb-5">{{pourcent | numberFormat:'fr-FR' }} %</span>
                                         <mat-progress-bar mode="determinate" value="{{pourcent}}"></mat-progress-bar>
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!pourcent">
+                                        <span class="fs-13 d-block mb-5">{{0 | numberFormat:'fr-FR' }} %</span>
+                                        <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
                                     </span>
                                 </li>
                             </ul> 

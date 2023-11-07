@@ -20,8 +20,32 @@ export class BeneficiaireInfoComponent {
   
     constructor(
       public themeService: CustomizerSettingsService,
+      private router: Router, 
+      private beneficiareService: BeneficiareService,
       public dialog: MatDialog,
+      private toastr: ToastrService
   ) {}
+
+  edit(id: number) {
+    this.router.navigate(['/layouts/beneficiaires', id, 'beneficiaire-edit']);
+  }
+
+  delete(id: number): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+      this.beneficiareService
+        .delete(id)
+        .subscribe({
+          next: () => {
+            this.toastr.info('Supprimé avec succès!', 'Success!');
+            this.router.navigate(['/layouts/users/user-list']);
+          },
+          error: err => {
+            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+            console.log(err);
+          }
+        });
+    }
+  }
 
 
   openEditStatutDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number): void {
@@ -55,7 +79,7 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
 
   currentUser: UserModel | any;
 
-  statutList = ['En cours', 'interrompu', 'Complete'];
+  statutList = ['En cours', 'interrompu', 'Terminé'];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

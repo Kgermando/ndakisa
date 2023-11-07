@@ -55,7 +55,7 @@
                             <app-cohorte-progress [item]="item"></app-cohorte-progress> 
                         </td>
                         <td class="gray-color">
-                            {{ item.montant_global | numberFormat:'fr-FR' }} USD
+                            <app-cohorte-garantie [item]="item"></app-cohorte-garantie>
                         </td>
                         <td class="members-list">
                             {{ item.beneficiaires.length }}

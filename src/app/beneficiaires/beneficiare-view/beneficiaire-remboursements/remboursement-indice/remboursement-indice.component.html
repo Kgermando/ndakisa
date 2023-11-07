@@ -1,4 +1,11 @@
 
 
-{{ indiceRemboursement }} $ 
-<i class="flaticon-arrow-up"></i>
+
+<span class="badge fw-semibold" *ngIf="indice >= 0">
+    {{ indice }} $ 
+    <i class="flaticon-arrow-up"></i>
+</span>
+<span class="badge fw-semibold down" *ngIf="indice < 0">
+    {{ indice }} $ 
+    <i class="flaticon-down-filled-triangular-arrow"></i>
+</span>

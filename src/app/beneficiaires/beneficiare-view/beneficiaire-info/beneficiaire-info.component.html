@@ -1,159 +1,172 @@
-<mat-card class="mb-25 personal-info-card tagus-card" 
-    [class.component-dark-theme]="themeService.isDark()" *ngIf="beneficiaire">
-    <mat-card-header class="border-bottom">
-        <div>
-            <h5 class="mb-10">Informations du beneficiaire</h5> 
-            <div class="d-flex align-items-center justify-content-start">
-                Statut:
-                <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15); font-size: medium;" *ngIf="beneficiaire.statut == 'En cours'">En cours</span>
-                <span class="badge pending fw-medium d-block position-relative"  style="color: red; font-size: medium;" *ngIf="beneficiaire.statut == 'interrompu'">Interrompu</span>
-                <span class="badge completed fw-medium d-block position-relative" style="color: blue; font-size: medium;" *ngIf="beneficiaire.statut == 'Complete'">Complète</span> 
-            </div> 
+<div class="course-details-desc" *ngIf="beneficiaire"> 
+    <div class="d-flex align-items-center justify-content-space-between">
+        <div class="d-flex align-items-center justify-content-start">
+            Statut:
+            <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15); font-size: medium;" *ngIf="beneficiaire.statut == 'En cours'">En cours</span>
+            <span class="badge pending fw-medium d-block position-relative"  style="color: red; font-size: medium;" *ngIf="beneficiaire.statut == 'interrompu'">Interrompu</span>
+            <span class="badge completed fw-medium d-block position-relative" style="color: blue; font-size: medium;" *ngIf="beneficiaire.statut == 'Terminé'">Terminé</span> 
+            
+            <button mat-icon-button color="primary"  
+                (click)="openEditStatutDialog('300ms', '100ms', beneficiaire.id)"
+                *ngIf="currentUser.permission === 'RU' ||
+                    currentUser.permission === 'RCU' || 
+                    currentUser.permission === 'RUD' || 
+                    currentUser.permission === 'CRUD'" matTooltip="Modifier le statut">
+                    <mat-icon>edit</mat-icon>
+             </button>
+        </div> 
+         <div *ngIf="beneficiaire.statut === 'En cours'">
+            <div *ngIf="currentUser"> 
+                <button mat-icon-button color="warn" 
+                        (click)="delete(beneficiaire.id)"
+                    *ngIf="currentUser.permission === 'RD' ||
+                        currentUser.permission === 'RUD' ||
+                        currentUser.permission === 'CRUD'" matTooltip="Supprimer ce document">
+                        <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="accent"  
+                    (click)="edit(beneficiaire.id)"
+                    *ngIf="currentUser.permission === 'RU' ||
+                        currentUser.permission === 'RCU' || 
+                        currentUser.permission === 'RUD' || 
+                        currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
+                        <mat-icon>edit</mat-icon>
+                </button>  
+            </div>
         </div>
-        <button mat-icon-button color="primary"  
-            (click)="openEditStatutDialog('300ms', '100ms', beneficiaire.id)"
-            *ngIf="currentUser.permission === 'RU' ||
-                currentUser.permission === 'RCU' || 
-                currentUser.permission === 'RUD' || 
-                currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
-                <mat-icon>edit</mat-icon>
-        </button>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="course-details-desc">  
-            <mat-accordion>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Identité
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <ul class="mb-0 mt-0 ps-0 content-list">
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">FullName:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.name_beneficiaire }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Sexe:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.sexe }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Date de naissance:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.date_naissance | date: 'dd/MM/yyyy' }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Province:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.province }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Identifiant:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.identifiant }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Email:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.email }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Telephone:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.telephone }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Raison sociale:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.raison_sociale }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Secteur d'activité:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.secteur_activite }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Numero impôt:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.numero_impot }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Id nat.:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.id_nat }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">RCCM:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.rccm }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Adresse:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.adresse }}</span>
-                        </li>
-                    </ul>
-                </mat-expansion-panel>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Finances
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <ul class="mb-0 mt-0 ps-0 content-list">
-                        <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.banque">
-                            <span class="d-block gray-color fw-medium">Banque:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.banque.name_banque }} </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Montant garantie:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_garantie | numberFormat:'fr-FR' }} $</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Credit accordé:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} $</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Interet:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.interet | numberFormat:'fr-FR' }} $</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Montant à rembourser:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_a_debourser | numberFormat:'fr-FR' }} $</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Montant remboursé:</span>
-                            <span class="d-block gray-color fw-medium">
-                                <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Reste à rembourser:</span>
-                            <span class="d-block gray-color fw-medium">
-                                <app-reste-a-rembourser [item]="beneficiaire"></app-reste-a-rembourser>
-                            </span>
-                        </li>
-                    </ul>
-                </mat-expansion-panel>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Planification
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <ul class="mb-0 mt-0 ps-0 content-list">
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Date valeur:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.date_valeur | date: 'dd/MM/yyyy' }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Durée de credit:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.duree_credit }} mois</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Delai de grâce:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.delai_de_grace | date: 'dd/MM/yyyy' }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Date maturité:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}</span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-space-between">
-                            <span class="d-block gray-color fw-medium">Delai de réajustement:</span>
-                            <span class="d-block gray-color fw-medium">{{ beneficiaire.delai_de_reajustement | date: 'dd/MM/yyyy' }}</span>
-                        </li>
-                    </ul>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-    </mat-card-content>
-</mat-card>
+    </div> 
+    
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Identité
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="mb-0 mt-0 ps-0 content-list">
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">FullName:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.name_beneficiaire }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Sexe:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.sexe }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date de naissance:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.date_naissance | date: 'dd/MM/yyyy' }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Province:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.province }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Identifiant:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.identifiant }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Email:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.email }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Telephone:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.telephone }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Raison sociale:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.raison_sociale }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Secteur d'activité:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.secteur_activite }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Numero impôt:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.numero_impot }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Id nat.:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.id_nat }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">RCCM:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.rccm }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Adresse:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.adresse }}</span>
+                </li>
+            </ul>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Finances
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="mb-0 mt-0 ps-0 content-list">
+                <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.banque">
+                    <span class="d-block gray-color fw-medium">Banque:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.banque.name_banque }} </span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Montant garantie:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_garantie | numberFormat:'fr-FR' }} usd</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Credit accordé:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} usd</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Interet:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.interet | numberFormat:'fr-FR' }} usd</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Montant à rembourser:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_a_debourser | numberFormat:'fr-FR' }} usd</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Montant remboursé:</span>
+                    <span class="d-block gray-color fw-medium">
+                        <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
+                    </span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Reste à rembourser:</span>
+                    <span class="d-block gray-color fw-medium">
+                        <app-reste-a-rembourser [item]="beneficiaire"></app-reste-a-rembourser>
+                    </span>
+                </li>
+            </ul>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Planification
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="mb-0 mt-0 ps-0 content-list">
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date valeur:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.date_valeur | date: 'dd/MM/yyyy' }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Durée de credit:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.duree_credit }} mois</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Delai de grâce:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.delai_de_grace | date: 'dd/MM/yyyy' }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date maturité:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Delai de réajustement:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.delai_de_reajustement | date: 'dd/MM/yyyy' }}</span>
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

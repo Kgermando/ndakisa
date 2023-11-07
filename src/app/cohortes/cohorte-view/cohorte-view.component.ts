@@ -9,8 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { StatutList } from 'src/app/shared/tools/statut';
 import { CohorteModel } from '../models/cohorte.model';  
-import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model'; 
-import { BanqueService } from 'src/app/banques/banque.service';
+import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';  
 
 @Component({
   selector: 'app-cohorte-view',
@@ -29,9 +28,10 @@ export class CohorteViewComponent implements OnInit {
   banques: string[] = [];
   banqueFilter: string[] = [];
 
+  montant_global = 0;
   totalBanque = 0;
   totalCreditAccorde = 0;
-  totalADebourser = 0;
+  montant_A_Rembourser = 0;
   totalRembourse = 0;
   resteARembouser = 0;
   totalInteret = 0;
@@ -55,25 +55,42 @@ export class CohorteViewComponent implements OnInit {
           this.cohorteService.get(Number(id)).subscribe(res => {
             this.cohorte = res;
             this.ELEMENT_DATA = this.cohorte.beneficiaires;
-            var rembousement = this.cohorte.remboursements;
+            var rembousement = this.cohorte.plan_remboursements;
+
+            this.montant_global = this.ELEMENT_DATA.reduce(function(sum, value){
+              return sum + parseFloat(value.montant_garantie); 
+            }, 0);
+
+            this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
+              return sum + parseFloat(value.credit_accorde); 
+            }, 0);
+            this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
+              return sum + parseFloat(value.montant_a_debourser);
+            }, 0);
+            this.totalInteret = this.ELEMENT_DATA.reduce(function(sum, value){
+              return sum + parseFloat(value.interet); 
+            }, 0);
+            this.totalRembourse = rembousement.reduce(function(sum, value){
+              return sum + parseFloat(value.montant_payer); 
+             }, 0);
+
             for (let item of this.ELEMENT_DATA) {
               if (item.banque.name_banque) {
                 this.banques.push(item.banque.name_banque);
               }
-              this.totalCreditAccorde =+ parseFloat(item.credit_accorde);
-              this.totalADebourser =+ parseFloat(item.montant_a_debourser);
-              this.totalInteret =+ parseFloat(item.interet);
+              // this.totalCreditAccorde =+ parseFloat(item.credit_accorde);
+              // this.totalADebourser =+ parseFloat(item.montant_a_debourser);
+              // this.totalInteret =+ parseFloat(item.interet);
             };
-            if (rembousement) {
-              for (let item of rembousement) {
-                this.totalRembourse =+ parseFloat(item.montant_payer);
-              }
-            }
-            this.resteARembouser = this.totalADebourser - this.totalRembourse;
+            // if (rembousement) {
+            //   for (let item of rembousement) {
+            //     this.totalRembourse =+ parseFloat(item.montant_payer);
+            //   }
+            // }
+            this.resteARembouser = this.montant_A_Rembourser - this.totalRembourse;
             
             this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
-            this.totalBanque = this.banqueFilter.length;
-            console.log('banques', this.banques)
+            this.totalBanque = this.banqueFilter.length; 
             this.isLoading = false;
           });  
         },

@@ -1,0 +1,21 @@
+.badge {
+    background: rgba(0, 182, 155, 0.1);
+    padding: 3px 28px 3px 10px;
+    position: relative;
+    border-radius: 4px;
+    color: #00B69B;
+    font-size: 14px;
+
+    i {
+        top: 50%;
+        right: 10px;
+        line-height: 1;
+        font-size: 10px;
+        position: absolute;
+        transform: translateY(-50%);
+    }
+    &.down {
+        color: #EE368C;
+        background: rgba(238, 54, 140, 0.1);
+    }
+}

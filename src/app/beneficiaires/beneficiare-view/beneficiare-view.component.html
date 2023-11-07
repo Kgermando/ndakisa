@@ -1,19 +1,29 @@
 <div class="d-flex justify-content-center" *ngIf="isLoading">
     <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
 </div>
+ 
 
-<div class="row">
-    <div class="col-xxl-4">
-        <div class="border-radius bg-white box-shadow"
-            [class.component-dark-theme]="themeService.isDark()"
-            [class.card-borderd-theme]="themeService.isCardBorder()"
-            [class.card-border-radius]="themeService.isCardBorderRadius()" 
-            *ngIf="!isLoading"
-        > 
-        </div>
-        <app-beneficiaire-info [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-info>
+<mat-card class="mb-25 enrolled-created-box tagus-card" *ngIf="beneficiaire">
+    <div class="d-flex align-items-center justify-content-end">
+        <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
+            [matMenuTriggerFor]="iconMenu">
+            <i class="ri-menu-line"></i>
+        </button>
+        <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu" xPosition="before">
+            <button mat-menu-item type="button" 
+            class="bg-transparent border-none position-relative">
+                <i class="ri-printer-line"></i> Exporter
+            </button>
+        </mat-menu>
     </div>
-    <div class="col-xxl-8">
-        <app-beneficiaire-remboursements [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-remboursements>
-    </div>
-</div>
+    <mat-card-content>
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+            <mat-tab label="Plan d'amortissement">
+                <app-beneficiaire-remboursements [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-remboursements>
+            </mat-tab>
+            <mat-tab label="Infos du beneficiaire">
+                <app-beneficiaire-info [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-info>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

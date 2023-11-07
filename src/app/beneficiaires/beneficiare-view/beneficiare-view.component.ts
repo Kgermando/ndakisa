@@ -6,9 +6,7 @@ import { BeneficiareService } from '../beneficiare.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/users/models/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import { PlanRemboursementModel } from '../models/plan_remousement.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { PlanRemboursementModel } from '../models/plan_remousement.model'; 
 
 @Component({
   selector: 'app-beneficiare-view',
@@ -48,6 +46,10 @@ export class BeneficiareViewComponent implements OnInit {
           console.log(error);
         }
       });  
+    }
+
+    edit(id: number) {
+      this.router.navigate(['/layouts/beneficiaires', id, 'beneficiaire-edit']);
     }
 
     delete(id: number): void {
