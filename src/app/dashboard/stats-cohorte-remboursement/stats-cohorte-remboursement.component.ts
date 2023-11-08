@@ -45,7 +45,7 @@ export class StatsCohorteRemboursementComponent {
       this.chartOptions = {
           series: [
               {
-                  name: "distibuted",
+                  name: "Beneficiares",
                   data: [21, 22, 10, 28, 16, 21, 13, 30, 45, 15, 29]
               }
           ],
