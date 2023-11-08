@@ -15,11 +15,29 @@
         <div class="mat-elevation-z8 tagus-mat-table">
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
+                <ng-container matColumnDef="identifiant">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Beneficiaire</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                            {{element.identifiant  }}
+                        </a>
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="name_beneficiaire">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Beneficiaire</th>
                     <td mat-cell *matCellDef="let element">
                         <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
                             {{element.name_beneficiaire.toUpperCase()}}
+                        </a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cohorte">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohorte</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                            {{element.cohorte.name_cohorte.toUpperCase()}}
                         </a>
                     </td>
                 </ng-container>
