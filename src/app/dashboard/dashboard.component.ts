@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { CustomizerSettingsService } from '../common/customizer-settings/customizer-settings.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,4 +9,23 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
+  dateRange!: FormGroup;
+
+  constructor(
+    public themeService: CustomizerSettingsService  
+  ) {}
+
+
+
+  toggleTheme() {
+      this.themeService.toggleTheme();
+  }
+
+  toggleCardBorderTheme() {
+      this.themeService.toggleCardBorderTheme();
+  }
+
+  toggleCardBorderRadiusTheme() {
+      this.themeService.toggleCardBorderRadiusTheme();
+  }
 }

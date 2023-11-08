@@ -59,6 +59,14 @@ import { ResteARembourserComponent } from './beneficiaires/reste-a-rembourser/re
 import { BanqueProgessComponent } from './banques/banque-progess/banque-progess.component';
 import { RemboursementIndiceComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/remboursement-indice/remboursement-indice.component';
 import { CohorteGarantieComponent } from './cohortes/cohorte-garantie/cohorte-garantie.component';
+import { StatsNombreComponent } from './dashboard/stats-nombre/stats-nombre.component';
+import { StatsProgressComponent } from './dashboard/stats-progress/stats-progress.component';
+import { StatsSexeComponent } from './dashboard/stats-sexe/stats-sexe.component';
+import { StatsBeneficiaireProvinceComponent } from './dashboard/stats-beneficiaire-province/stats-beneficiaire-province.component'; 
+import { StatsBeneficiaireStatutComponent } from './dashboard/stats-beneficiaire-statut/stats-beneficiaire-statut.component';
+import { StatsBanqueComponent } from './dashboard/stats-banque/stats-banque.component';
+import { StatsGarantieRemboursementComponent } from './dashboard/stats-garantie-remboursement/stats-garantie-remboursement.component';
+import { StatsCohorteRemboursementComponent } from './dashboard/stats-cohorte-remboursement/stats-cohorte-remboursement.component';
 
 registerLocaleData(localeFr);
 
@@ -117,6 +125,14 @@ registerLocaleData(localeFr);
     BanqueProgessComponent,
     RemboursementIndiceComponent,
     CohorteGarantieComponent,
+    StatsNombreComponent,
+    StatsProgressComponent,
+    StatsSexeComponent,
+    StatsBeneficiaireProvinceComponent, 
+    StatsBeneficiaireStatutComponent,
+    StatsBanqueComponent,
+    StatsGarantieRemboursementComponent,
+    StatsCohorteRemboursementComponent,
   ],
   imports: [
     BrowserModule,

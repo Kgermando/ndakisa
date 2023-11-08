@@ -1,0 +1,23 @@
+<mat-card class="mb-25 tagus-card">
+    <mat-card-header class="border-bottom">
+        <h5 class="mb-0">Repartion par montant de remboursement</h5>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <apx-chart
+                [series]="chartOptions.series!"
+                [chart]="chartOptions.chart!"
+                [dataLabels]="chartOptions.dataLabels!"
+                [plotOptions]="chartOptions.plotOptions!"
+                [yaxis]="chartOptions.yaxis!"
+                [legend]="chartOptions.legend!"
+                [fill]="chartOptions.fill!"
+                [stroke]="chartOptions.stroke!"
+                [tooltip]="chartOptions.tooltip!"
+                [colors]="chartOptions.colors!"
+                [grid]="chartOptions.grid!"
+                [xaxis]="chartOptions.xaxis!"
+            ></apx-chart>
+        </div>
+    </mat-card-content>
+</mat-card>

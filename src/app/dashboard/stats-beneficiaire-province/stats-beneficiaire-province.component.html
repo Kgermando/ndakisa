@@ -1,0 +1,63 @@
+<mat-card class="mb-25 tagus-card sales-by-locations">
+    <mat-card-header class="border-bottom">
+        <h5 class="mb-0">Taux de participation par province</h5>
+        <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" [matMenuTriggerFor]="monthMenu">
+            <i class="ri-more-fill"></i>
+        </button>
+        <mat-menu #monthMenu="matMenu" class="monthMenu" xPosition="before">
+            <button mat-menu-item type="button" class="bg-transparent border-none">Today</button>
+            <button mat-menu-item type="button" class="bg-transparent border-none">Last Month</button>
+            <button mat-menu-item type="button" class="bg-transparent border-none">Last Year</button>
+            <button mat-menu-item type="button" class="bg-transparent border-none">All Time</button>
+        </mat-menu>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="text-center">
+            <img src="assets/img/rdc.jpg" alt="hex-map">
+        </div>
+        <ul class="m-0 p-0">
+            <li>
+                <div class="d-flex align-items-center justify-content-space-between">
+                    <span class="gray-color fw-semibold">Kinshasa</span>
+                    <span class="gray-color fw-semibold">75%</span>
+                </div>
+                <mat-progress-bar mode="determinate" value="75"></mat-progress-bar>
+            </li>
+            <li>
+                <div class="d-flex align-items-center justify-content-space-between">
+                    <span class="gray-color fw-semibold">Haut-Katanga</span>
+                    <span class="gray-color fw-semibold">65%</span>
+                </div>
+                <mat-progress-bar mode="determinate" value="65"></mat-progress-bar>
+            </li>
+            <li>
+                <div class="d-flex align-items-center justify-content-space-between">
+                    <span class="gray-color fw-semibold">Nord-Kivu</span>
+                    <span class="gray-color fw-semibold">50%</span>
+                </div>
+                <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+            </li>
+            <li>
+                <div class="d-flex align-items-center justify-content-space-between">
+                    <span class="gray-color fw-semibold">Kasai-oriental</span>
+                    <span class="gray-color fw-semibold">40%</span>
+                </div>
+                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+            </li>
+            <li>
+                <div class="d-flex align-items-center justify-content-space-between">
+                    <span class="gray-color fw-semibold">Congo-central</span>
+                    <span class="gray-color fw-semibold">30%</span>
+                </div>
+                <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+            </li>
+            <li>
+                <div class="d-flex align-items-center justify-content-space-between">
+                    <span class="gray-color fw-semibold">Equateur</span>
+                    <span class="gray-color fw-semibold">20%</span>
+                </div>
+                <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>

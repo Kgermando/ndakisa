@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4 col-xxl-2/5">
+        <mat-card class="single-stats-box tagus-card mb-25">
+            <div class="d-flex align-items-center">
+                <!-- <div class="icon">
+                    <i class="flaticon-goal"></i>
+                </div> -->
+                <div class="title">
+                    <h3>{{ totalGarantie  | numberFormat:'fr-FR' }}  $</h3>
+                    <span class="gray-color d-block">Total garantie</span>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xxl-2/5">
+        <mat-card class="single-stats-box tagus-card mb-25">
+            <div class="d-flex align-items-center">
+                <!-- <div class="icon bg2">
+                    <i class="flaticon-learning"></i>
+                </div> -->
+                <div class="title">
+                    <h3>{{ totalCreditAccorde  | numberFormat:'fr-FR' }} $</h3>
+                    <span class="gray-color d-block">Total crédit accordé</span>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xxl-2/5">
+        <mat-card class="single-stats-box tagus-card mb-25">
+            <div class="d-flex align-items-center">
+                <!-- <div class="icon bg3">
+                    <i class="flaticon-struggle"></i>
+                </div> -->
+                <div class="title">
+                    <h3>{{totalARembourser  | numberFormat:'fr-FR'}} $</h3>
+                    <span class="gray-color d-block">Total à rembourser</span>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xxl-2/5">
+        <mat-card class="single-stats-box tagus-card mb-25">
+            <div class="d-flex align-items-center">
+                <!-- <div class="icon bg4">
+                    <i class="flaticon-purpose"></i>
+                </div> -->
+                <div class="title">
+                    <h3>{{ totalRembourse | numberFormat:'fr-FR' }} $</h3>
+                    <span class="gray-color d-block">Total remboursé</span>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xxl-2/5">
+        <mat-card class="single-stats-box tagus-card mb-25">
+            <div class="d-flex align-items-center">
+                <!-- <div class="icon bg5">
+                    <i class="flaticon-idea"></i>
+                </div> -->
+                <div class="title">
+                    <h3>{{ totalARembourser - totalRembourse | numberFormat:'fr-FR' }} $</h3>
+                    <span class="gray-color d-block">Reste à rembourser</span>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

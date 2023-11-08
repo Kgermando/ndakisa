@@ -11,7 +11,7 @@
                 *ngIf="currentUser.permission === 'RU' ||
                     currentUser.permission === 'RCU' || 
                     currentUser.permission === 'RUD' || 
-                    currentUser.permission === 'CRUD'" matTooltip="Modifier le statut">
+                    currentUser.permission === 'CRUD'" matTooltip="Chabger le statut">
                     <mat-icon>edit</mat-icon>
              </button>
         </div> 
@@ -21,7 +21,7 @@
                         (click)="delete(beneficiaire.id)"
                     *ngIf="currentUser.permission === 'RD' ||
                         currentUser.permission === 'RUD' ||
-                        currentUser.permission === 'CRUD'" matTooltip="Supprimer ce document">
+                        currentUser.permission === 'CRUD'" matTooltip="Supprimer ce beneficiaire">
                         <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button color="accent"  
@@ -29,7 +29,7 @@
                     *ngIf="currentUser.permission === 'RU' ||
                         currentUser.permission === 'RCU' || 
                         currentUser.permission === 'RUD' || 
-                        currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
+                        currentUser.permission === 'CRUD'" matTooltip="Modifier les infos du beneficiaire">
                         <mat-icon>edit</mat-icon>
                 </button>  
             </div>

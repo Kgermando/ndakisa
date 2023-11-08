@@ -51,7 +51,7 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Select province</mat-label>
                             <i class="ri-list-check"></i>
-                            <mat-select formControlName="province">
+                            <mat-select  (selectionChange)="onChange($event)" formControlName="province">
                                 <mat-option  *ngFor="let province of provinceList" [value]="province">{{province}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="formGroup.controls['province'].hasError('required')">
@@ -65,10 +65,7 @@
                     <mat-form-field appearance="fill">
                         <i class="ri-edit-2-line"></i>
                         <mat-label>Identifiant du beneficiaire </mat-label>
-                        <input matInput type="text" formControlName="identifiant" name="identifiant">
-                        <mat-error *ngIf="formGroup.controls['identifiant'].hasError('required')">
-                            Ce champs est obligatoire
-                        </mat-error>
+                        <input matInput type="text" [value]="identifiant" readonly="true" name="identifiant"> 
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">

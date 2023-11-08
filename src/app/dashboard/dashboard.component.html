@@ -1,1 +1,120 @@
-<p>dashboard works!</p>
+
+<div class="row">
+    <div class="col-xxl-4"> 
+        <div
+        class="welcome-box border-radius bg-white box-shadow mb-25"
+        [class.component-dark-theme]="themeService.isDark()"
+        [class.card-borderd-theme]="themeService.isCardBorder()"
+        [class.card-border-radius]="themeService.isCardBorderRadius()" 
+    >
+        <div class="top border-radius position-relative"> 
+            <h4>Votre filtre</h4>
+            <div class="d-flex align-items-center justify-content-center">
+                <form [formGroup]="dateRange">
+                    <mat-form-field>
+                        <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate  placeholder="Start Date">
+                        <input matEndDate placeholder="End Date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field> 
+                    <button mat-icon-button color="primary" class="bg-white" matTooltip="Soumettre" style="margin-left: 20px !important;">
+                        <mat-icon>send</mat-icon>
+                    </button>
+                </form> 
+            </div> 
+        </div>
+    </div>
+    </div>
+    <div class="col-xxl-8">
+        <div class="row">
+            <div class="col-md-4">
+                <mat-card class="single-stats-box tagus-card mb-25">
+                    <div class="d-flex align-items-center">
+                        <div class="icon">
+                            <i class="flaticon-donut-chart"></i>
+                        </div>
+                        <div class="title">
+                            <span class="d-block gray-color">Beneficiaires</span>
+                            <h3>240</h3>
+                        </div>
+                    </div>
+                    <p class="position-relative up">Total des Beneficiaires</p>
+                </mat-card>
+            </div>
+            <div class="col-md-4">
+                <mat-card class="single-stats-box tagus-card mb-25">
+                    <div class="d-flex align-items-center">
+                        <div class="icon">
+                            <i class="flaticon-goal"></i>
+                        </div>
+                        <div class="title">
+                            <span class="d-block gray-color">Cohortes</span>
+                            <h3>15</h3>
+                        </div>
+                    </div>
+                    <p class="position-relative up">Total des Cohortes</p>
+                </mat-card>
+            </div>
+            <div class="col-md-4">
+                <mat-card class="single-stats-box tagus-card mb-25">
+                    <div class="d-flex align-items-center">
+                        <div class="icon">
+                            <i class="flaticon-award"></i>
+                        </div>
+                        <div class="title">
+                            <span class="d-block gray-color">Banques</span>
+                            <h3>6</h3>
+                        </div>
+                    </div>
+                    <p class="position-relative up">Total des banques</p>
+                </mat-card>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<app-stats-nombre></app-stats-nombre>
+
+
+<div class="row">
+    <div class="col-xxl-8">
+
+        <app-stats-progress></app-stats-progress>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-xxl-6">
+                <app-stats-banque></app-stats-banque>
+            </div>
+            <div class="col-md-6 col-xxl-6">
+                <app-stats-beneficiaire-statut></app-stats-beneficiaire-statut>
+            </div> 
+        </div>
+
+        <app-stats-garantie-remboursement></app-stats-garantie-remboursement>
+
+        <app-stats-cohorte-remboursement></app-stats-cohorte-remboursement>
+
+        <div class="row">
+            <div class="col-xxl-8">
+               
+            </div>
+            <div class="col-xxl-4"> 
+
+            </div>
+        </div>
+         
+        
+
+    </div>
+    <div class="col-xxl-4">
+
+        <app-stats-sexe></app-stats-sexe>
+
+        <app-stats-beneficiaire-province></app-stats-beneficiaire-province>
+
+    </div>
+</div>

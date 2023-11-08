@@ -10,7 +10,8 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                <h5 class="mb-0">{{ cohorte.name_cohorte.toUpperCase() }}</h5> 
+                                <h6 class="mb-0">COHORTE</h6>
+                                <h4 class="mb-0">{{ cohorte.name_cohorte.toUpperCase() }}</h4> 
                                 <div class="d-md-flex meta mb-0 pb-0 justify-content-space-between align-items-center">
                                     <p>Créé le {{ cohorte.created | date: 'dd/MM/yyyy' }} </p>
                                     <p>Mise à jour le {{ cohorte.update_created | date: 'dd/MM/yyyy HH:mm' }} </p>
@@ -26,7 +27,7 @@
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Total banques
+                                    Total banque
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ totalBanque }} 
                                     </span>
