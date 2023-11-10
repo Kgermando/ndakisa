@@ -57,7 +57,7 @@ export class StatsSecteurActiviteComponent {
               position: "bottom",
               horizontalAlign: "center"
           },
-          labels: ["Domestic", "International"]
+          labels: ["Transformation", "Energie"]
       };
   }
 
