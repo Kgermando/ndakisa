@@ -52,7 +52,7 @@
                             </h4>
                         </td>
                         <td class="gray-color text-start">
-                            <app-cohorte-progress [item]="item"></app-cohorte-progress> 
+                            <app-cohorte-progress [item]="item"></app-cohorte-progress>
                         </td>
                         <td class="gray-color">
                             <app-cohorte-garantie [item]="item"></app-cohorte-garantie>
@@ -61,9 +61,7 @@
                             {{ item.beneficiaires.length }}
                         </td>
                         <td class="gray-color">
-                            <span class="badge fw-medium" *ngIf="item.statut == 'Opened'">Ouverte</span>
-                            <span class="badge pending fw-medium" *ngIf="item.statut == 'Closed'">Fermée</span>
-                            <span class="badge completed fw-medium" *ngIf="item.statut == 'Complete'">Complète</span>
+                            <span class="badge fw-medium">{{item.statut}}</span>
                         </td>
                         <td class="gray-color">{{ item.update_created | date: 'dd/MM/yyyy HH:mm' }}</td>
                     </tr>

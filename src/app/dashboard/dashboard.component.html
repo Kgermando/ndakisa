@@ -86,15 +86,12 @@
         <app-stats-progress [start_date]="start_date" [end_date]="end_date"></app-stats-progress>
 
         <div class="row justify-content-center">
-            <div class="col-md-6 col-xxl-6">
+            <div class="col-md-6 col-xxl-6"> 
                 <app-stats-banque [start_date]="start_date" [end_date]="end_date"></app-stats-banque>
             </div>
             <div class="col-md-6 col-xxl-6">
                 <app-stats-beneficiaire-statut [start_date]="start_date" [end_date]="end_date"></app-stats-beneficiaire-statut>
             </div>
-            <div class="col-md-6 col-xxl-6">
-                <app-stats-chorte-statut [start_date]="start_date" [end_date]="end_date"></app-stats-chorte-statut>
-            </div> 
         </div>
 
         <app-tranche-age></app-tranche-age>
@@ -118,6 +115,8 @@
     <div class="col-xxl-4">
 
         <app-stats-sexe></app-stats-sexe>
+        
+        <app-stats-chorte-statut [start_date]="start_date" [end_date]="end_date"></app-stats-chorte-statut>
 
         <app-stats-beneficiaire-province [tauxParticipatiionProvinceList]="tauxParticipatiionProvinceList"></app-stats-beneficiaire-province>
 

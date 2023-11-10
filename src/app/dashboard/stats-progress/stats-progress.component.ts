@@ -11,6 +11,7 @@ import {
     ApexTitleSubtitle,
     ApexLegend
 } from "ng-apexcharts";
+import { DashboardService } from "../dashboard.service";
 
 export type ChartOptions = {
     series: ApexAxisChartSeries;
@@ -38,91 +39,125 @@ export class StatsProgressComponent {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
-      this.chartOptions = {
-          series: [
-              {
-                  name: "Homme",
-                  data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51]
-              },
-              {
-                  name: "Femme",
-                  data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56]
-              }
-          ],
-          chart: {
-              height: 300,
-              type: "line",
-              toolbar: {
-                  show: false,
-              }
-          },
-          colors: ["#757fef", "#ee368c"],
-          dataLabels: {
-              enabled: false
-          },
-          stroke: {
-              width: 3,
-              curve: "smooth",
-          },
-          legend: {
-              offsetY: 3,
-              position: "top",
-              fontSize: "14px",
-              horizontalAlign: "center",
-              labels: {
-                  colors: '#5B5B98',
-              },
-          },
-          yaxis: {
-              tickAmount: 4,
-              labels: {
-                  style: {
-                      colors: "#a9a9c8",
-                      fontSize: "14px",
-                  },
-              },
-              axisBorder: {
-                  show: false,
-              },
-          },
-          xaxis: {
-              axisBorder: {
-                  show: false,
-              },
-              labels: {
-                  trim: false,
-                  style: {
-                      colors: "#a9a9c8",
-                      fontSize: "14px",
-                  },
-              },
-              categories: [
-                  "01 Jan",
-                  "02 Jan",
-                  "03 Jan",
-                  "04 Jan",
-                  "05 Jan",
-                  "06 Jan",
-                  "07 Jan",
-                  "08 Jan",
-                  "09 Jan",
-                  "10 Jan",
-              ],
-          },
-          tooltip: {
-              y: {
-                  formatter: function(val:any) {
-                      return val + " hours";
-                  }
-              }
-          },
-          grid: {
-              show: true,
-              borderColor: "#EDEFF5",
-              strokeDashArray: 5,
-          },
-      };
+  isLoading = false;  
+  progressionRemboursementHommeList: any[] = [];
+  progressionRemboursementFemmeList: any[] = [];
+  progressionRemboursementDateList: any[] = [];
+
+  constructor(private dashboardService: DashboardService) {
+      
   }
+
+  ngOnInit(): void {
+    // console.log('start_date', this.start_date);
+    // console.log('end_date', this.end_date);
+
+     this.getProgression();
+    }
+
+    getProgression() {
+        this.isLoading = true;
+        this.dashboardService.progressionRemboursementSexeDate(this.start_date, this.end_date).subscribe(
+            res => {
+                this.dashboardService.progressionRemboursementSexeHomme(this.start_date, this.end_date).subscribe(
+                    h => {
+                        this.dashboardService.progressionRemboursementSexeFemme(this.start_date, this.end_date).subscribe(
+                            f => {
+                                this.progressionRemboursementDateList = res;
+                                this.progressionRemboursementHommeList = h;
+                                this.progressionRemboursementFemmeList = f;
+                                
+                this.chartOptions = { 
+                    series: [
+                        {
+                            name: "Homme",
+                            data: this.progressionRemboursementHommeList.map((item: any) => parseFloat(item.montant_payer)),
+                        },
+                        {
+                            name: "Femme",
+                            data: this.progressionRemboursementFemmeList.map((item: any) => parseFloat(item.montant_payer)),
+                        }
+                    ],
+                    // series: [
+                    //     {
+                    //         name: "Homme",
+                    //         data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51]
+                    //     },
+                    //     {
+                    //         name: "Femme",
+                    //         data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56]
+                    //     }
+                    // ],
+                    chart: {
+                        height: 300,
+                        type: "line",
+                        toolbar: {
+                            show: false,
+                        }
+                    },
+                    colors: ["#757fef", "#ee368c"],
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        width: 3,
+                        curve: "smooth",
+                    },
+                    legend: {
+                        offsetY: 3,
+                        position: "top",
+                        fontSize: "14px",
+                        horizontalAlign: "center",
+                        labels: {
+                            colors: '#5B5B98',
+                        },
+                    },
+                    yaxis: {
+                        tickAmount: 4,
+                        labels: {
+                            style: {
+                                colors: "#a9a9c8",
+                                fontSize: "14px",
+                            },
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                    },
+                    xaxis: {
+                        axisBorder: {
+                            show: false,
+                        },
+                        labels: {
+                            trim: false,
+                            style: {
+                                colors: "#a9a9c8",
+                                fontSize: "14px",
+                            },
+                        },
+                        categories: this.progressionRemboursementDateList.map((item: any) => item.month),
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function(val:any) {
+                                return val + " usd";
+                            }
+                        }
+                    },
+                    grid: {
+                        show: true,
+                        borderColor: "#EDEFF5",
+                        strokeDashArray: 5,
+                    },
+                };
+               this.isLoading = false; 
+                            } 
+                        );
+                    } 
+                ); 
+            }
+            
+        );
+    }
 
 }

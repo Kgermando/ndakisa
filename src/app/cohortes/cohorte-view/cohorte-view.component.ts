@@ -128,7 +128,6 @@ export class CohorteViewComponent implements OnInit {
 }
 
 
-
 @Component({
   selector: 'edit-cohorte-dialog',
   templateUrl: './cohorte-edit.html',
@@ -137,7 +136,6 @@ export class EditCohorteDialogBox implements OnInit{
   isLoading = false;
 
   formGroup!: FormGroup;
- 
 
   currentUser: UserModel | any; 
 
