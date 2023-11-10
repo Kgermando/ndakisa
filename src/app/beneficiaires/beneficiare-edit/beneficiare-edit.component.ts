@@ -51,6 +51,44 @@ export class BeneficiareEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.formGroup = this._formBuilder.group({
+      photo: [''],
+      name_beneficiaire: [''],
+      sexe: [''],  
+      date_naissance: [''], 
+      province: [''],
+      identifiant: [''],
+      email: [''],
+      telephone: [''],
+      raison_sociale: [''],
+      secteur_activite: [''],
+      numero_impot: [''],
+      id_nat: [''],
+      rccm: [''],
+      adresse: [''],
+    });
+
+    this.formGroup2 = this._formBuilder.group({
+      banque: [''],
+      montant_garantie: [''],
+      credit_accorde: [''],
+      interet: [''],
+      montant_a_debourser: [''], 
+      delai_de_grace: [''],
+      duree_credit: [''],
+      date_valeur: [''],
+      date_maturite: [''],
+      delai_de_reajustement: [''],
+    });
+
+    this.formGroup3 = this._formBuilder.group({
+      date_de_rembousement: ['', Validators.required],
+      credit_en_debut_periode: ['', Validators.required],
+      // mensualite: ['', Validators.required],
+      interet: ['', Validators.required],
+      capital: ['', Validators.required],
+    });
+
     this.authService.user().subscribe({
       next: (user) => {
         this.currentUser = user;
@@ -102,43 +140,7 @@ export class BeneficiareEditComponent implements OnInit {
       }
     });
 
-    this.formGroup = this._formBuilder.group({
-      photo: [''],
-      name_beneficiaire: [''],
-      sexe: [''],  
-      date_naissance: [''], 
-      province: [''],
-      identifiant: [''],
-      email: [''],
-      telephone: [''],
-      raison_sociale: [''],
-      secteur_activite: [''],
-      numero_impot: [''],
-      id_nat: [''],
-      rccm: [''],
-      adresse: [''],
-    });
-
-    this.formGroup2 = this._formBuilder.group({
-      banque: [''],
-      montant_garantie: [''],
-      credit_accorde: [''],
-      interet: [''],
-      montant_a_debourser: [''], 
-      delai_de_grace: [''],
-      duree_credit: [''],
-      date_valeur: [''],
-      date_maturite: [''],
-      delai_de_reajustement: [''],
-    });
-
-    this.formGroup3 = this._formBuilder.group({
-      date_de_rembousement: ['', Validators.required],
-      credit_en_debut_periode: ['', Validators.required],
-      // mensualite: ['', Validators.required],
-      interet: ['', Validators.required],
-      capital: ['', Validators.required],
-    });
+    
   }
 
   getAllData(id: number) {
@@ -176,12 +178,13 @@ export class BeneficiareEditComponent implements OnInit {
   onSubmit2() {
     try {
       if (this.formGroup2.valid) {
-        this.isLoading = true;  
+        this.isLoading = true; 
         this.beneficiareService.update(this.id, this.formGroup2.getRawValue()).subscribe({
           next: () => {
             this.isLoading = false;
             this.formGroup2.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
+            // window.location.reload()
             // this.router.navigate(['/layouts/cohortes/cohorte-list']);
           },
           error: (err) => {

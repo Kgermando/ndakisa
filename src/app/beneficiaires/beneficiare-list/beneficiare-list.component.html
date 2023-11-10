@@ -16,7 +16,7 @@
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
                 <ng-container matColumnDef="identifiant">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Beneficiaire</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Identifiant</th>
                     <td mat-cell *matCellDef="let element">
                         <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
                             {{element.identifiant  }}
@@ -45,9 +45,12 @@
                 <ng-container matColumnDef="banque">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Banque</th>
                     <td mat-cell *matCellDef="let element">
-                        <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
-                            {{element.banque.name_banque }} 
-                        </a>
+                        <span  *ngIf="element.banque">
+                            <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                                {{element.banque.name_banque }} 
+                            </a>
+                        </span> 
+                        <span  *ngIf="!element.banque">--</span>
                     </td>
                 </ng-container> 
                 

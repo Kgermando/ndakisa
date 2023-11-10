@@ -51,7 +51,24 @@
                 </td>
                 <td class="gray-color">{{ plan_remboursement.observation }}</td>
                 <td *ngIf="beneficiaire.statut === 'En cours'">
-                    <div *ngIf="isActivatedBtn(beneficiaire.delai_de_grace)">
+                    <button mat-icon-button color="primary" 
+                            (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)" 
+                                *ngIf="currentUser.permission === 'RC' ||
+                                currentUser.permission === 'RCU' ||
+                                currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0"
+                                matTooltip="Ajouter le remboursement">
+                                <mat-icon>add</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" 
+                            (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)"
+                            *ngIf="currentUser.permission === 'RU' ||
+                                currentUser.permission === 'RCU' || 
+                                currentUser.permission === 'RUD' || 
+                                currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0"
+                                matTooltip="Modifier le remboursement">
+                                <mat-icon>edit</mat-icon>
+                        </button>
+                    <!-- <div *ngIf="isActivatedBtn(beneficiaire.delai_de_grace)">
                         <div *ngIf="isActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
                             <button mat-icon-button color="primary" 
                                 (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)" 
@@ -97,7 +114,7 @@
                                     <mat-icon>edit</mat-icon>
                             </button>
                         </div> 
-                    </div>
+                    </div> -->
                 </td>
                 <td *ngIf="beneficiaire.statut === 'interrompu'">
                     <button mat-icon-button color="accent">

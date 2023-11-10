@@ -16,48 +16,14 @@
             <img src="assets/img/rdc.jpg" alt="hex-map">
         </div>
         <ul class="m-0 p-0">
-            <li>
+            <li *ngFor="let item of tauxParticipatiionProvinceList">
                 <div class="d-flex align-items-center justify-content-space-between">
-                    <span class="gray-color fw-semibold">Kinshasa</span>
-                    <span class="gray-color fw-semibold">75%</span>
+                    <span class="gray-color fw-semibold">{{item.province}}</span>
+                    <span class="gray-color fw-semibold">{{item.pourcentage}} %</span>
                 </div>
-                <mat-progress-bar mode="determinate" value="75"></mat-progress-bar>
+                <mat-progress-bar mode="determinate" [value]="item.pourcentage"></mat-progress-bar>
             </li>
-            <li>
-                <div class="d-flex align-items-center justify-content-space-between">
-                    <span class="gray-color fw-semibold">Haut-Katanga</span>
-                    <span class="gray-color fw-semibold">65%</span>
-                </div>
-                <mat-progress-bar mode="determinate" value="65"></mat-progress-bar>
-            </li>
-            <li>
-                <div class="d-flex align-items-center justify-content-space-between">
-                    <span class="gray-color fw-semibold">Nord-Kivu</span>
-                    <span class="gray-color fw-semibold">50%</span>
-                </div>
-                <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
-            </li>
-            <li>
-                <div class="d-flex align-items-center justify-content-space-between">
-                    <span class="gray-color fw-semibold">Kasai-oriental</span>
-                    <span class="gray-color fw-semibold">40%</span>
-                </div>
-                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-            </li>
-            <li>
-                <div class="d-flex align-items-center justify-content-space-between">
-                    <span class="gray-color fw-semibold">Congo-central</span>
-                    <span class="gray-color fw-semibold">30%</span>
-                </div>
-                <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
-            </li>
-            <li>
-                <div class="d-flex align-items-center justify-content-space-between">
-                    <span class="gray-color fw-semibold">Equateur</span>
-                    <span class="gray-color fw-semibold">20%</span>
-                </div>
-                <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
-            </li>
+            
         </ul>
     </mat-card-content>
 </mat-card>

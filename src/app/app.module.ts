@@ -67,6 +67,8 @@ import { StatsBeneficiaireStatutComponent } from './dashboard/stats-beneficiaire
 import { StatsBanqueComponent } from './dashboard/stats-banque/stats-banque.component';
 import { StatsGarantieRemboursementComponent } from './dashboard/stats-garantie-remboursement/stats-garantie-remboursement.component';
 import { StatsCohorteRemboursementComponent } from './dashboard/stats-cohorte-remboursement/stats-cohorte-remboursement.component';
+import { TrancheAgeComponent } from './dashboard/tranche-age/tranche-age.component';
+import { StatsChorteStatutComponent } from './dashboard/stats-chorte-statut/stats-chorte-statut.component';
 
 registerLocaleData(localeFr);
 
@@ -133,6 +135,8 @@ registerLocaleData(localeFr);
     StatsBanqueComponent,
     StatsGarantieRemboursementComponent,
     StatsCohorteRemboursementComponent,
+    TrancheAgeComponent,
+    StatsChorteStatutComponent,
   ],
   imports: [
     BrowserModule,

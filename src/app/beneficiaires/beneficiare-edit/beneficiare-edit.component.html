@@ -181,7 +181,7 @@
                                 <i class="ri-group-line"></i>
                                 <mat-label>Select banque</mat-label>
                                 <mat-select [compareWith]="compareFn" formControlName="banque">
-                                    <mat-option *ngFor="let banque of banqueList" [value]="banque.id">{{banque.name_banque}}</mat-option>
+                                    <mat-option *ngFor="let banque of banqueList" [value]="banque">{{banque.name_banque}}</mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="formGroup2.controls['banque'].hasError('required')">
                                     Ce champs est obligatoire
@@ -327,9 +327,9 @@
                                 <td class="gray-color">{{ i+1 }}</td>
                                 <td class="gray-color">{{ remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
                                 <td class="gray-color">{{ remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} usd</td>
-                                <td class="gray-color">{{ +remboursement.interet + +remboursement.capital | numberFormat:'fr-FR' }} usd</td>
-                                <td class="gray-color">{{ remboursement.interet | numberFormat:'fr-FR' }} usd</td>
                                 <td class="gray-color">{{ remboursement.capital | numberFormat:'fr-FR' }} usd</td>
+                                <td class="gray-color">{{ remboursement.interet | numberFormat:'fr-FR' }} usd</td>
+                                <td class="gray-color">{{ +remboursement.interet + +remboursement.capital | numberFormat:'fr-FR' }} usd</td>
                                 <td>
                                     <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" [matMenuTriggerFor]="actionMenu">
                                         <i class="ri-more-fill"></i>
@@ -390,17 +390,6 @@
                             </mat-form-field>
                         </div> -->
                         <div class="col-lg-2 col-md-6 col-sm-6">
-                            <!-- <label class="d-block mb-12 fw-semibold gray-color">Interêt </label> -->
-                            <mat-form-field appearance="fill">
-                                <i class="ri-edit-2-line"></i>
-                                <mat-label>Interêt'</mat-label>
-                                <input matInput type="number" formControlName="interet" name="interet">
-                                <mat-error *ngIf="formGroup3.controls['interet'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6">
                             <!-- <label class="d-block mb-12 fw-semibold gray-color">Capital </label> -->
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
@@ -411,6 +400,18 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6">
+                            <!-- <label class="d-block mb-12 fw-semibold gray-color">Interêt </label> -->
+                            <mat-form-field appearance="fill">
+                                <i class="ri-edit-2-line"></i>
+                                <mat-label>Interêt'</mat-label>
+                                <input matInput type="number" formControlName="interet" name="interet">
+                                <mat-error *ngIf="formGroup3.controls['interet'].hasError('required')">
+                                    Ce champs est obligatoire
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        
                         <div class="col-lg-2 col-md-6 col-sm-6">
                             <div class="d-flex justify-content-center" *ngIf="isLoadingPlanRemboursement">
                                 <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>

@@ -1,0 +1,28 @@
+<mat-card class="mb-25 tagus-card">
+    <mat-card-header class="border-bottom">
+        <h5 class="mb-0">Tranches d'âges des beneficiaires</h5>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngIf="isLoading" 
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner [diameter]="30"
+                color="primary" 
+                mode="indeterminate">
+            </mat-progress-spinner>
+        </div> 
+        <div class="chart" *ngIf="!isLoading && trancheAgeList.length > 0">
+            <apx-chart
+            [series]="chartOption.series!"
+            [chart]="chartOption.chart!"
+            [dataLabels]="chartOption.dataLabels!"
+            [plotOptions]="chartOption.plotOptions!"
+            [yaxis]="chartOption.yaxis!"
+            [xaxis]="chartOption.xaxis!"
+            [colors]="chartOption.colors!"
+            [fill]="chartOption.fill!"
+            [grid]="chartOption.grid!"
+            [title]="chartOption.title!"
+        ></apx-chart>
+        </div>
+    </mat-card-content>
+</mat-card>

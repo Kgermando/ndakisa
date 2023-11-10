@@ -156,17 +156,14 @@ export class BeneficiareAddComponent implements OnInit {
       this.identifiant = `B-025-${numero}`;
     } else if (event.value === 'Tshuapa') {
       this.identifiant = `B-026-${numero}`;
-    }
-
-    console.log('identifiant', this.identifiant);
+    } 
   }
 
 
   onSubmit() {
     try {
       if (this.formGroup.valid) {
-        this.isLoading = true;
-        
+        this.isLoading = true; 
         var body = {
           photo: this.formGroup.value.photo,
           name_beneficiaire: this.capitalizeTest(this.formGroup.value.name_beneficiaire),
@@ -193,7 +190,7 @@ export class BeneficiareAddComponent implements OnInit {
             this.isLoading = false;
             this.formGroup.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.router.navigate(['/layouts/beneficiaires', res.id, 'beneficiaire-edit']);
+            this.router.navigate(['/layouts/beneficiaires', res.id, 'beneficiaire-edit']); 
           },
           error: (err) => {
             this.isLoading = false;

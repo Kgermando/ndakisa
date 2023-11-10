@@ -78,15 +78,7 @@ export class CohorteViewComponent implements OnInit {
               if (item.banque.name_banque) {
                 this.banques.push(item.banque.name_banque);
               }
-              // this.totalCreditAccorde =+ parseFloat(item.credit_accorde);
-              // this.totalADebourser =+ parseFloat(item.montant_a_debourser);
-              // this.totalInteret =+ parseFloat(item.interet);
-            };
-            // if (rembousement) {
-            //   for (let item of rembousement) {
-            //     this.totalRembourse =+ parseFloat(item.montant_payer);
-            //   }
-            // }
+            }; 
             this.resteARembouser = this.montant_A_Rembourser - this.totalRembourse;
             
             this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
@@ -164,8 +156,7 @@ export class EditCohorteDialogBox implements OnInit{
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({  
       name_cohorte: [''],
-      contrat_ref: [''],
-      montant_global: [''],
+      contrat_ref: [''], 
       statut: [''],
     }); 
     this.authService.user().subscribe({
@@ -174,8 +165,7 @@ export class EditCohorteDialogBox implements OnInit{
         this.cohorteService.get(parseInt(this.data['id'])).subscribe(item => {
           this.formGroup.patchValue({
             name_cohorte: item.name_cohorte,
-            contrat_ref: item.contrat_ref,
-            montant_global: item.montant_global,
+            contrat_ref: item.contrat_ref, 
             statut: item.statut,
             signature: this.currentUser.matricule, 
             update_created: new Date(),

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, Input, ViewChild } from "@angular/core";
 import {
     ChartComponent,
     ApexAxisChartSeries,
@@ -32,6 +32,8 @@ export type ChartOptions = {
   styleUrls: ['./stats-progress.component.scss']
 })
 export class StatsProgressComponent {
+    @Input() start_date: string;
+    @Input() end_date: string;
 
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;

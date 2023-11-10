@@ -2,7 +2,7 @@
 class="mb-25 tagus-card milestones-overview-box" 
 >
 <mat-card-header class="border-bottom">
-    <h5 class="mb-0">Participation par banque</h5>
+    <h5 class="mb-0">Remboursement par banque</h5>
     <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" [matMenuTriggerFor]="monthMenu">
         <i class="ri-more-fill"></i>
     </button>
@@ -14,7 +14,14 @@ class="mb-25 tagus-card milestones-overview-box"
     </mat-menu>
 </mat-card-header>
 <mat-card-content>
-    <div class="chart">
+    <div *ngIf="isLoading" 
+        style="display: flex; justify-content: center; align-items: center; background: white;">
+        <mat-progress-spinner [diameter]="30"
+            color="primary" 
+            mode="indeterminate">
+        </mat-progress-spinner>
+    </div> 
+    <div class="chart" *ngIf="!isLoading && banqueList.length > 0">
         <apx-chart
             [series]="chartOptions.series!"
             [chart]="chartOptions.chart!"
