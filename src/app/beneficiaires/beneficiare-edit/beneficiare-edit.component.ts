@@ -148,7 +148,7 @@ export class BeneficiareEditComponent implements OnInit {
         this.planRemboursementList = res;
       }
     );
-  }
+  } 
 
 
   onSubmit() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,9 @@ import { BanqueModel } from 'src/app/banques/models/banque.model';
 import { BanqueService } from 'src/app/banques/banque.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
+import { SecteurService } from '../secteur.service';
+import { SecteurModel } from '../models/secteur.model';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-beneficiare-add',
@@ -35,6 +38,7 @@ export class BeneficiareAddComponent implements OnInit {
   banqueList: BanqueModel[] = [];
   beneficiareList: BeneficiaireModel[] = [];
   planRemboursementList: PlanRemboursementModel[] = [];
+  secteurList: SecteurModel[] = [];
 
   id: any;
 
@@ -48,6 +52,8 @@ export class BeneficiareAddComponent implements OnInit {
     private authService: AuthService,
     private beneficiareService: BeneficiareService,
     private banqueService: BanqueService,
+    private secteurService: SecteurService,
+    public dialog: MatDialog,
     private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -62,6 +68,12 @@ export class BeneficiareAddComponent implements OnInit {
         this.banqueService.getAll().subscribe((res) => {
           this.banqueList = res;
         });
+
+        this.secteurService.refreshDataList$.subscribe(() => {
+          this.getAllData();
+        });
+        this.getAllData(); 
+        
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
@@ -84,6 +96,12 @@ export class BeneficiareAddComponent implements OnInit {
       id_nat: ['', Validators.required],
       rccm: ['', Validators.required],
       adresse: ['', Validators.required],
+    });
+  }
+
+  getAllData() {
+    this.secteurService.getAll().subscribe((res) => {
+      this.secteurList = res;
     });
   }
  
@@ -203,6 +221,94 @@ export class BeneficiareAddComponent implements OnInit {
       this.isLoading = false;
       console.log(error);
     }
+  } 
+
+  openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(AddSecteurDialogBox, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration, 
+    }); 
+  } 
+
+  capitalizeTest(text: string): string {
+    return (text && text[0].toUpperCase() + text.slice(1).toLowerCase()) || text;
+  }
+
+}
+
+
+
+@Component({
+  selector: 'add-secteur-dialog',
+  templateUrl: './secteur-add.html',
+})
+export class AddSecteurDialogBox implements OnInit {
+  isLoading = false;
+
+  formGroup!: FormGroup;
+
+  currentUser: UserModel | any; 
+ 
+
+  constructor(
+      public dialogRef: MatDialogRef<AddSecteurDialogBox>,
+      private formBuilder: FormBuilder,
+      private router: Router,
+      private authService: AuthService, 
+      private toastr: ToastrService, 
+      private secteurService: SecteurService,
+  ) {}
+
+  ngOnInit(): void {
+    this.formGroup = this.formBuilder.group({  
+      name_secteur: ['', Validators.required],
+    });
+    
+    this.authService.user().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+      },
+      error: (error) => {
+        this.router.navigate(['/auth/login']);
+        console.log(error);
+      }
+    }); 
+  }
+
+
+  onSubmit() {
+    try {
+      if (this.formGroup.valid) {
+        this.isLoading = true;
+        var body = {
+          name_secteur: this.capitalizeTest(this.formGroup.value.name_secteur),
+          signature: this.currentUser.matricule, 
+          created: new Date(),
+          update_created: new Date(),
+        };
+        this.secteurService.create(body).subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.formGroup.reset();
+            this.toastr.success('Ajouter avec succès!', 'Success!');
+            this.close(); 
+          },
+          error: (err) => {
+            this.isLoading = false;
+            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+            console.log(err);
+          }
+        });
+      }
+    } catch (error) {
+      this.isLoading = false;
+      console.log(error);
+    }
+  } 
+
+  close(){
+      this.dialogRef.close(true);
   } 
 
   capitalizeTest(text: string): string {

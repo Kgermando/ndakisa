@@ -10,7 +10,7 @@ export class ResteARembourserComponent {
   @Input('item') item: BeneficiaireModel;
 
   totalPayE = 0; 
-  reste = 0; 
+  reste = 0;
 
   ngOnInit(): void {
     if (this.item.plan_remboursements) {

@@ -46,7 +46,7 @@ import { CohorteService } from './cohortes/cohorte.service';
 import { BanqueService } from './banques/banque.service';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
 import { BeneficiareEditComponent, EditPlanRemboursementDialogBox } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
-import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
+import { AddSecteurDialogBox, BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
 import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component'; 
@@ -139,6 +139,7 @@ registerLocaleData(localeFr);
     TrancheAgeComponent,
     StatsChorteStatutComponent,
     StatsSecteurActiviteComponent,
+    AddSecteurDialogBox
   ],
   imports: [
     BrowserModule,
