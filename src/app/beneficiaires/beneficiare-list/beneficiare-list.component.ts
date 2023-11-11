@@ -22,7 +22,7 @@ export class BeneficiareListComponent implements OnInit {
   
   ELEMENT_DATA: BeneficiaireModel[] = [];
 
-  displayedColumns: string[] = ['identifiant', 'name_beneficiaire', 'cohorte', 'banque', 'credit_accorde', 'montant_a_rembourser', 'montant_rembourser', 'reste_a_rembourser'];
+  displayedColumns: string[] = ['identifiant', 'name_beneficiaire', 'cohorte', 'banque', 'montant_a_rembourser', 'montant_rembourser', 'reste_a_rembourser'];
 
   dataSource = new MatTableDataSource<BeneficiaireModel>(this.ELEMENT_DATA);
   selection = new SelectionModel<BeneficiaireModel>(true, []);

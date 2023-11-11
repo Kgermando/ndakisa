@@ -70,6 +70,7 @@ import { StatsCohorteRemboursementComponent } from './dashboard/stats-cohorte-re
 import { TrancheAgeComponent } from './dashboard/tranche-age/tranche-age.component';
 import { StatsChorteStatutComponent } from './dashboard/stats-chorte-statut/stats-chorte-statut.component';
 import { StatsSecteurActiviteComponent } from './dashboard/stats-secteur-activite/stats-secteur-activite.component';
+import { ResteARembourserViewComponent } from './beneficiaires/beneficiare-view/reste-a-rembourser-view/reste-a-rembourser-view.component';
 
 registerLocaleData(localeFr);
 
@@ -139,7 +140,8 @@ registerLocaleData(localeFr);
     TrancheAgeComponent,
     StatsChorteStatutComponent,
     StatsSecteurActiviteComponent,
-    AddSecteurDialogBox
+    AddSecteurDialogBox,
+    ResteARembourserViewComponent
   ],
   imports: [
     BrowserModule,

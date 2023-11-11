@@ -1,4 +1,4 @@
 export const StatutList: string[] = [
   'Ouverte',
-  'Complete',
+  'Fermée',
 ]

@@ -189,6 +189,17 @@
                             </mat-form-field>
                         </div> 
                         <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label class="d-block mb-12 fw-semibold gray-color">Compte bancaire </label>
+                            <mat-form-field appearance="fill">
+                                <i class="ri-edit-2-line"></i>
+                                <mat-label>Entrer le compte bancaire</mat-label>
+                                <input matInput type="text" formControlName="compte_bancaire" name="compte_bancaire">
+                                <mat-error *ngIf="formGroup2.controls['compte_bancaire'].hasError('required')">
+                                    Ce champs est obligatoire
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             <label class="d-block mb-12 fw-semibold gray-color">Montant garantie </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>

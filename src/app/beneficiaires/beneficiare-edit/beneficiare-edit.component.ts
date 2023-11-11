@@ -70,6 +70,7 @@ export class BeneficiareEditComponent implements OnInit {
 
     this.formGroup2 = this._formBuilder.group({
       banque: [''],
+      compte_bancaire: [''],
       montant_garantie: [''],
       credit_accorde: [''],
       interet: [''],
@@ -120,6 +121,7 @@ export class BeneficiareEditComponent implements OnInit {
           });
           this.formGroup2.patchValue({
             banque: item.banque,
+            compte_bancaire: item.compte_bancaire,
             montant_garantie: item.montant_garantie,
             credit_accorde: item.credit_accorde,
             interet: item.interet,

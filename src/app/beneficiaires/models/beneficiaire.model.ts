@@ -16,7 +16,8 @@ export interface BeneficiaireModel {
     secteur_activite: string; 
     numero_impot: string; 
     id_nat: string;
-    rccm: string; 
+    rccm: string;
+    compte_bancaire: string;
     adresse: string;
     
     montant_garantie: string; 

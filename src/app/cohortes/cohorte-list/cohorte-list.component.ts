@@ -129,8 +129,7 @@ export class CreateCohorteDialogBox {
         var body = {
           name_cohorte: this.capitalizeTest(this.formGroup.value.name_cohorte),
           contrat_ref: this.formGroup.value.contrat_ref, 
-          statut: 'Opened', 
-          montant_global: this.formGroup.value.montant_global,  
+          statut: 'Ouverte',
           signature: this.currentUser.matricule,
           created: new Date(),
           update_created: new Date(),

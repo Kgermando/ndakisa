@@ -61,7 +61,8 @@
                             {{ item.beneficiaires.length }}
                         </td>
                         <td class="gray-color">
-                            <span class="badge fw-medium">{{item.statut}}</span>
+                            <span class="badge fw-medium" *ngIf="item.statut == 'Ouverte'">{{item.statut}}</span>
+                            <span class="badge fw-medium completed" *ngIf="item.statut == 'Fermée'">{{item.statut}}</span>
                         </td>
                         <td class="gray-color">{{ item.update_created | date: 'dd/MM/yyyy HH:mm' }}</td>
                     </tr>
