@@ -20,10 +20,10 @@ export interface BeneficiaireModel {
     compte_bancaire: string;
     adresse: string;
     
-    montant_garantie: string; 
-    credit_accorde: string; 
-    interet: string; 
-    montant_a_debourser: string; // Montant à rembourser c'est le montan que les beneficieres doivent rembourser donc credit + interet
+    montant_garantie: string;
+    credit_accorde: string;
+    interet: string;
+    montant_a_debourser: string; // Montant à rembourser c'est le montant que les beneficieres doivent rembourser donc credit + interet
 
     delai_de_grace: Date;
     delai_de_reajustement: Date;
@@ -31,7 +31,7 @@ export interface BeneficiaireModel {
     date_valeur: Date; // Date à la quel on donné le credit 
     date_maturite: Date; // Date du dernier remboursement donc écheance  
     
-    cohorte: CohorteModel; 
+    cohorte: CohorteModel;
     banque: BanqueModel; 
     statut: string; // En cours, interrompu, Complete 
     plan_remboursements: PlanRemboursementModel[];
