@@ -45,6 +45,13 @@
                         <span class="title">Beneficiaires</span>
                     </a>
 
+                    <a routerLink="/layouts/beneficiaires/secteur-list" class="sidebar-menu-link" routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{exact: true}"
+                        *ngIf="currentUser.roles.includes('Beneficiaires')">
+                        <i class="ri-building-4-line"></i>
+                        <span class="title">Secteurs</span>
+                    </a>
+
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">INSTITUTIONS</span>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
                     *ngIf="currentUser.roles.includes('Banques')">

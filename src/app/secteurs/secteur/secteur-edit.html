@@ -1,6 +1,6 @@
 <div class="create-dialog-box">
     <div class="title d-flex align-items-center justify-content-space-between">
-        <h4 class="mb-0">Ajouter un secteur</h4>
+        <h4 class="mb-0">Modifier le secteur d'activité</h4>
         <button class="close-btn bg-transparent p-0 border-none" (click)="close()"><i class="flaticon-close"></i></button>
     </div>
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
@@ -12,6 +12,14 @@
                     <mat-error *ngIf="formGroup.controls['name_secteur'].hasError('required')">
                         Ce champs est obligatoire
                     </mat-error>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="tagus-form-group">
+                    <label class="d-block mb-12 fw-semibold gray-color">Statut du secteur</label>
+                    <mat-checkbox class="example-margin" id="statut" formControlName="statut">
+                        Statut 
+                    </mat-checkbox> 
                 </div>
             </div>
         </div>
@@ -28,8 +36,8 @@
                     </mat-progress-spinner>
                 </span>
                 <span *ngIf="!isLoading">
-                    <i class="ri-add-line"></i>
-                    Ajouter
+                    <i class="ri-edit-line"></i>
+                    Modifier
                 </span> 
             </button>
         </div>

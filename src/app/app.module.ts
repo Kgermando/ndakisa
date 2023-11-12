@@ -46,7 +46,7 @@ import { CohorteService } from './cohortes/cohorte.service';
 import { BanqueService } from './banques/banque.service';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
 import { BeneficiareEditComponent, EditPlanRemboursementDialogBox } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
-import { AddSecteurDialogBox, BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
+import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
 import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component'; 
@@ -71,6 +71,8 @@ import { TrancheAgeComponent } from './dashboard/tranche-age/tranche-age.compone
 import { StatsChorteStatutComponent } from './dashboard/stats-chorte-statut/stats-chorte-statut.component';
 import { StatsSecteurActiviteComponent } from './dashboard/stats-secteur-activite/stats-secteur-activite.component';
 import { ResteARembourserViewComponent } from './beneficiaires/beneficiare-view/reste-a-rembourser-view/reste-a-rembourser-view.component';
+import { EditSecteurDialogBox, SecteurComponent } from './secteurs/secteur/secteur.component';
+import { SecteurItemComponent } from './secteurs/secteur-item/secteur-item.component';
 
 registerLocaleData(localeFr);
 
@@ -140,8 +142,10 @@ registerLocaleData(localeFr);
     TrancheAgeComponent,
     StatsChorteStatutComponent,
     StatsSecteurActiviteComponent,
-    AddSecteurDialogBox,
-    ResteARembourserViewComponent
+    ResteARembourserViewComponent,
+    SecteurComponent,
+    EditSecteurDialogBox,
+    SecteurItemComponent
   ],
   imports: [
     BrowserModule,

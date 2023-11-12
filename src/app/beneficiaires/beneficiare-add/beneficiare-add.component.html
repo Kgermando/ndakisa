@@ -101,31 +101,20 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 ">
-                    <div class="row align-items-center">
-                        <div class="col-lg-9 col-md-9 col-sm-9">
-                            <div class="tagus-form-group">
-                                <label class="d-block mb-12 fw-semibold gray-color">Secteur activité</label>
-                                <mat-form-field appearance="fill">
-                                    <mat-label>Select Secteur activité</mat-label>
-                                    <i class="ri-list-check"></i>
-                                    <mat-select (selectionChange)="onChange($event)" formControlName="secteur_activite">
-                                        <mat-option  *ngFor="let secteur of secteurList" [value]="secteur">{{secteur.name_secteur}}</mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="formGroup.controls['secteur_activite'].hasError('required')">
-                                        Ce champs est obligatoire
-                                    </mat-error>
-                                </mat-form-field>
-                            </div> 
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <a mat-icon-button color="primary"   
-                            (click)="openAddDialog('300ms', '100ms')" 
-                            matTooltip="Ajouter plus de secteurs">
-                                <mat-icon>add_circle</mat-icon>
-                        </a>  
-                        </div>
-                    </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 "> 
+                    <div class="tagus-form-group">
+                        <label class="d-block mb-12 fw-semibold gray-color">Secteur activité</label>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select Secteur activité</mat-label>
+                            <i class="ri-list-check"></i>
+                            <mat-select (selectionChange)="onChange($event)" formControlName="secteur_activite">
+                                <mat-option  *ngFor="let secteur of secteurList" [value]="secteur">{{secteur.name_secteur}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="formGroup.controls['secteur_activite'].hasError('required')">
+                                Ce champs est obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div> 
                 </div> 
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <label class="d-block mb-12 fw-semibold gray-color">Numero impôt </label>
@@ -182,10 +171,9 @@
                     *ngIf="currentUser.permission === 'RC' ||
                                 currentUser.permission === 'RCU' ||
                                 currentUser.permission === 'CRUD'">
-                    Soumettre
-                </button>
-                </div>
-                
+                        Soumettre
+                    </button>
+                </div> 
             </div> 
         </form>
     </mat-card-content>

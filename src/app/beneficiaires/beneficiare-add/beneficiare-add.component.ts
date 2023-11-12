@@ -10,8 +10,8 @@ import { BanqueModel } from 'src/app/banques/models/banque.model';
 import { BanqueService } from 'src/app/banques/banque.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
-import { SecteurService } from '../secteur.service';
-import { SecteurModel } from '../models/secteur.model';
+import { SecteurService } from '../../secteurs/secteur.service';
+import { SecteurModel } from '../../secteurs/models/secteur.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LogUserService } from 'src/app/users/log-user.service';
 
@@ -103,7 +103,8 @@ export class BeneficiareAddComponent implements OnInit {
 
   getAllData() {
     this.secteurService.getAll().subscribe((res) => {
-      this.secteurList = res;
+      var secteurs = res;
+      this.secteurList = secteurs.filter((v: { statut: boolean; }) => v.statut == true);
     });
   }
  
@@ -231,105 +232,13 @@ export class BeneficiareAddComponent implements OnInit {
       console.log(error);
     }
   } 
-
-  openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(AddSecteurDialogBox, {
-      width: '600px',
-      enterAnimationDuration,
-      exitAnimationDuration, 
-    }); 
-  } 
-
-  capitalizeTest(text: string): string {
-    return (text && text[0].toUpperCase() + text.slice(1).toLowerCase()) || text;
-  }
-
-}
-
-
-
-@Component({
-  selector: 'add-secteur-dialog',
-  templateUrl: './secteur-add.html',
-})
-export class AddSecteurDialogBox implements OnInit {
-  isLoading = false;
-
-  formGroup!: FormGroup;
-
-  currentUser: UserModel | any; 
  
 
-  constructor(
-      public dialogRef: MatDialogRef<AddSecteurDialogBox>,
-      private formBuilder: FormBuilder,
-      private router: Router,
-      private authService: AuthService, 
-      private toastr: ToastrService, 
-      private secteurService: SecteurService,
-      private logService: LogUserService,
-  ) {}
-
-  ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({  
-      name_secteur: ['', Validators.required],
-    });
-    
-    this.authService.user().subscribe({
-      next: (user) => {
-        this.currentUser = user;
-      },
-      error: (error) => {
-        this.router.navigate(['/auth/login']);
-        console.log(error);
-      }
-    }); 
-  }
-
-
-  onSubmit() {
-    try {
-      if (this.formGroup.valid) {
-        this.isLoading = true;
-        var body = {
-          name_secteur: this.capitalizeTest(this.formGroup.value.name_secteur),
-          signature: this.currentUser.matricule, 
-          created: new Date(),
-          update_created: new Date(),
-        };
-        this.secteurService.create(body).subscribe({
-          next: (res) => {
-            this.logService.createLog(
-              this.currentUser.id, 
-              'Create', 
-              'Beneficiaire', 
-              `${res.name_secteur}`, 
-              'Création d\'un secteur d\'activité'
-            );
-            this.isLoading = false;
-            this.formGroup.reset(); 
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.close(); 
-          },
-          error: (err) => {
-            this.isLoading = false;
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            console.log(err);
-          }
-        });
-      }
-    } catch (error) {
-      this.isLoading = false;
-      console.log(error);
-    }
-  } 
-
-  close(){
-      this.dialogRef.close(true);
-  } 
-
   capitalizeTest(text: string): string {
     return (text && text[0].toUpperCase() + text.slice(1).toLowerCase()) || text;
   }
 
 }
+
+
+ 

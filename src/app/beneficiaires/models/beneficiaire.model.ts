@@ -1,7 +1,7 @@
 import { BanqueModel } from "src/app/banques/models/banque.model";
 import { CohorteModel } from "src/app/cohortes/models/cohorte.model"; 
 import { PlanRemboursementModel } from "./plan_remousement.model"; 
-import { SecteurModel } from "./secteur.model";
+import { SecteurModel } from "../../secteurs/models/secteur.model";
 
 export interface BeneficiaireModel {
     id: number;

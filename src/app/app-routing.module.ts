@@ -20,6 +20,7 @@ import { BeneficiareListComponent } from './beneficiaires/beneficiare-list/benef
 import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
 import { BeneficiareEditComponent } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
+import { SecteurComponent } from './secteurs/secteur/secteur.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent, children: [
@@ -48,7 +49,8 @@ const routes: Routes = [
     { path: 'beneficiaires/:id/beneficiaire-add', component: BeneficiareAddComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-view', component: BeneficiareViewComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-edit', component: BeneficiareEditComponent, canActivate: [beneficiairesGuard]},
-   
+    { path: 'beneficiaires/secteur-list', component: SecteurComponent, canActivate: [beneficiairesGuard]},
+
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   ]},
 

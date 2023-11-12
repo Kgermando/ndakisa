@@ -13,8 +13,8 @@ import { PlanRemboursementModel } from '../models/plan_remousement.model';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LogUserService } from 'src/app/users/log-user.service';
-import { SecteurModel } from '../models/secteur.model';
-import { SecteurService } from '../secteur.service';
+import { SecteurModel } from '../../secteurs/models/secteur.model';
+import { SecteurService } from '../../secteurs/secteur.service';
 
 @Component({
   selector: 'app-beneficiare-edit',
