@@ -1,6 +1,7 @@
 import { BanqueModel } from "src/app/banques/models/banque.model";
 import { CohorteModel } from "src/app/cohortes/models/cohorte.model"; 
 import { PlanRemboursementModel } from "./plan_remousement.model"; 
+import { SecteurModel } from "./secteur.model";
 
 export interface BeneficiaireModel {
     id: number;
@@ -13,7 +14,7 @@ export interface BeneficiaireModel {
     email: string; 
     telephone: string; 
     raison_sociale: string; 
-    secteur_activite: string; 
+    secteur_activite: SecteurModel; 
     numero_impot: string; 
     id_nat: string;
     rccm: string;

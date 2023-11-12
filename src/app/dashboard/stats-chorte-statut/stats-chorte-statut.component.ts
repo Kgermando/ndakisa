@@ -72,7 +72,7 @@ export class StatsChorteStatutComponent implements OnInit {
                 for(let item of this.statutCohorteList) {
                     if (item.statut == 'Ouverte') {
                         this.totalOuverte = item.count;
-                    } else if (item.statut == 'Complete') {
+                    } else if (item.statut == 'Fermée') {
                         this.totalComplete = item.count;
                     }
                 }
@@ -85,13 +85,13 @@ export class StatsChorteStatutComponent implements OnInit {
        this.chartOptions = {
             series: [
                 {
-                    name: "Ouvert",
+                    name: "Ouverte",
                     data: [2400, 1398, 5405, 3910, 4398, 3321, 2000]
                 }
             ],
             series2: [
                 {
-                    name: "Fermé",
+                    name: "Fermée",
                     data: [24, 13, 30, 35, 40, 22, 15]
                 }
             ],

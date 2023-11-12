@@ -74,9 +74,8 @@
                                 </li> 
                                 <li class="gray-color fw-semibold">
                                     Statut
-                                    <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15);" *ngIf="cohorte.statut == 'Opened'">Ouverte</span>
-                                    <span class="badge pending fw-medium  d-block position-relative"  style="color: red;" *ngIf="cohorte.statut == 'Closed'">Fermée</span>
-                                    <span class="badge completed fw-medium  d-block position-relative" style="color: blue;" *ngIf="cohorte.statut == 'Complete'">Complète</span>
+                                    <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15);" *ngIf="cohorte.statut == 'Fermée'">Fermée</span>
+                                    <span class="badge completed fw-medium  d-block position-relative" style="color: blue;" *ngIf="cohorte.statut == 'Ouverte'">Ouverte</span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Progession de remboursement

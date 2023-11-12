@@ -8,7 +8,4 @@ export interface LogUserModel {
     module: string; // Beneficiaire, Cohorte, Banque, Utilisateurs
     title: string; // Titre de l'objet
     observation: string; // Mise en corbeil
-    signature: string;
-    created: Date;
-    update_created: Date;
 }

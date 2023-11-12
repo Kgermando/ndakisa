@@ -36,9 +36,7 @@ export class StatsSecteurActiviteComponent {
   isLoading = false;
   secteurActiviteList:any[] = [];
 
-  constructor(private dashboardService: DashboardService) {
-      
-  }
+  constructor(private dashboardService: DashboardService) {  }
 
     ngOnInit(): void {
         // console.log('start_date', this.start_date);

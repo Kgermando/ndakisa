@@ -12,6 +12,9 @@ import { PlanRemboursementService } from '../plan_remboursement.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LogUserService } from 'src/app/users/log-user.service';
+import { SecteurModel } from '../models/secteur.model';
+import { SecteurService } from '../secteur.service';
 
 @Component({
   selector: 'app-beneficiare-edit',
@@ -36,6 +39,7 @@ export class BeneficiareEditComponent implements OnInit {
   provinceList: string[] = ProvinceList;
   banqueList: BanqueModel[] = [];
   planRemboursementList: PlanRemboursementModel[] = [];
+  secteurList: SecteurModel[] = [];
 
   id: any; 
 
@@ -46,6 +50,8 @@ export class BeneficiareEditComponent implements OnInit {
     private beneficiareService: BeneficiareService,
     private planRemboursement: PlanRemboursementService,
     private banqueService: BanqueService,
+    private logService: LogUserService,
+    private secteurService: SecteurService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
 
@@ -95,6 +101,9 @@ export class BeneficiareEditComponent implements OnInit {
         this.currentUser = user;
         this.banqueService.getAll().subscribe((res) => {
           this.banqueList = res;
+        });
+        this.secteurService.getAll().subscribe((res) => {
+          this.secteurList = res;
         });
         this.beneficiareService.get(this.id).subscribe(item => {
           this.beneficiare = item;
@@ -158,11 +167,21 @@ export class BeneficiareEditComponent implements OnInit {
       if (this.formGroup.valid) {
         this.isLoading = true; 
         this.beneficiareService.update(this.id, this.formGroup.getRawValue()).subscribe({
-          next: (res) => { 
-            this.isLoading = false;
-            this.formGroup.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            // this.router.navigate(['/layouts/cohortes/cohorte-list']);
+          next: () => { 
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Update', 
+              'Beneficiaire', 
+              `${this.beneficiare.name_beneficiaire}`,
+              'Modification des infos du Beneficiaire'
+            ).subscribe(
+              () => {
+                this.isLoading = false;
+                this.formGroup.reset();
+                this.toastr.success('Ajouter avec succès!', 'Success!');
+                // this.router.navigate(['/layouts/cohortes/cohorte-list']);
+              }
+            );
           },
           error: (err) => {
             this.isLoading = false;
@@ -182,10 +201,17 @@ export class BeneficiareEditComponent implements OnInit {
       if (this.formGroup2.valid) {
         this.isLoading = true; 
         this.beneficiareService.update(this.id, this.formGroup2.getRawValue()).subscribe({
-          next: () => {
+          next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Update', 
+              'Beneficiaire', 
+              `${this.beneficiare.name_beneficiaire}`, 
+              'Modification des infos bancaires du Beneficiaire'
+            );
             this.isLoading = false;
             this.formGroup2.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
+            this.toastr.success('Modifier avec succès!', 'Success!');
             // window.location.reload()
             // this.router.navigate(['/layouts/cohortes/cohorte-list']);
           },
@@ -219,7 +245,14 @@ export class BeneficiareEditComponent implements OnInit {
           update_created: new Date(),
         };
         this.planRemboursement.create(body).subscribe({
-          next: () => {
+          next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'Beneficiaire', 
+              `${this.beneficiare.name_beneficiaire}`, 
+              'Création du plan de remboursement'
+            );
             this.isLoadingPlanRemboursement = false;
             this.formGroup3.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
@@ -247,6 +280,13 @@ export class BeneficiareEditComponent implements OnInit {
         .delete(id)
         .subscribe({
           next: () => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Delete', 
+              'Beneficiaire', 
+              `D'un élement de plan de remboursement`, 
+              'Suppression du plan de remboursement'
+            );
             this.toastr.info('Supprimé avec succès!', 'Success!'); 
           },
           error: err => {
@@ -273,6 +313,10 @@ export class BeneficiareEditComponent implements OnInit {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
+  compareSecteurFn(c1: SecteurModel, c2: SecteurModel): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
   capitalizeTest(text: string): string {
     return (text && text[0].toUpperCase() + text.slice(1).toLowerCase()) || text;
   }
@@ -291,6 +335,8 @@ export class EditPlanRemboursementDialogBox implements OnInit{
 
   currentUser: UserModel | any;
 
+  plan_remboursement: PlanRemboursementModel;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
       public dialogRef: MatDialogRef<EditPlanRemboursementDialogBox>,
@@ -299,6 +345,7 @@ export class EditPlanRemboursementDialogBox implements OnInit{
       private authService: AuthService, 
       private toastr: ToastrService, 
       private planRemboursementService: PlanRemboursementService,
+      private logService: LogUserService,
   ) {}
 
   ngOnInit(): void {
@@ -313,6 +360,7 @@ export class EditPlanRemboursementDialogBox implements OnInit{
       next: (user) => {
         this.currentUser = user; 
         this.planRemboursementService.get(parseInt(this.data['id'])).subscribe(item => {
+          this.plan_remboursement = item;
           this.formGroup.patchValue({
             date_de_rembousement: item.date_de_rembousement,
             credit_en_debut_periode: item.credit_en_debut_periode,
@@ -338,6 +386,13 @@ export class EditPlanRemboursementDialogBox implements OnInit{
       this.planRemboursementService.update(parseInt(this.data['id']), this.formGroup.getRawValue())
       .subscribe({
         next: () => {
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Update', 
+            'Beneficiaire', 
+            `${this.plan_remboursement.beneficiaire.name_beneficiaire}`, 
+            'Modification du plan de remboursement'
+          );
           this.isLoading = false;
           this.toastr.success('Modification enregistré!', 'Success!');
           // window.location.reload();

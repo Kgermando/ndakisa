@@ -13,6 +13,7 @@ import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { SecteurService } from '../secteur.service';
 import { SecteurModel } from '../models/secteur.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-beneficiare-add',
@@ -53,6 +54,7 @@ export class BeneficiareAddComponent implements OnInit {
     private beneficiareService: BeneficiareService,
     private banqueService: BanqueService,
     private secteurService: SecteurService,
+    private logService: LogUserService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
 
@@ -192,7 +194,7 @@ export class BeneficiareAddComponent implements OnInit {
           email: this.formGroup.value.email,
           telephone: this.formGroup.value.telephone,
           raison_sociale: this.capitalizeTest(this.formGroup.value.raison_sociale), 
-          secteur_activite: this.capitalizeTest(this.formGroup.value.secteur_activite),
+          secteur_activite: this.formGroup.value.secteur_activite,
           numero_impot: this.formGroup.value.numero_impot, 
           id_nat: this.formGroup.value.id_nat,
           rccm: this.formGroup.value.rccm,
@@ -205,6 +207,13 @@ export class BeneficiareAddComponent implements OnInit {
         };
         this.beneficiareService.create(body).subscribe({
           next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'Beneficiaire', 
+              `${res.name_beneficiaire}`, 
+              'Création d\'un beneficiaire'
+            );
             this.isLoading = false;
             this.formGroup.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
@@ -258,6 +267,7 @@ export class AddSecteurDialogBox implements OnInit {
       private authService: AuthService, 
       private toastr: ToastrService, 
       private secteurService: SecteurService,
+      private logService: LogUserService,
   ) {}
 
   ngOnInit(): void {
@@ -288,9 +298,16 @@ export class AddSecteurDialogBox implements OnInit {
           update_created: new Date(),
         };
         this.secteurService.create(body).subscribe({
-          next: () => {
+          next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'Beneficiaire', 
+              `${res.name_secteur}`, 
+              'Création d\'un secteur d\'activité'
+            );
             this.isLoading = false;
-            this.formGroup.reset();
+            this.formGroup.reset(); 
             this.toastr.success('Ajouter avec succès!', 'Success!');
             this.close(); 
           },
