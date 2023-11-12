@@ -10,25 +10,25 @@ export class DashboardService extends ApiService {
   endpoint: string = `${environment.apiURL}/dashboard`;
 
 
-  totalBeneficiaire(): Observable<any> {
-    return this.http.get(`${this.endpoint}/beneficiaires`);
+  totalBeneficiaire(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/beneficiaires/${start_date}/${end_date}`);
   }
 
-  totalCohorte(): Observable<any> {
-    return this.http.get(`${this.endpoint}/cohortes`);
+  totalCohorte(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/cohortes/${start_date}/${end_date}`);
   }
 
-  totalBanque(): Observable<any> {
-    return this.http.get(`${this.endpoint}/banques`);
+  totalBanque(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/banques/${start_date}/${end_date}`);
   }
 
-  sexe(): Observable<any> {
-    return this.http.get(`${this.endpoint}/sexe`);
+  sexe(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/sexe/${start_date}/${end_date}`);
   }
 
 
-  ageBeneficiaires(): Observable<any> {
-    return this.http.get(`${this.endpoint}/age`);
+  ageBeneficiaires(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/age/${start_date}/${end_date}`);
   }
 
   totalGarantie(start_date: string, end_date: string): Observable<any> {

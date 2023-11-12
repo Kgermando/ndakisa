@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
 import { ChartComponent } from "ng-apexcharts";
 
 import {
@@ -26,57 +26,45 @@ export type ChartOptions = {
   templateUrl: './stats-secteur-activite.component.html',
   styleUrls: ['./stats-secteur-activite.component.scss']
 })
-export class StatsSecteurActiviteComponent {
-  @Input() start_date: string;
-  @Input() end_date: string;
+export class StatsSecteurActiviteComponent implements OnChanges {
+  @Input() secteurActiviteList:any[] = [];
+  @Input() isLoading: boolean;
 
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-
-  isLoading = false;
-  secteurActiviteList:any[] = [];
-
-  constructor(private dashboardService: DashboardService) {  }
-
-    ngOnInit(): void {
-        // console.log('start_date', this.start_date);
-    // console.log('end_date', this.end_date);
-
+  
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
     this.getPieSecteurs();
-    }
+  }
 
     getPieSecteurs() {
-        this.dashboardService.secteurActivite(this.start_date, this.end_date).subscribe(
-            res => {
-                this.secteurActiviteList = res;
-                this.chartOptions = {
-                    series: this.secteurActiviteList.map((item: any) => parseFloat(item.count)),
-                    // colors: ["#ee368c", "#757fef"],
-                    chart: {
-                        height: 365,
-                        type: "donut"
+        this.chartOptions = {
+            series: this.secteurActiviteList.map((item: any) => parseFloat(item.count)),
+            // colors: ["#ee368c", "#757fef"],
+            chart: {
+                height: 365,
+                type: "donut"
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return "" + val + "Beneficiaires";
                     },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return "" + val + "Beneficiaires";
-                            },
-                        },
-                    },
-                    stroke: {
-                        width: 1,
-                        show: true
-                    },
-                    legend: {
-                        offsetY: 0,
-                        fontSize: "14px",
-                        position: "bottom",
-                        horizontalAlign: "center"
-                    },
-                    labels: this.secteurActiviteList.map((item: any) => item.name_secteur)
-                };
-            }
-        )
+                },
+            },
+            stroke: {
+                width: 1,
+                show: true
+            },
+            legend: {
+                offsetY: 0,
+                fontSize: "14px",
+                position: "bottom",
+                horizontalAlign: "center"
+            },
+            labels: this.secteurActiviteList.map((item: any) => item.name_secteur)
+        };
     }
 
 }

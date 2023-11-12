@@ -77,28 +77,39 @@
 </div>
 
 
-<app-stats-nombre [start_date]="start_date" [end_date]="end_date"></app-stats-nombre> 
-
+<app-stats-nombre 
+    [totalGarantie]="totalGarantie"
+    [totalCreditAccorde]="totalCreditAccorde"
+    [totalARembourser]="totalARembourser"
+    [totalRembourse]="totalRembourse"
+    [resteARembourser]="resteARembourser"
+    [isLoading]="isLoading">
+</app-stats-nombre> 
 
 <div class="row">
     <div class="col-xxl-8">
 
-        <app-stats-progress [start_date]="start_date" [end_date]="end_date"></app-stats-progress>
+        <app-stats-progress 
+            [progressionRemboursementHommeList]="progressionRemboursementHommeList"
+            [progressionRemboursementFemmeList]="progressionRemboursementFemmeList" 
+            [progressionRemboursementDateList]="progressionRemboursementDateList"
+            [isLoading]="isLoading">
+        </app-stats-progress> 
 
         <div class="row justify-content-center">
             <div class="col-md-6 col-xxl-6"> 
-                <app-stats-banque [start_date]="start_date" [end_date]="end_date"></app-stats-banque>
+                <app-stats-banque [banqueList]="banqueList" [isLoading]="isLoading"></app-stats-banque>
             </div>
             <div class="col-md-6 col-xxl-6">
-                <app-stats-beneficiaire-statut [start_date]="start_date" [end_date]="end_date"></app-stats-beneficiaire-statut>
+                <app-stats-beneficiaire-statut [statutBeneficiaireList]="statutBeneficiaireList" [isLoading]="isLoading"></app-stats-beneficiaire-statut>
             </div>
         </div>
 
-        <app-tranche-age></app-tranche-age>
+        <app-tranche-age [trancheAgeList]="trancheAgeList" [isLoading]="isLoading"></app-tranche-age>
 
-        <app-stats-garantie-remboursement [start_date]="start_date" [end_date]="end_date"></app-stats-garantie-remboursement>
+        <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
 
-        <app-stats-cohorte-remboursement [start_date]="start_date" [end_date]="end_date"></app-stats-cohorte-remboursement>
+        <app-stats-cohorte-remboursement [cohorteList]="cohorteList" [isLoading]="isLoading"></app-stats-cohorte-remboursement>
 
         <div class="row">
             <div class="col-xxl-8">
@@ -114,11 +125,15 @@
     </div>
     <div class="col-xxl-4">
 
-        <app-stats-sexe></app-stats-sexe>
+        <app-stats-sexe [sexeList]="sexeList" [isLoading]="isLoading"></app-stats-sexe>
         
-        <app-stats-chorte-statut [start_date]="start_date" [end_date]="end_date"></app-stats-chorte-statut>
+        <app-stats-chorte-statut 
+            [totalOuverte]="totalOuverte" 
+            [totalFermee]="totalFermee" 
+            [isLoading]="isLoading">
+        </app-stats-chorte-statut>
 
-        <app-stats-secteur-activite [start_date]="start_date" [end_date]="end_date"></app-stats-secteur-activite>
+        <app-stats-secteur-activite [secteurActiviteList]="secteurActiviteList" [isLoading]="isLoading"></app-stats-secteur-activite>
 
         <app-stats-beneficiaire-province [tauxParticipatiionProvinceList]="tauxParticipatiionProvinceList"></app-stats-beneficiaire-province>
 

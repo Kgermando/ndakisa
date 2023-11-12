@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
 import { DatePipe } from '@angular/common'; 
 import {
     ApexAxisChartSeries,
@@ -38,19 +38,14 @@ export type ChartOptions = {
   templateUrl: './stats-chorte-statut.component.html',
   styleUrls: ['./stats-chorte-statut.component.scss']
 })
-export class StatsChorteStatutComponent implements OnInit {
-  @Input() start_date: string;
-  @Input() end_date: string;
+export class StatsChorteStatutComponent implements OnChanges {
+  @Input() totalOuverte: number;
+  @Input() totalFermee: number;
+  @Input() isLoading: boolean;
 
   @ViewChild("chart") chart: ChartComponent;
     public chartOptions: Partial<ChartOptions>;
 
-    isLoading = false;
-
-    statutCohorteList: any[] = [];
-
-    totalOuverte = 0;
-    totalComplete = 0;
 
     toggleTheme() {
         this.themeService.toggleTheme();
@@ -59,27 +54,11 @@ export class StatsChorteStatutComponent implements OnInit {
     constructor(
         private datePipe: DatePipe,
         public themeService: CustomizerSettingsService,
-        private dashboardService: DashboardService
-    ) { }
+    ) { } 
 
 
-    ngOnInit(): void {
-        this.isLoading = true;
-        this.dashboardService.statutCohorte(this.start_date, this.end_date).subscribe(
-            res => {
-                this.statutCohorteList = res;
-                
-                for(let item of this.statutCohorteList) {
-                    if (item.statut == 'Ouverte') {
-                        this.totalOuverte = item.count;
-                    } else if (item.statut == 'Fermée') {
-                        this.totalComplete = item.count;
-                    }
-                }
-
-                this.isLoading = false;
-            }
-        );
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log(changes);
 
 
        this.chartOptions = {
