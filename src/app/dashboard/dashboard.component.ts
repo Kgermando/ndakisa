@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CustomizerSettingsService } from '../common/customizer-settings/customizer-settings.service';
 import { DashboardService } from './dashboard.service';
-import { formatDate } from '@angular/common';
-import { s } from '@fullcalendar/core/internal-common';
+import { formatDate } from '@angular/common'; 
 
 @Component({
   selector: 'app-dashboard',
