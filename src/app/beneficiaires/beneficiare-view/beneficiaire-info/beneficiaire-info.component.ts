@@ -14,9 +14,12 @@ import { Router } from '@angular/router';
   templateUrl: './beneficiaire-info.component.html',
   styleUrls: ['./beneficiaire-info.component.scss']
 })
-export class BeneficiaireInfoComponent {
+export class BeneficiaireInfoComponent implements OnInit {
   @Input('beneficiaire') beneficiaire: BeneficiaireModel;
   @Input() currentUser: UserModel; 
+
+
+  delai_de_reajustement = 0;
   
     constructor(
       public themeService: CustomizerSettingsService,
@@ -25,6 +28,15 @@ export class BeneficiaireInfoComponent {
       public dialog: MatDialog,
       private toastr: ToastrService
   ) {}
+
+
+  ngOnInit(): void {
+    this.delai_de_reajustement = this.beneficiaire.plan_remboursements.reduce(function(sum, value) {
+        return sum + value.delai_reajustement;
+    },0);
+  }
+
+
 
   edit(id: number) {
     this.router.navigate(['/layouts/beneficiaires', id, 'beneficiaire-edit']);
@@ -79,7 +91,7 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
 
   currentUser: UserModel | any;
 
-  statutList = ['En cours', 'interrompu', 'Terminé'];
+  statutList = ['En cours', 'Interrompu', 'Terminé'];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

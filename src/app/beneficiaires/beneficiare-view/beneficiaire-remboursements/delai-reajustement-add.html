@@ -1,0 +1,38 @@
+<div class="create-dialog-box">
+    <div class="title d-flex align-items-center justify-content-space-between">
+        <h4 class="mb-0">Ajouter le Delai de réajustement</h4>
+        <button class="close-btn bg-transparent p-0 border-none" (click)="close()"><i class="flaticon-close"></i></button>
+    </div>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="d-block fw-semibold">Delai de réajustement en mois</label>
+                    <input type="number" class="input-control" 
+                        placeholder="Delai réajustement" formControlName="delai_reajustement" required>
+                        <mat-error *ngIf="formGroup.controls['delai_reajustement'].hasError('required')">
+                            Ce champs est obligatoire
+                        </mat-error>
+                </div>
+            </div>
+        </div>
+        <div class="text-end">
+            <button type="button" class="gray" (click)="close()">
+                <i class="ri-close-fill"></i> 
+                Annuler
+            </button>
+            <button type="submit">
+                <span *ngIf="isLoading">
+                    <mat-progress-spinner [diameter]="30"
+                        color="primary" 
+                        mode="indeterminate">
+                    </mat-progress-spinner>
+                </span>
+                <span *ngIf="!isLoading">
+                    <i class="ri-add-fill"></i> 
+                    Soumettre
+                </span> 
+            </button>
+        </div>
+    </form>
+</div>

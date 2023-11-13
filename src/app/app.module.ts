@@ -53,7 +53,7 @@ import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progre
 import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/beneficiare-input.component';
 import { PlanRemboursementService } from './beneficiaires/plan_remboursement.service';
 import { BeneficiaireInfoComponent, EditStatutBeneficiaireDialogBox } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
-import { AddRemboursementDialogBox, BeneficiaireRemboursementsComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/beneficiaire-remboursements.component'; 
+import { AddDelaiReajustelentDialogBox, AddRemboursementDialogBox, BeneficiaireRemboursementsComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/beneficiaire-remboursements.component'; 
 import { MontantRembourserComponent } from './beneficiaires/montant-rembourser/montant-rembourser.component';
 import { ResteARembourserComponent } from './beneficiaires/reste-a-rembourser/reste-a-rembourser.component';
 import { BanqueProgessComponent } from './banques/banque-progess/banque-progess.component';
@@ -145,7 +145,8 @@ registerLocaleData(localeFr);
     ResteARembourserViewComponent,
     SecteurComponent,
     EditSecteurDialogBox,
-    SecteurItemComponent
+    SecteurItemComponent,
+    AddDelaiReajustelentDialogBox
   ],
   imports: [
     BrowserModule,

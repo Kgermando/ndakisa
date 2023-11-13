@@ -163,7 +163,7 @@ export class EditCohorteDialogBox implements OnInit{
         this.cohorteService.get(parseInt(this.data['id'])).subscribe(item => {
           this.formGroup.patchValue({
             name_cohorte: item.name_cohorte,
-            contrat_ref: item.contrat_ref, 
+            contrat_ref: item.contrat_ref,
             statut: item.statut,
             signature: this.currentUser.matricule, 
             update_created: new Date(),
@@ -174,8 +174,8 @@ export class EditCohorteDialogBox implements OnInit{
         this.router.navigate(['/auth/login']);
         console.log(error);
       }
-    }); 
-  } 
+    });
+  }
 
 
   onSubmit() {

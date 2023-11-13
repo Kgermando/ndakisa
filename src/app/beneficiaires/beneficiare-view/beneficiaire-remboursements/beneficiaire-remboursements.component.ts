@@ -111,10 +111,20 @@ export class BeneficiaireRemboursementsComponent {
         id: id
       }
     }); 
-  } 
+  }
+  
+  openDelaiReajustementDialog(enterAnimationDuration: string, exitAnimationDuration: string,id: number): void {
+    this.dialog.open(AddDelaiReajustelentDialogBox, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        id: id
+      }
+    }); 
+  }
 
 }
-
 
 
 @Component({
@@ -182,6 +192,84 @@ export class AddRemboursementDialogBox implements OnInit {
         //   signature: this.currentUser.matricule, 
         //   update_created: new Date(),
         // };
+        this.remboursementService.update(this.data.id, this.formGroup.getRawValue()).subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.formGroup.reset();
+            this.toastr.success('Ajouter avec succès!', 'Success!');
+            this.close(); 
+          },
+          error: (err) => {
+            this.isLoading = false;
+            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+            console.log(err);
+          }
+        });
+      }
+    } catch (error) {
+      this.isLoading = false;
+      console.log(error);
+    }
+  } 
+
+  close(){
+      this.dialogRef.close(true);
+  } 
+
+}
+
+
+
+@Component({
+  selector: 'add-delai-reajustement-dialog',
+  templateUrl: './delai-reajustement-add.html',
+})
+export class AddDelaiReajustelentDialogBox implements OnInit {
+  isLoading = false;
+
+  formGroup!: FormGroup;
+
+  currentUser: UserModel | any; 
+ 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+      public dialogRef: MatDialogRef<AddDelaiReajustelentDialogBox>,
+      private formBuilder: FormBuilder,
+      private router: Router,
+      private authService: AuthService, 
+      private toastr: ToastrService, 
+      private remboursementService: PlanRemboursementService,
+  ) {}
+
+  ngOnInit(): void {
+    this.formGroup = this.formBuilder.group({
+      delai_reajustement: [''],
+    });
+    
+    this.authService.user().subscribe({
+      next: (user) => {
+        this.currentUser = user; 
+        this.remboursementService.get(this.data.id).subscribe(item => { 
+            this.formGroup.patchValue({
+              delai_reajustement: item.delai_reajustement,
+              signature: this.currentUser.matricule, 
+              update_created: new Date(),
+            });
+          }
+        );
+      },
+      error: (error) => {
+        this.router.navigate(['/auth/login']);
+        console.log(error);
+      }
+    }); 
+  }
+
+
+  onSubmit() {
+    try {
+      if (this.formGroup.valid) {
+        this.isLoading = true;
         this.remboursementService.update(this.data.id, this.formGroup.getRawValue()).subscribe({
           next: () => {
             this.isLoading = false;

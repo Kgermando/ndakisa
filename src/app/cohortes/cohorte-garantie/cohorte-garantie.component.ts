@@ -19,4 +19,3 @@ export class CohorteGarantieComponent implements OnInit {
     }
   }
 }
- 

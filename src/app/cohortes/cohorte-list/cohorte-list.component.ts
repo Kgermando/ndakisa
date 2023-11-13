@@ -116,8 +116,7 @@ export class CreateCohorteDialogBox {
 
     this.formGroup = this._formBuilder.group({
       name_cohorte: ['', Validators.required],
-      contrat_ref: ['', Validators.required], 
-      montant_global: ['', Validators.required],
+      contrat_ref: ['', Validators.required],
     });
   }
 

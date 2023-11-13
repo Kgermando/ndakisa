@@ -6,7 +6,7 @@
     [class.hide-sidebar]="themeService.isHideSidebar()"
 >
     <div class="logo bg-white">
-        <a routerLink="/" class="d-flex align-items-center">
+        <a  class="d-flex align-items-center">
             <img src="assets/img/logo-icon.png" alt="logo">
             <span>NDAKISA</span>
         </a>
@@ -54,7 +54,7 @@
 
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">INSTITUTIONS</span>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
-                    *ngIf="currentUser.roles.includes('Banques')">
+                        *ngIf="currentUser.roles.includes('Banques')">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <i class="ri-bank-line"></i>
@@ -75,7 +75,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </mat-expansion-panel>  
+                    </mat-expansion-panel>
                     
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('users')">PERSONNEL</span>
                     <a routerLink="/layouts/users/user-list" class="sidebar-menu-link" 

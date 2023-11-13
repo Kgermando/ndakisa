@@ -8,6 +8,7 @@ export interface PlanRemboursementModel {
     banque: BanqueModel;
     beneficiaire: BeneficiaireModel;
     date_de_rembousement: Date;
+    delai_reajustement: number;
     credit_en_debut_periode: string;
     // mensualite: string;  // somme de interet + capital
     interet: string;

@@ -15,12 +15,20 @@
                 <th class="fw-semibold gray-color">Bordereau</th>
                 <th class="fw-semibold gray-color">Observation</th>
                 <th class="fw-semibold gray-color">Add</th>
+                <th class="fw-semibold gray-color">Delai réajustement</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let plan_remboursement of planRemboursementList; let i = index"> 
                 <td class="gray-color">{{ i+1 }}</td>
-                <td class="gray-color">{{ plan_remboursement.date_de_rembousement | date: 'EE le dd/MM/yyyy' }}</td>
+                <td class="gray-color">
+                    <span [matBadge]="plan_remboursement.delai_reajustement" 
+                        matBadgeOverlap="false" matBadgeColor="warn" 
+                        [matBadgeHidden]="plan_remboursement.delai_reajustement === 0"
+                        class="d-inline-block">
+                        {{ plan_remboursement.date_de_rembousement | date: 'EE le dd/MM/yyyy' }}
+                    </span>
+                </td>
                 <td class="gray-color">{{ plan_remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} usd</td>
                 <td class="gray-color">{{ plan_remboursement.capital | numberFormat:'fr-FR' }} usd</td> 
                 <td class="gray-color">{{ plan_remboursement.interet | numberFormat:'fr-FR' }} usd</td>
@@ -116,14 +124,25 @@
                         </div> 
                     </div> -->
                 </td>
-                <td *ngIf="beneficiaire.statut === 'interrompu'">
-                    <button mat-icon-button color="accent">
+                <td *ngIf="beneficiaire.statut === 'Interrompu'">
+                    <button mat-icon-button color="accent" matTooltip="Remboursement Interrompu">
                             <mat-icon>info</mat-icon>
                     </button>
                 </td>
                 <td *ngIf="beneficiaire.statut === 'Terminé'">
-                    <button mat-icon-button color="success">
+                    <button mat-icon-button color="success" matTooltip="Remboursement Terminé">
                             <mat-icon>verified</mat-icon>
+                    </button>
+                </td>
+                <td>
+                    <button mat-icon-button color="primary" *ngIf="plan_remboursement.date_paiement"
+                     matTooltip="Pas de delai de réajustement">
+                        <mat-icon>schedule</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" *ngIf="!plan_remboursement.date_paiement"
+                     (click)="openDelaiReajustementDialog('300ms', '100ms', plan_remboursement.id)"
+                     matTooltip="Ajouter un delai réajustement">
+                            <mat-icon>more_time</mat-icon>
                     </button>
                 </td>
             </tr>
