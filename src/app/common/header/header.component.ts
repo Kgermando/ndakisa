@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomizerSettingsService } from '../customizer-settings/customizer-settings.service';
 import { Auth } from '../classes/auth';
 import { UserModel } from 'src/app/users/models/user.model';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class HeaderComponent {
         private datePipe: DatePipe,
         public themeService: CustomizerSettingsService,
         private authService: AuthService, 
-        private formBuilder: FormBuilder,
+        private logService: LogUserService,
     ) {
         this.toggleService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
@@ -60,10 +61,18 @@ export class HeaderComponent {
   
     logOut() {
         this.authService.logout().subscribe(res => {
-           console.log(res);
-           localStorage.removeItem('jwt');
-           localStorage.removeItem('roles');
-        //    localStorage.clear();
+            this.logService.createLog(
+            this.currentUser.id,
+            'Logout', 
+            'User', 
+            `${this.currentUser.prenom} ${this.currentUser.nom}`,
+            'Déconnexion réussi.'
+            ).subscribe(() => {
+            console.log(res);
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('roles');
+               localStorage.clear();
+            });
         });
     }
 

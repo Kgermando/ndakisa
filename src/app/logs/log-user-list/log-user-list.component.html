@@ -16,6 +16,8 @@
                         <span class="badge text-bg-warning" *ngIf="item.type_operation == 'Update'">{{item.type_operation}}</span>
                         <span class="badge text-bg-danger" *ngIf="item.type_operation == 'Delete'">{{item.type_operation}}</span>
                         <span class="badge text-bg-info" *ngIf="item.type_operation == 'Export'">{{item.type_operation}}</span>
+                        <span class="badge text-bg-success" *ngIf="item.type_operation == 'Login'">{{item.type_operation}}</span>
+                        <span class="badge text-bg-secondary" *ngIf="item.type_operation == 'Logout'">{{item.type_operation}}</span>
                         -{{ item.title }}
                     </h5>
                     <h6 class="mb-0">{{item.user.matricule }}</h6>
@@ -23,6 +25,10 @@
                     <p>{{ item.observation }}</p>
                 </li>
             </ul>
+            <app-paginator
+                [lastPage]="lastPage"
+                (pageChanged)="load($event)"
+                ></app-paginator>
         </mat-card-content>
     </mat-card>    
 </div>

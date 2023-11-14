@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router'; 
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/users/models/user.model';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private logService: LogUserService,
     private toastr: ToastrService
   ) {}
 
@@ -46,29 +48,37 @@ export class LoginComponent {
       };
       this.authService.login(body).subscribe({
           next: (res) => {
-            let user: UserModel = res;
-            let roleList = JSON.stringify(user.roles);
-            localStorage.removeItem('roles');
-            localStorage.setItem('roles', roleList);
-            if (user.statut_user) {
-              if (user.roles[0] === 'Dashboard') { 
-                this.router.navigate(['/layouts/dashboard']);  
-              } else if (user.roles[0] === 'Cohortes') { 
-                this.router.navigate(['/layouts/cohortes/cohorte-list']);
-              } else if (user.roles[0] === 'Banques') { 
-                this.router.navigate(['/layouts/banques/banque-list']);
-              } else if (user.roles[0] === 'Beneficiaires') { 
-                this.router.navigate(['/layouts/beneficiaires/beneficiaire-list']);
-              } else if (user.roles[0] === 'users') { 
-                this.router.navigate(['/layouts/users/user-list']);
+            this.logService.createLog(
+              res.id,
+              'Login', 
+              'User', 
+              `${res.prenom} ${res.nom}`,
+              'Authentification réussi.'
+            ).subscribe(() => {
+              let user: UserModel = res;
+              let roleList = JSON.stringify(user.roles);
+              localStorage.removeItem('roles');
+              localStorage.setItem('roles', roleList);
+              if (user.statut_user) {
+                if (user.roles[0] === 'Dashboard') { 
+                  this.router.navigate(['/layouts/dashboard']);  
+                } else if (user.roles[0] === 'Cohortes') { 
+                  this.router.navigate(['/layouts/cohortes/cohorte-list']);
+                } else if (user.roles[0] === 'Banques') { 
+                  this.router.navigate(['/layouts/banques/banque-list']);
+                } else if (user.roles[0] === 'Beneficiaires') { 
+                  this.router.navigate(['/layouts/beneficiaires/beneficiaire-list']);
+                } else if (user.roles[0] === 'users') { 
+                  this.router.navigate(['/layouts/users/user-list']);
+                } else {
+                  this.router.navigate(['/auth/login']);
+                }
               } else {
                 this.router.navigate(['/auth/login']);
               }
-            } else {
-              this.router.navigate(['/auth/login']);
-            }
-            this.toastr.success(`Bienvenue ${user.prenom}!`, 'Success!');
-            this.isLoading = false;
+              this.toastr.success(`Bienvenue ${user.prenom}!`, 'Success!');
+              this.isLoading = false;
+            });
           },
           error: (e) => {
             this.isLoading = false;
