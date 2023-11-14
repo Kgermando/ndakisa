@@ -20,6 +20,7 @@ export class BeneficiaireInfoComponent implements OnInit {
 
 
   delai_de_reajustement = 0;
+  date_maturite_reajustement: Date;
   
     constructor(
       public themeService: CustomizerSettingsService,
@@ -34,6 +35,17 @@ export class BeneficiaireInfoComponent implements OnInit {
     this.delai_de_reajustement = this.beneficiaire.plan_remboursements.reduce(function(sum, value) {
         return sum + value.delai_reajustement;
     },0);
+
+    if (this.delai_de_reajustement > 0) {
+      var days = this.delai_de_reajustement * 30;
+      var date = new Date(this.beneficiaire.date_maturite);
+      this.date_maturite_reajustement = new Date(date);
+      this.date_maturite_reajustement.setDate(date.getMonth() + days);
+
+      console.log('days', days);
+      console.log('date_maturite_reajustement', this.date_maturite_reajustement);
+    }
+
   }
 
 

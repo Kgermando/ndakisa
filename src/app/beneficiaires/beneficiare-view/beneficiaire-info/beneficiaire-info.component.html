@@ -166,6 +166,11 @@
                     <span class="d-block gray-color fw-medium">Date maturité:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}</span>
                 </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date maturité après réajustement:</span>
+                    <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement > 0">{{ date_maturite_reajustement | date: 'dd/MM/yyyy' }}</span>
+                    <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement === 0">{{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}</span>
+                </li>
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
