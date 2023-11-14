@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';  
 import { UserService } from '../user.service';
 import { UserModel } from '../models/user.model';
+import { LogUserService } from '../log-user.service';
 
 
 @Component({
@@ -207,6 +208,7 @@ export class UserExportXLSXDialogBox implements OnInit {
       private userService: UserService, 
       private router: Router,
       private authService: AuthService,
+      private logService: LogUserService
   ) {}
 
 
@@ -235,18 +237,24 @@ export class UserExportXLSXDialogBox implements OnInit {
         end_date
       ).subscribe({
       next: (res) => {
-        this.isLoading = false;
-        const blob = new Blob([res], {type: 'text/xlsx'});
-        const downloadUrl = window.URL.createObjectURL(res);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = `users-${dateNowFormat}.xlsx`;
-        link.click();
-
-
-        this.toastr.success('Success!', 'Extraction effectuée!');
-        // window.location.reload();
-        this.close();
+        this.logService.createLog(
+          this.currentUser.id, 
+          'Export', 
+          'Cohorte', 
+          `De ${start_date} A ${end_date}`, 
+          'Exportation des données.'
+        ).subscribe(() => {
+          this.isLoading = false;
+          const blob = new Blob([res], {type: 'text/xlsx'});
+          const downloadUrl = window.URL.createObjectURL(res);
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = `users-${dateNowFormat}.xlsx`;
+          link.click(); 
+          this.toastr.success('Success!', 'Extraction effectuée!');
+          // window.location.reload();
+          this.close();
+        }); 
       },
       error: (err) => {
         this.isLoading = false;
