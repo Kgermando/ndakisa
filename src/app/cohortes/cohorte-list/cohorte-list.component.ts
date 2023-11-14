@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-cohorte-list',
@@ -22,11 +23,9 @@ export class CohorteListComponent implements OnInit {
   cohorteList: CohorteModel[] = [];
 
   constructor(
-    public themeService: CustomizerSettingsService,
-    private router: Router,
-    private cohorteService: CohorteService,
-    public dialog: MatDialog,
-    private toastr: ToastrService
+    public themeService: CustomizerSettingsService, 
+    private cohorteService: CohorteService, 
+    public dialog: MatDialog, 
   ) {}
 
 
@@ -44,23 +43,7 @@ export class CohorteListComponent implements OnInit {
       this.isLoading = false;
     }); 
   }
-
-  delete(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-      this.cohorteService
-        .delete(id)
-        .subscribe({
-          next: () => {
-            this.toastr.info('Supprimé avec succès!', 'Success!');
-            this.router.navigate(['/layouts/cohortes/cohorte-list']);
-          },
-          error: err => {
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            console.log(err);
-          }
-        });
-    }
-  }
+ 
  
   openCreateDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CreateCohorteDialogBox, {
@@ -100,6 +83,7 @@ export class CreateCohorteDialogBox {
     private _formBuilder: FormBuilder,
     private authService: AuthService,
     private cohorteService: CohorteService,
+    private logService: LogUserService,
     private toastr: ToastrService
   ) {}
 
@@ -134,12 +118,20 @@ export class CreateCohorteDialogBox {
           update_created: new Date(),
         };
         this.cohorteService.create(body).subscribe({
-          next: () => {
-            this.isLoading = false;
-            this.formGroup.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.close();
-            // this.router.navigate(['/layouts/cohortes/cohorte-list']);
+          next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'Cohorte', 
+              `${res.name_cohorte}`, 
+              'Création d\'une cohorte.'
+            ).subscribe(() => {
+              this.isLoading = false;
+              this.formGroup.reset();
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+              this.close();
+              // this.router.navigate(['/layouts/cohortes/cohorte-list']);
+            });
           },
           error: (err) => {
             this.isLoading = false;
@@ -187,6 +179,7 @@ export class CohorteExportXLSXDialogBox implements OnInit {
       private cohorteService: CohorteService, 
       private router: Router,
       private authService: AuthService,
+      private logService: LogUserService,
   ) {}
 
 
@@ -215,18 +208,24 @@ export class CohorteExportXLSXDialogBox implements OnInit {
         end_date
       ).subscribe({
       next: (res) => {
-        this.isLoading = false;
-        const blob = new Blob([res], {type: 'text/xlsx'});
-        const downloadUrl = window.URL.createObjectURL(res);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = `users-${dateNowFormat}.xlsx`;
-        link.click();
-
-
-        this.toastr.success('Success!', 'Extraction effectuée!');
-        // window.location.reload();
-        this.close();
+        this.logService.createLog(
+          this.currentUser.id, 
+          'Export', 
+          'Cohorte', 
+          `De ${start_date} A ${end_date}`, 
+          'Exportation des données.'
+        ).subscribe(() => {
+          this.isLoading = false;
+          const blob = new Blob([res], {type: 'text/xlsx'});
+          const downloadUrl = window.URL.createObjectURL(res);
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = `users-${dateNowFormat}.xlsx`;
+          link.click(); 
+          this.toastr.success('Success!', 'Extraction effectuée!');
+          // window.location.reload();
+          this.close();
+        }); 
       },
       error: (err) => {
         this.isLoading = false;

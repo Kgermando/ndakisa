@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserModel } from '../models/user.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from '../user.service';
 import { ToastrService } from 'ngx-toastr';
 import { RoleDataList } from 'src/app/shared/tools/role-list';
 import { permissionDataList } from 'src/app/shared/tools/permission-list';
+import { UserModel } from '../models/user.model';
+import { LogUserService } from '../log-user.service';
 
 @Component({
   selector: 'app-user-add',
@@ -31,6 +32,7 @@ export class UserAddComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private authService: AuthService, 
     private userService: UserService, 
+    private logService: LogUserService,
     private toastr: ToastrService) {}
 
 
@@ -85,11 +87,20 @@ export class UserAddComponent implements OnInit {
           update_created: new Date(),
         };
         this.userService.create(body).subscribe({
-          next: () => {
-            this.isLoading = false;
-            this.formGroup.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.router.navigate(['/layouts/users/user-list']);
+          next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'User', 
+              `${res.prenom} ${res.nom}`,
+              'Création d\'un utilisateur.'
+            ).subscribe(() => {
+              this.isLoading = false;
+              this.formGroup.reset();
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+              this.router.navigate(['/layouts/users/user-list']);
+            });
+           
           },
           error: (err) => {
             this.isLoading = false;

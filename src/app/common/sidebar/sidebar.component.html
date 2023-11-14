@@ -44,14 +44,7 @@
                         <i class="ri-group-line"></i>
                         <span class="title">Beneficiaires</span>
                     </a>
-
-                    <a routerLink="/layouts/beneficiaires/secteur-list" class="sidebar-menu-link" routerLinkActive="active" 
-                        [routerLinkActiveOptions]="{exact: true}"
-                        *ngIf="currentUser.roles.includes('Beneficiaires')">
-                        <i class="ri-building-4-line"></i>
-                        <span class="title">Secteurs</span>
-                    </a>
-
+ 
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">INSTITUTIONS</span>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
                         *ngIf="currentUser.roles.includes('Banques')">
@@ -84,6 +77,37 @@
                         <i class="ri-user-line"></i>
                         <span class="title">Utilisateurs</span>
                     </a>
+
+                    <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Configuration')">PLUS</span>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
+                       *ngIf="currentUser.roles.includes('Configuration')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="ri-settings-line"></i>
+                                <span class="title">Configuration</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a  routerLink="/layouts/beneficiaires/secteur-list" class="sidebar-menu-link" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Secteurs
+                                </a>
+                            </li>
+                            <!-- <li class="sidemenu-item">
+                                <a  routerLink="/layouts/banques/config" class="sidebar-menu-link" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Banques
+                                </a>
+                            </li> -->
+                            <li class="sidemenu-item">
+                                <a  routerLink="/layouts/users/logs" class="sidebar-menu-link" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Le Journal
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
                 </mat-accordion>
             </div>
         </div>

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { permissionDataList } from 'src/app/shared/tools/permission-list';
 import { RoleDataList } from 'src/app/shared/tools/role-list';
 import { UserModel } from '../models/user.model';
+import { LogUserService } from '../log-user.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -34,7 +35,8 @@ export class UserEditComponent implements OnInit {
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private authService: AuthService, 
-    private userService: UserService, 
+    private userService: UserService,
+    private logService: LogUserService,
     private toastr: ToastrService) {}
 
 
@@ -96,9 +98,18 @@ export class UserEditComponent implements OnInit {
       this.userService.update(this.id, this.formGroup.getRawValue())
       .subscribe({
         next: () => {
-          this.toastr.success('Modification enregistré!', 'Success!');
-          this.router.navigate(['/layouts/users/user-list']);
-          this.isLoading = false;
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Update', 
+            'User', 
+            `${this.user.prenom} ${this.user.nom}`,
+            'Modification de l\'utilisateur.'
+          ).subscribe(() => {
+            this.toastr.success('Modification enregistré!', 'Success!');
+            this.router.navigate(['/layouts/users/user-list']);
+            this.isLoading = false;
+          });
+          
         },
         error: err => {
           console.log(err);

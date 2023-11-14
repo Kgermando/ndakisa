@@ -1,4 +1,4 @@
-
+ 
 <div class="row">
     <div class="col-lg-4 col-md-12 col-sm-12">
         <mat-card class="create-project-card tagus-card mb-25">
@@ -71,8 +71,7 @@
                                             (click)="openEditDialog('300ms', '100ms', secteur.id)">
                                             <i class="ri-edit-line"></i> Modifier
                                         </button>
-                                        <app-secteur-item [item]="secteur"></app-secteur-item>
-                                        
+                                        <app-secteur-item [item]="secteur" [currentUser]="currentUser"></app-secteur-item>
                                     </mat-menu>
                                 </td>
                             </tr>

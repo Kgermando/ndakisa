@@ -173,12 +173,12 @@ export class BeneficiareEditComponent implements OnInit {
               'Update', 
               'Beneficiaire', 
               `${this.beneficiare.name_beneficiaire}`,
-              'Modification des infos du Beneficiaire'
+              'Modification des infos du Beneficiaire.'
             ).subscribe(
               () => {
                 this.isLoading = false;
                 this.formGroup.reset();
-                this.toastr.success('Ajouter avec succès!', 'Success!');
+                this.toastr.success('Modification effectuée!', 'Success!');
                 // this.router.navigate(['/layouts/cohortes/cohorte-list']);
               }
             );
@@ -201,19 +201,21 @@ export class BeneficiareEditComponent implements OnInit {
       if (this.formGroup2.valid) {
         this.isLoading = true; 
         this.beneficiareService.update(this.id, this.formGroup2.getRawValue()).subscribe({
-          next: (res) => {
+          next: () => {
             this.logService.createLog(
               this.currentUser.id, 
               'Update', 
               'Beneficiaire', 
-              `${this.beneficiare.name_beneficiaire}`, 
-              'Modification des infos bancaires du Beneficiaire'
+              `${this.beneficiare.name_beneficiaire}`,
+              'Modification des infos du Beneficiaire.'
+            ).subscribe(
+              () => {
+                this.isLoading = false;
+                this.formGroup.reset();
+                this.toastr.success('Modification effectuée!', 'Success!');
+                // this.router.navigate(['/layouts/cohortes/cohorte-list']);
+              }
             );
-            this.isLoading = false;
-            this.formGroup2.reset();
-            this.toastr.success('Modifier avec succès!', 'Success!');
-            // window.location.reload()
-            // this.router.navigate(['/layouts/cohortes/cohorte-list']);
           },
           error: (err) => {
             this.isLoading = false;
@@ -252,10 +254,11 @@ export class BeneficiareEditComponent implements OnInit {
               'Beneficiaire', 
               `${this.beneficiare.name_beneficiaire}`, 
               'Création du plan de remboursement'
-            );
-            this.isLoadingPlanRemboursement = false;
-            this.formGroup3.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
+            ).subscribe(() => {
+              this.isLoadingPlanRemboursement = false;
+              this.formGroup3.reset();
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+            });
           },
           error: (err) => {
             this.isLoadingPlanRemboursement = false;
@@ -276,17 +279,17 @@ export class BeneficiareEditComponent implements OnInit {
 
   deleteItem(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet ligne ?')) {
-      this.planRemboursement
+      this.logService.createLog(
+        this.currentUser.id, 
+        'Delete', 
+        'Beneficiaire', 
+        `${id}`, 
+        'Suppression du plan de remboursement'
+      ).subscribe(() => {
+        this.planRemboursement
         .delete(id)
         .subscribe({
           next: () => {
-            this.logService.createLog(
-              this.currentUser.id, 
-              'Delete', 
-              'Beneficiaire', 
-              `D'un élement de plan de remboursement`, 
-              'Suppression du plan de remboursement'
-            );
             this.toastr.info('Supprimé avec succès!', 'Success!'); 
           },
           error: err => {
@@ -294,6 +297,7 @@ export class BeneficiareEditComponent implements OnInit {
             console.log(err);
           }
         });
+      }); 
     }
   }
 
@@ -392,11 +396,12 @@ export class EditPlanRemboursementDialogBox implements OnInit{
             'Beneficiaire', 
             `${this.plan_remboursement.beneficiaire.name_beneficiaire}`, 
             'Modification du plan de remboursement'
-          );
-          this.isLoading = false;
-          this.toastr.success('Modification enregistré!', 'Success!');
-          // window.location.reload();
-          this.close();
+          ).subscribe(() => {
+            this.isLoading = false;
+            this.toastr.success('Modification enregistré!', 'Success!');
+            // window.location.reload();
+            this.close();
+          });
         },
         error: err => {
           this.isLoading = false;

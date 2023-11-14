@@ -213,12 +213,13 @@ export class BeneficiareAddComponent implements OnInit {
               'Create', 
               'Beneficiaire', 
               `${res.name_beneficiaire}`, 
-              'Création d\'un beneficiaire'
-            );
-            this.isLoading = false;
-            this.formGroup.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.router.navigate(['/layouts/beneficiaires', res.id, 'beneficiaire-edit']); 
+              'Création d\'un beneficiaire.'
+            ).subscribe(() => {
+              this.isLoading = false;
+              this.formGroup.reset();
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+              this.router.navigate(['/layouts/beneficiaires', res.id, 'beneficiaire-edit']); 
+            });
           },
           error: (err) => {
             this.isLoading = false;

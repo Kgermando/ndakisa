@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
-import { UserModel } from '../models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from '../user.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserModel } from '../models/user.model';
+import { LogUserService } from '../log-user.service';
 
 @Component({
   selector: 'app-user-view',
@@ -24,6 +25,7 @@ export class UserViewComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
+    private logService: LogUserService,
     private toastr: ToastrService) {}
 
     ngOnInit(): void {
@@ -47,7 +49,14 @@ export class UserViewComponent implements OnInit {
 
     delete(id: number): void {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-        this.userService
+        this.logService.createLog(
+          this.currentUser.id, 
+          'Delete', 
+          'User', 
+          `${this.user.prenom} ${this.user.nom}`,
+          'Suppression de l\'utilisateur.'
+        ).subscribe(() => {
+          this.userService
           .delete(id)
           .subscribe({
             next: () => {
@@ -59,6 +68,8 @@ export class UserViewComponent implements OnInit {
               console.log(err);
             }
           });
+        });
+        
       }
     }
    

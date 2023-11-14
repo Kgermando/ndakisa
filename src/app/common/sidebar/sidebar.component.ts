@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ToggleService } from '../header/toggle.service'; 
-import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
-import { UserModel } from 'src/app/users/models/user.model';
+import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service'; 
 import { Auth } from '../classes/auth';
 import { BanqueService } from 'src/app/banques/banque.service';
 import { BanqueModel } from 'src/app/banques/models/banque.model';
 import { CreateBanqueDialogBox } from 'src/app/banques/banque-list/banque-list.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserModel } from 'src/app/users/models/user.model';
 
 @Component({
     selector: 'app-sidebar',

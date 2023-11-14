@@ -3,8 +3,8 @@ import { CustomizerSettingsService } from '../common/customizer-settings/customi
 import { AuthService } from '../auth/auth.service';
 import { ToggleService } from '../common/header/toggle.service';
 import { Router } from '@angular/router';
-import { UserModel } from '../users/models/user.model';
 import { Auth } from '../common/classes/auth';
+import { UserModel } from '../users/models/user.model';
 
 @Component({
   selector: 'app-layouts',

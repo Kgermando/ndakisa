@@ -21,6 +21,8 @@ import { formatDate } from '@angular/common';
 export class BeneficiaireRemboursementsComponent {
   @Input() beneficiaire: BeneficiaireModel; 
   @Input() currentUser: UserModel; 
+
+  isLoadingDowload = false;
  
   planRemboursementList: PlanRemboursementModel[] = []; 
 
@@ -100,6 +102,30 @@ export class BeneficiaireRemboursementsComponent {
         });
     }
   }
+
+  downloadBordereau() {
+    // try {
+    //   this.isLoadingDowload = true;
+    //   this.userService.downloadModelReport().subscribe({
+    //   next: (res) => {
+    //     this.isLoadingDowload = false; 
+    //     const downloadUrl = window.URL.createObjectURL(res);
+    //     const link = document.createElement('a');
+    //     link.href = downloadUrl;
+    //     link.download = `Votre_model_users.xlsx`;
+    //     link.click(); 
+    //     this.toastr.info('Extraction effectuée!', 'Info!'); 
+    //   },
+    //   error: (err) => {
+    //     this.isLoadingDowload = false;
+    //     this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+    //     console.log(err); 
+    //   }
+    // });
+    // } catch (error) {
+      
+    // }
+  } 
 
 
   openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string,id: number): void {

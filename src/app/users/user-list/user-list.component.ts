@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { formatDate } from '@angular/common'; 
-import { UserModel } from '../models/user.model';
+import { formatDate } from '@angular/common';  
 import { UserService } from '../user.service';
+import { UserModel } from '../models/user.model';
 
 
 @Component({

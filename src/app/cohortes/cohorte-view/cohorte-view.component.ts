@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { StatutList } from 'src/app/shared/tools/statut';
 import { CohorteModel } from '../models/cohorte.model';  
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';  
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-cohorte-view',
@@ -42,6 +43,7 @@ export class CohorteViewComponent implements OnInit {
     private router: Router,
     private authService: AuthService, 
     private cohorteService: CohorteService,
+    private logService: LogUserService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
 
@@ -96,17 +98,24 @@ export class CohorteViewComponent implements OnInit {
 
     delete(id: number): void {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-        this.cohorteService
-          .delete(id)
-          .subscribe({
-            next: () => {
-              this.toastr.info('Success!', 'Supprimé avec succès!');
-              this.router.navigate(['layouts/cohortes/cohorte-list']);
-            },
-            error: err => {
-              this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            }
-          });
+        this.logService.createLog(
+          this.currentUser.id, 
+          'Delete', 
+          'Cohorte', 
+          `${this.cohorte.name_cohorte}`, 
+          'Suppression de la cohorte.'
+        ).subscribe(() => this.cohorteService
+        .delete(id)
+        .subscribe({
+          next: () => {
+            this.toastr.info('Success!', 'Supprimé avec succès!');
+            this.router.navigate(['layouts/cohortes/cohorte-list']);
+          },
+          error: err => {
+            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+          }
+        }));
+        
       }
     }
 
@@ -139,6 +148,8 @@ export class EditCohorteDialogBox implements OnInit{
 
   currentUser: UserModel | any; 
 
+  cohorte: CohorteModel; 
+
   statutLIst: string[] = StatutList;
 
   constructor(
@@ -149,6 +160,7 @@ export class EditCohorteDialogBox implements OnInit{
       private authService: AuthService, 
       private toastr: ToastrService, 
       private cohorteService: CohorteService,
+      private logService: LogUserService
   ) {}
 
   ngOnInit(): void {
@@ -161,6 +173,7 @@ export class EditCohorteDialogBox implements OnInit{
       next: (user) => {
         this.currentUser = user; 
         this.cohorteService.get(parseInt(this.data['id'])).subscribe(item => {
+          this.cohorte = item;
           this.formGroup.patchValue({
             name_cohorte: item.name_cohorte,
             contrat_ref: item.contrat_ref,
@@ -184,9 +197,17 @@ export class EditCohorteDialogBox implements OnInit{
       this.cohorteService.update(parseInt(this.data['id']), this.formGroup.getRawValue())
       .subscribe({
         next: () => {
-          this.isLoading = false;
-          this.toastr.success('Modification enregistré!', 'Success!');
-          window.location.reload();
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Update', 
+            'Cohorte', 
+            `${this.cohorte.name_cohorte}`, 
+            'Modification de la cohorte.'
+          ).subscribe(() => {
+            this.isLoading = false;
+            this.toastr.success('Modification enregistré!', 'Success!');
+            window.location.reload();
+          });
         },
         error: err => {
           this.isLoading = false;

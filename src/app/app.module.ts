@@ -73,6 +73,8 @@ import { StatsSecteurActiviteComponent } from './dashboard/stats-secteur-activit
 import { ResteARembourserViewComponent } from './beneficiaires/beneficiare-view/reste-a-rembourser-view/reste-a-rembourser-view.component';
 import { EditSecteurDialogBox, SecteurComponent } from './secteurs/secteur/secteur.component';
 import { SecteurItemComponent } from './secteurs/secteur-item/secteur-item.component';
+import { BanqueConfigComponent } from './banques/banque-config/banque-config.component';
+import { LogUserListComponent } from './logs/log-user-list/log-user-list.component';
 
 registerLocaleData(localeFr);
 
@@ -146,7 +148,9 @@ registerLocaleData(localeFr);
     SecteurComponent,
     EditSecteurDialogBox,
     SecteurItemComponent,
-    AddDelaiReajustelentDialogBox
+    AddDelaiReajustelentDialogBox,
+    BanqueConfigComponent,
+    LogUserListComponent
   ],
   imports: [
     BrowserModule,

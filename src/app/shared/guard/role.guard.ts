@@ -50,6 +50,16 @@ export const usersGuard: CanActivateFn = (route, state) => {
   return access; 
 };
 
+export const configurationGuard: CanActivateFn = (route, state) => {
+  let roles = localStorage.getItem('roles');
+  let roleList = JSON.parse(roles!) 
+  let access = false; 
+  if (roleList.includes('Configuration')) { 
+    access = true;
+  }    
+  return access; 
+};
+
 
 export const supportGuard: CanActivateFn = (route, state) => {
   let roles = localStorage.getItem('roles');

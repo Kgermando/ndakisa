@@ -6,9 +6,9 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserModel } from 'src/app/users/models/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LogUserService } from 'src/app/users/log-user.service';
+import { UserModel } from 'src/app/users/models/user.model';
 
 @Component({
   selector: 'app-secteur',
@@ -76,13 +76,14 @@ export class SecteurComponent implements OnInit {
             this.logService.createLog(
               this.currentUser.id, 
               'Create', 
-              'Beneficiaire', 
+              'Secteur', 
               `${res.name_secteur}`, 
-              'Création d\'un secteur d\'activité'
-            );
-            this.isLoading = false;
-            this.formGroup.reset(); 
-            this.toastr.success('Ajouter avec succès!', 'Success!');
+              'Création d\'un secteur d\'activité.'
+            ).subscribe(() => {
+              this.isLoading = false;
+              this.formGroup.reset(); 
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+            }); 
           },
           error: (err) => {
             this.isLoading = false;
@@ -129,6 +130,8 @@ export class EditSecteurDialogBox implements OnInit {
 
   currentUser: UserModel | any; 
 
+  secteur: SecteurModel;
+
   secteurList: SecteurModel[] = [];
  
 
@@ -140,6 +143,7 @@ export class EditSecteurDialogBox implements OnInit {
       private authService: AuthService, 
       private toastr: ToastrService, 
       private secteurService: SecteurService,
+      private logService: LogUserService
   ) {}
 
   ngOnInit(): void {
@@ -155,7 +159,8 @@ export class EditSecteurDialogBox implements OnInit {
           this.getAllData();
         });
         this.getAllData();  
-        this.secteurService.get(this.data.id).subscribe(item => { 
+        this.secteurService.get(this.data.id).subscribe(item => {
+          this.secteur = item;
             this.formGroup.patchValue({
               name_secteur: this.capitalizeTest(item.name_secteur),
               statut: item.statut,
@@ -193,10 +198,18 @@ export class EditSecteurDialogBox implements OnInit {
         // };
         this.secteurService.update(this.data.id, this.formGroup.getRawValue()).subscribe({
           next: () => {
-            this.isLoading = false;
-            this.formGroup.reset();
-            this.toastr.success('Modifier avec succès!', 'Success!');
-            this.close(); 
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Update', 
+              'Secteur', 
+              `${this.secteur.name_secteur}`, 
+              'Modification d\'un secteur d\'activité.'
+            ).subscribe(() => {
+              this.isLoading = false;
+              this.formGroup.reset();
+              this.toastr.success('Modifier avec succès!', 'Success!');
+              this.close(); 
+            });
           },
           error: (err) => {
             this.isLoading = false;

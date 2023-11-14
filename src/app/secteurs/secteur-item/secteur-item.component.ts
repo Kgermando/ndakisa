@@ -4,6 +4,8 @@ import { SecteurService } from '../secteur.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';
+import { UserModel } from 'src/app/users/models/user.model';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-secteur-item',
@@ -12,6 +14,7 @@ import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.mod
 })
 export class SecteurItemComponent implements OnInit {
   @Input() item: SecteurModel;
+  @Input() currentUser: UserModel;
 
   secteur: SecteurModel;
   beneficiaireList: BeneficiaireModel[] = [];
@@ -19,6 +22,7 @@ export class SecteurItemComponent implements OnInit {
   constructor(
     private router: Router,
     private secteurService: SecteurService,
+    private logService: LogUserService,
     private toastr: ToastrService) {}
 
 
@@ -27,10 +31,6 @@ export class SecteurItemComponent implements OnInit {
       this.secteur = res;
       this.beneficiaireList = this.secteur.beneficiaires;  
     });
-
-    // this.beneficiaireList = this.item.beneficiaires;
-
-    console.log('list', this.beneficiaireList)
   }
 
 
@@ -38,7 +38,14 @@ export class SecteurItemComponent implements OnInit {
 
   delete(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-      this.secteurService
+      this.logService.createLog(
+        this.currentUser.id, 
+        'Delete',
+        'Secteur', 
+        `${this.item.name_secteur}`, 
+        'Suppression du secteur d\'activité.'
+      ).subscribe(() => {
+        this.secteurService
         .delete(id)
         .subscribe({
           next: () => {
@@ -50,6 +57,8 @@ export class SecteurItemComponent implements OnInit {
             console.log(err);
           }
         });
+      });
+      
     }
   }
 

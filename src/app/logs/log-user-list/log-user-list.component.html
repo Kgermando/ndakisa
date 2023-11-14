@@ -1,0 +1,28 @@
+
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+</div>
+<div *ngIf="!isLoading">
+    <mat-card class="mb-25 tagus-card">
+        <mat-card-header class="border-bottom">
+            <h4 class="mb-0">Le journal</h4>
+        </mat-card-header>
+        <mat-card-content>
+            <ul class="ps-0 mb-0 mt-0 list-unstyled tagus-timeline">
+                <li class="position-relative" *ngFor="let item of logUserList">
+                    <img src="assets/img/icon/right-arrow.png" alt="right-arrow" class="icon">
+                    <h5 class="mb-0">
+                        <span class="badge text-bg-primary" *ngIf="item.type_operation == 'Create'">{{item.type_operation}}</span>
+                        <span class="badge text-bg-warning" *ngIf="item.type_operation == 'Update'">{{item.type_operation}}</span>
+                        <span class="badge text-bg-danger" *ngIf="item.type_operation == 'Delete'">{{item.type_operation}}</span> 
+                        -{{ item.title }}
+                    </h5>
+                    <h6 class="mb-5">{{item.user.matricule }}</h6>
+                    <span class="d-block muted-color mb-0 fs-14">{{ item.date_operation | date: 'dd/MM/yyyy HH:mm:ss EEEE' }}</span>
+                    <p>{{ item.observation }}</p>
+                </li>
+            </ul>
+        </mat-card-content>
+    </mat-card>    
+</div>
+

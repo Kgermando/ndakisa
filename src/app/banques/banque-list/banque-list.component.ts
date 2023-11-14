@@ -10,6 +10,7 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model'; 
 import { PlanRemboursementModel } from 'src/app/beneficiaires/models/plan_remousement.model';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-banque-list',
@@ -44,6 +45,7 @@ export class BanqueListComponent implements OnInit {
       private router: Router, 
       private authService: AuthService,
       private banqueService: BanqueService,
+      private logService: LogUserService,
       public dialog: MatDialog, 
       private toastr: ToastrService
   ) {}
@@ -102,7 +104,14 @@ export class BanqueListComponent implements OnInit {
 
   delete(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-      this.banqueService
+      this.logService.createLog(
+        this.currentUser.id, 
+        'Delete', 
+        'User', 
+        `${this.banque.name_banque}`,
+        'Suppression de la banque.'
+      ).subscribe(() => {
+        this.banqueService
         .delete(id)
         .subscribe({
           next: () => {
@@ -114,6 +123,8 @@ export class BanqueListComponent implements OnInit {
             console.log(err);
           }
         });
+      });
+      
     }
   }
 
@@ -152,6 +163,7 @@ export class CreateBanqueDialogBox {
     private _formBuilder: FormBuilder,
     private authService: AuthService,
     private banqueService: BanqueService, 
+    private logService: LogUserService,
     private toastr: ToastrService
   ) {}
 
@@ -183,11 +195,19 @@ export class CreateBanqueDialogBox {
           update_created: new Date(),
         };
         this.banqueService.create(body).subscribe({
-          next: () => {
-            this.isLoading = false;
-            this.formGroup.reset();
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-            this.close();
+          next: (res) => {
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'Banque', 
+              `${res.name_banque}`, 
+              'Création d\'une banque.'
+            ).subscribe(() => {
+              this.isLoading = false;
+              this.formGroup.reset();
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+              this.close();
+            });
           },
           error: (err) => {
             this.isLoading = false;
@@ -234,7 +254,8 @@ export class EditBanqueDialogBox implements OnInit{
       private router: Router,
       private authService: AuthService, 
       private toastr: ToastrService, 
-      private banqueService: BanqueService, 
+      private banqueService: BanqueService,
+      private logService: LogUserService,
   ) {}
 
   ngOnInit(): void {
@@ -265,10 +286,18 @@ export class EditBanqueDialogBox implements OnInit{
       this.isLoading = true;
       this.banqueService.update(parseInt(this.data['id']), this.formGroup.getRawValue())
       .subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.toastr.success('Modification enregistré!', 'Success!');
-          window.location.reload();
+        next: (res) => {
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Update', 
+            'Banque', 
+            `${res.name_banque}`, 
+            'Modification de la banque.'
+          ).subscribe(() => {
+            this.isLoading = false;
+            this.toastr.success('Modification enregistré!', 'Success!');
+            window.location.reload();
+          });
         },
         error: err => {
           this.isLoading = false;

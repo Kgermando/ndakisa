@@ -4,6 +4,7 @@ export const RoleDataList: string[] = [
   'Banques',
   'Beneficiaires',
   'users',
+  'Configuration',
 ]
 
 export const RoleSupportDataList: string[] = [
@@ -12,4 +13,5 @@ export const RoleSupportDataList: string[] = [
   'Banques',
   'Beneficiaires',
   'users',
+  'Configuration',
 ]
