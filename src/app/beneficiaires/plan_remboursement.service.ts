@@ -13,4 +13,9 @@ export class PlanRemboursementService extends ApiService {
   getAllData(id: number): Observable<any> {
     return this.http.get(`${this.endpoint}/get-all/${id}`);
   }
+
+
+  downloadBordereau(): Observable<any> {
+    return this.http.post(`${this.endpoint}/download-pdf`, {}, {responseType: 'blob'});
+  }
 }

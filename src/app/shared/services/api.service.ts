@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -59,4 +60,10 @@ export abstract class ApiService {
       this._refreshData$.next();
     }));
   } 
+
+
+  // Get file
+  getFile(url: string): Observable<any> {
+    return this.http.get(`${url}`);
+  }
 }

@@ -37,25 +37,29 @@
                     {{ plan_remboursement.date_paiement | date: 'EE le dd/MM/yyyy' }}
                 </td>
                 <td class="gray-color" *ngIf="!plan_remboursement.date_paiement">
-                    -
+                    --
                 </td>
                 <td class="gray-color" *ngIf="plan_remboursement.montant_payer != '0'">
                     {{ plan_remboursement.montant_payer | numberFormat:'fr-FR' }} usd
                 </td>
                 <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
-                    -
+                    --
                 </td>
                 <td *ngIf="plan_remboursement.date_paiement">
                     <app-remboursement-indice [plan_remboursement]="plan_remboursement" [id]="id"></app-remboursement-indice>
                 </td>
                 <td class="gray-color" *ngIf="!plan_remboursement.date_paiement">
-                    -
+                    --
                 </td>
-                <td class="gray-color">
+                <td class="gray-color" *ngIf="plan_remboursement.file_scan">
                     <!-- {{ plan_remboursement.file_scan }} -->
-                    <button mat-icon-button matTooltip="Télécharger le bordereau de remboursement">
+                    <button mat-icon-button (click)="downloadBordereau(plan_remboursement.date_paiement, plan_remboursement.file_scan)"
+                        matTooltip="Télécharger le bordereau de remboursement">
                         <mat-icon>download</mat-icon>
                     </button>
+                </td>
+                <td class="gray-color" *ngIf="!plan_remboursement.file_scan">
+                    --
                 </td>
                 <td class="gray-color">{{ plan_remboursement.observation }}</td>
                 <td *ngIf="beneficiaire.statut === 'En cours'">

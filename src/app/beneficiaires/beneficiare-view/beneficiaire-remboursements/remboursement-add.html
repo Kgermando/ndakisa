@@ -23,7 +23,7 @@
                             Ce champs est obligatoire
                         </mat-error>
                 </div>
-            </div> 
+            </div>
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
                     <label class="d-block fw-semibold">Observation</label>
@@ -36,7 +36,8 @@
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
                     <label class="d-block fw-semibold">Bordereau scanner</label>
-                    <input type="file" class="input-control" formControlName="file_scan">
+                    <input class="input-control" formControlName="file_scan">
+                    <app-upload (uploadedUrl)="formGroup.patchValue({'file_scan': $event})"></app-upload>
                 </div>
             </div> 
         </div>

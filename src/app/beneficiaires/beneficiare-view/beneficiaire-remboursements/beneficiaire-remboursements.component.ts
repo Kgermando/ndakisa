@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PlanRemboursementService } from '../../plan_remboursement.service';
 import { Validators } from 'ngx-editor';
 import { formatDate } from '@angular/common';
+import { LogUserService } from 'src/app/users/log-user.service';
 
 @Component({
   selector: 'app-beneficiaire-remboursements',
@@ -19,12 +20,12 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./beneficiaire-remboursements.component.scss']
 })
 export class BeneficiaireRemboursementsComponent {
-  @Input() beneficiaire: BeneficiaireModel; 
-  @Input() currentUser: UserModel; 
-
+  @Input() beneficiaire: BeneficiaireModel;
+  @Input() currentUser: UserModel;
+ 
   isLoadingDowload = false;
  
-  planRemboursementList: PlanRemboursementModel[] = []; 
+  planRemboursementList: PlanRemboursementModel[] = [];
 
   id: any;
 
@@ -47,7 +48,8 @@ export class BeneficiaireRemboursementsComponent {
     private router: Router,
     private route: ActivatedRoute,
     private beneficiareService: BeneficiareService,
-    private planRemboursement: PlanRemboursementService, 
+    private planRemboursement: PlanRemboursementService,
+    private logService: LogUserService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
 
@@ -103,28 +105,40 @@ export class BeneficiaireRemboursementsComponent {
     }
   }
 
-  downloadBordereau() {
-    // try {
-    //   this.isLoadingDowload = true;
-    //   this.userService.downloadModelReport().subscribe({
-    //   next: (res) => {
-    //     this.isLoadingDowload = false; 
-    //     const downloadUrl = window.URL.createObjectURL(res);
-    //     const link = document.createElement('a');
-    //     link.href = downloadUrl;
-    //     link.download = `Votre_model_users.xlsx`;
-    //     link.click(); 
-    //     this.toastr.info('Extraction effectuée!', 'Info!'); 
-    //   },
-    //   error: (err) => {
-    //     this.isLoadingDowload = false;
-    //     this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-    //     console.log(err); 
-    //   }
-    // });
-    // } catch (error) {
-      
-    // }
+  downloadBordereau(date_paiement: Date, url: string) {
+    try {
+      this.isLoadingDowload = true; 
+      var date = formatDate(new Date(date_paiement),'yyyy-MM','en_US');
+      console.log('url', url);
+      console.log('date', date);
+      this.planRemboursement.getFile(url).subscribe({
+      next: (res) => {
+        this.logService.createLog(
+          this.currentUser.id, 
+          'Download', 
+          'Plan de remboursement', 
+          `${this.beneficiaire.name_beneficiaire}-${date}`,
+          'Téléchargement bordereau.'
+        ).subscribe(() => {
+          this.isLoadingDowload = false;
+          const blob = new Blob([res], {type: 'text/pdf'});
+          const downloadUrl = new window.URL(url)
+          const link = document.createElement('a');
+          // link.href = downloadUrl;
+          link.download = `Bordereau-${date}.pdf`;
+          link.click(); 
+          this.toastr.success('Bordereau téléchargé!', 'Success!'); 
+        }); 
+      },
+      error: (err) => {
+        this.isLoadingDowload = false;
+        this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+        console.log(err); 
+      }
+    }); 
+    } catch (error) {
+      this.toastr.error(`${error}`, 'Oupss!');
+    }
   } 
 
 
