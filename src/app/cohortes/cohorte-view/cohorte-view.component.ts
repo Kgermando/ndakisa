@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserModel } from 'src/app/users/models/user.model';
 import { CohorteService } from '../cohorte.service';
@@ -70,7 +70,7 @@ export class CohorteViewComponent implements OnInit {
               return sum + parseFloat(value.montant_a_debourser);
             }, 0);
             this.totalInteret = this.ELEMENT_DATA.reduce(function(sum, value){
-              return sum + parseFloat(value.interet); 
+              return sum + parseFloat(value.interet_beneficiaire); 
             }, 0);
             this.totalRembourse = rembousement.reduce(function(sum, value){
               return sum + parseFloat(value.montant_payer); 
@@ -177,7 +177,7 @@ export class EditCohorteDialogBox implements OnInit{
           this.formGroup.patchValue({
             name_cohorte: item.name_cohorte,
             contrat_ref: item.contrat_ref,
-            statut: item.statut,
+            statut_cohorte: item.statut,
             signature: this.currentUser.matricule, 
             update_created: new Date(),
           });

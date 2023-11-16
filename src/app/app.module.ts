@@ -150,7 +150,7 @@ registerLocaleData(localeFr);
     SecteurItemComponent,
     AddDelaiReajustelentDialogBox,
     BanqueConfigComponent,
-    LogUserListComponent
+    LogUserListComponent,
   ],
   imports: [
     BrowserModule,

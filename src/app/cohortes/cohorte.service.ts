@@ -15,5 +15,5 @@ export class CohorteService extends ApiService {
 
   downloadReport(start_date: string, end_date: string): Observable<any> {
     return this.http.post(`${this.endpoint}/download-xlsx/${start_date}/${end_date}`, {}, {responseType: 'blob'});
-  } 
+  }
 }

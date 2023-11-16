@@ -8,6 +8,10 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model'; 
 import { LogUserService } from 'src/app/users/log-user.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { PlanRemboursementService } from '../plan_remboursement.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-beneficiare-view',
@@ -26,7 +30,9 @@ export class BeneficiareViewComponent implements OnInit {
     private router: Router, 
     private authService: AuthService,
     private beneficiareService: BeneficiareService,
+    private planRemboursementService: PlanRemboursementService, 
     private logService: LogUserService,
+    public dialog: MatDialog,
     private toastr: ToastrService) {}
 
     ngOnInit(): void {
@@ -37,8 +43,7 @@ export class BeneficiareViewComponent implements OnInit {
             this.currentUser = user; 
             this.beneficiareService.get(Number(id)).subscribe(res => {
               this.beneficiaire = res;
-              this.ELEMENT_DATA = this.beneficiaire.plan_remboursements; 
-              
+              this.ELEMENT_DATA = this.beneficiaire.plan_remboursements;
               this.isLoading = false;
             });
         },
@@ -79,6 +84,39 @@ export class BeneficiareViewComponent implements OnInit {
         
       }
     }
+ 
+    exportExcel() {
+      this.isLoading = true; 
+      var dateNow = new Date();
+    var dateNowFormat = formatDate(dateNow, 'dd-MM-yyyy_HH:mm', 'en-US');
+      this.planRemboursementService.downloadReport(
+          this.beneficiaire.id
+        ).subscribe({
+        next: (res) => {
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Export', 
+            'Beneficiaire', 
+            `De ${this.beneficiaire.name_beneficiaire}`, 
+            'Exportation des données.'
+          ).subscribe(() => {
+            this.isLoading = false;
+            const blob = new Blob([res], {type: 'text/xlsx'});
+            const downloadUrl = window.URL.createObjectURL(res);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = `Beneficiaire-${dateNowFormat}.xlsx`;
+            link.click(); 
+            this.toastr.success('Success!', 'Extraction effectuée!'); 
+          }); 
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+          console.log(err); 
+        }
+      });
+    } 
 
 
   toggleTheme() {

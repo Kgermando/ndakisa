@@ -5,7 +5,7 @@ export interface CohorteModel {
     id: number;
     name_cohorte: string;
     contrat_ref: string; 
-    statut: string; // Ouvert et cloturer 
+    statut_cohorte: string; // Ouvert et cloturer 
     // montant_global: string; 
     beneficiaires: BeneficiaireModel[];
     plan_remboursements: PlanRemboursementModel[];

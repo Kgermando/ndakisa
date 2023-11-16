@@ -74,8 +74,8 @@
                                 </li> 
                                 <li class="gray-color fw-semibold">
                                     Statut
-                                    <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15);" *ngIf="cohorte.statut == 'Fermée'">Fermée</span>
-                                    <span class="badge completed fw-medium  d-block position-relative" style="color: blue;" *ngIf="cohorte.statut == 'Ouverte'">Ouverte</span>
+                                    <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15);" *ngIf="cohorte.statut_cohorte == 'Fermée'">Fermée</span>
+                                    <span class="badge completed fw-medium  d-block position-relative" style="color: blue;" *ngIf="cohorte.statut_cohorte == 'Ouverte'">Ouverte</span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Progession de remboursement
@@ -91,7 +91,7 @@
         </div>
         <div class="d-md-flex justify-content-space-between align-items-center mb-25">
             <h5 class="mb-0">Liste des beneficiaires </h5>
-            <div *ngIf="cohorte.statut === 'Ouverte'">
+            <div *ngIf="cohorte.statut_cohorte === 'Ouverte'">
                 <a mat-raised-button [routerLink]="['/layouts/beneficiaires', cohorte.id, 'beneficiaire-add']"
                     class="tagus" *ngIf="currentUser.permission === 'RC' || currentUser.permission === 'RCU' ||
                         currentUser.permission === 'CRUD'">

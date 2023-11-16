@@ -80,7 +80,7 @@ export class BanqueListComponent implements OnInit {
         return sum + parseFloat(value.credit_accorde); 
       }, 0);
       this.interet = this.ELEMENT_DATA.reduce(function(sum, value){
-        return sum + parseFloat(value.interet); 
+        return sum + parseFloat(value.interet_beneficiaire); 
       }, 0);
       this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
         return sum + parseFloat(value.montant_a_debourser);

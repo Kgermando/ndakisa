@@ -11,7 +11,8 @@
         </button>
         <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu" xPosition="before">
             <button mat-menu-item type="button" 
-            class="bg-transparent border-none position-relative">
+            class="bg-transparent border-none position-relative"
+            (click)="exportExcel()">
                 <i class="ri-printer-line"></i> Exporter
             </button>
         </mat-menu>

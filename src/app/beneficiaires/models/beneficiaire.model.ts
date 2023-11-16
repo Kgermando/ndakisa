@@ -23,7 +23,7 @@ export interface BeneficiaireModel {
     
     montant_garantie: string; 
     credit_accorde: string;
-    interet: string;
+    interet_beneficiaire: string;
     montant_a_debourser: string; // Montant à rembourser c'est le montant que les beneficieres doivent rembourser donc credit + interet
 
     delai_de_grace: number;

@@ -112,7 +112,7 @@ export class CreateCohorteDialogBox {
         var body = {
           name_cohorte: this.capitalizeTest(this.formGroup.value.name_cohorte),
           contrat_ref: this.formGroup.value.contrat_ref, 
-          statut: 'Ouverte',
+          statut_cohorte: 'Ouverte',
           signature: this.currentUser.matricule,
           created: new Date(),
           update_created: new Date(),
@@ -186,7 +186,7 @@ export class CohorteExportXLSXDialogBox implements OnInit {
   ngOnInit(): void {
     this.authService.user().subscribe({
       next: (user) => {
-          this.currentUser = user; 
+        this.currentUser = user;
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
@@ -220,7 +220,7 @@ export class CohorteExportXLSXDialogBox implements OnInit {
           const downloadUrl = window.URL.createObjectURL(res);
           const link = document.createElement('a');
           link.href = downloadUrl;
-          link.download = `users-${dateNowFormat}.xlsx`;
+          link.download = `Cohortes-${dateNowFormat}.xlsx`;
           link.click(); 
           this.toastr.success('Success!', 'Extraction effectuée!');
           // window.location.reload();
