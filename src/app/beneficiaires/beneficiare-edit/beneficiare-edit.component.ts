@@ -85,7 +85,6 @@ export class BeneficiareEditComponent implements OnInit {
       duree_credit: [''],
       date_valeur: [''],
       date_maturite: [''],
-      delai_de_reajustement: [''],
     });
 
     this.formGroup3 = this._formBuilder.group({
@@ -290,7 +289,7 @@ export class BeneficiareEditComponent implements OnInit {
         .delete(id)
         .subscribe({
           next: () => {
-            this.toastr.info('Supprimé avec succès!', 'Success!'); 
+            this.toastr.info('Supprimé avec succès!', 'Success!');
           },
           error: err => {
             this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
