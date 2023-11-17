@@ -55,8 +55,11 @@
                                 <span class="badge">{{ banqueList.length }}</span> 
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu"> 
-                            <li class="sidemenu-item">
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item"
+                            *ngIf="currentUser.permission === 'RC' ||
+                                currentUser.permission === 'RCU' ||
+                                currentUser.permission === 'CRUD'"> 
                                 <a  (click)="openCreateDialog('300ms', '100ms')" class="sidemenu-link">
                                     Ajouter une banque
                                 </a>
