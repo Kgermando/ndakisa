@@ -6,6 +6,9 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { BanqueService } from '../banque.service';
 import { ToastrService } from 'ngx-toastr';
 import { LogUserService } from 'src/app/users/log-user.service';
+import { BanqueModel } from '../models/banque.model';
+import { MatDialog } from '@angular/material/dialog';
+import { EditBanqueDialogBox } from '../banque-list/banque-list.component';
 
 @Component({
   selector: 'app-banque-config',
@@ -16,7 +19,9 @@ export class BanqueConfigComponent implements OnInit {
   isLoading: boolean = false; 
   formGroup!: FormGroup;
 
-  currentUser: UserModel | any; 
+  currentUser: UserModel | any;
+
+  banquelist: BanqueModel[] = [];
 
   constructor(
     private router: Router,
@@ -24,22 +29,33 @@ export class BanqueConfigComponent implements OnInit {
     private authService: AuthService,
     private banqueService: BanqueService, 
     private logService: LogUserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
+    this.formGroup = this._formBuilder.group({
+      name_banque: ['', Validators.required],
+    });
+ 
     this.authService.user().subscribe({
       next: (user) => {
-        this.currentUser = user; 
+        this.currentUser = user;
+        this.banqueService.refreshDataList$.subscribe(() => {
+          this.getAllData();
+        });
+        this.getAllData();  
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
         console.log(error);
       }
     });
+  }
 
-    this.formGroup = this._formBuilder.group({
-      name_banque: ['', Validators.required],
+  getAllData() {
+    this.banqueService.getAll().subscribe(res => {
+      this.banquelist = res; 
     });
   }
 
@@ -78,6 +94,18 @@ export class BanqueConfigComponent implements OnInit {
       this.isLoading = false;
       console.log(error);
     }
+  } 
+
+
+  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number): void {
+    this.dialog.open(EditBanqueDialogBox, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        id: id
+      }
+    }); 
   } 
 
 

@@ -56,14 +56,14 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item"
+                            <!-- <li class="sidemenu-item"
                             *ngIf="currentUser.permission === 'RC' ||
                                 currentUser.permission === 'RCU' ||
                                 currentUser.permission === 'CRUD'"> 
                                 <a  (click)="openCreateDialog('300ms', '100ms')" class="sidemenu-link">
                                     Ajouter une banque
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="sidemenu-item" *ngFor="let item of banqueList">
                                 <a  [routerLink]="['/layouts/banques', item.id, 'banque-list']"
                                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
@@ -97,12 +97,12 @@
                                     Secteurs
                                 </a>
                             </li>
-                            <!-- <li class="sidemenu-item">
+                            <li class="sidemenu-item">
                                 <a  routerLink="/layouts/banques/config" class="sidebar-menu-link" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Banques
                                 </a>
-                            </li> -->
+                            </li>
                             <li class="sidemenu-item">
                                 <a  routerLink="/layouts/users/logs" class="sidebar-menu-link" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
