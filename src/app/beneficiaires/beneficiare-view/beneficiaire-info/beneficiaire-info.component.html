@@ -105,6 +105,10 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <ul class="mb-0 mt-0 ps-0 content-list">
+                <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.cohorte">
+                    <span class="d-block gray-color fw-medium">Cohorte:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.cohorte.name_cohorte }} </span>
+                </li>
                 <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.banque">
                     <span class="d-block gray-color fw-medium">Banque:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.banque.name_banque }} </span>
@@ -118,7 +122,7 @@
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} usd</span>
                 </li>
                 <li class="d-flex align-items-center justify-content-space-between">
-                    <span class="d-block gray-color fw-medium">Interet:</span>
+                    <span class="d-block gray-color fw-medium">Interêt:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.interet_beneficiaire | numberFormat:'fr-FR' }} usd</span>
                 </li>
                 <li class="d-flex align-items-center justify-content-space-between">
@@ -167,9 +171,8 @@
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}</span>
                 </li>
                 <li class="d-flex align-items-center justify-content-space-between">
-                    <span class="d-block gray-color fw-medium">Date maturité après réajustement:</span>
+                    <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement > 0">Date maturité après réajustement:</span>
                     <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement > 0">{{ date_maturite_reajustement | date: 'dd/MM/yyyy' }}</span>
-                    <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement === 0">{{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}</span>
                 </li>
             </ul>
         </mat-expansion-panel>

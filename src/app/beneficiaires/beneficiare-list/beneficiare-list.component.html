@@ -33,26 +33,14 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="cohorte">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohorte</th>
+                <ng-container matColumnDef="province">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Province</th>
                     <td mat-cell *matCellDef="let element">
                         <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
-                            {{element.cohorte.name_cohorte.toUpperCase()}}
+                            {{element.province }}
                         </a>
                     </td>
-                </ng-container>
-
-                <ng-container matColumnDef="banque">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Banque</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span  *ngIf="element.banque">
-                            <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
-                                {{element.banque.name_banque }} 
-                            </a>
-                        </span> 
-                        <span  *ngIf="!element.banque">--</span>
-                    </td>
-                </ng-container>
+                </ng-container> 
 
                 <ng-container matColumnDef="montant_a_rembourser">
                     <th mat-header-cell *matHeaderCellDef>Montant à rembourser</th>
@@ -72,6 +60,15 @@
                     <th mat-header-cell *matHeaderCellDef>Reste à rembourser</th>
                     <td mat-cell *matCellDef="let element">
                         <app-reste-a-rembourser [item]="element"></app-reste-a-rembourser>
+                    </td>
+                </ng-container> 
+
+                <ng-container matColumnDef="statut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="badge rounded-pill text-outline-primary" *ngIf="element.statut == 'Terminé'">Terminé</span>
+                        <span class="badge rounded-pill text-outline-success" *ngIf="element.statut == 'En cours'">En cours</span>
+                        <span class="badge rounded-pill text-outline-danger" *ngIf="element.statut == 'Interrompu'">Interrompu</span>
                     </td>
                 </ng-container> 
 

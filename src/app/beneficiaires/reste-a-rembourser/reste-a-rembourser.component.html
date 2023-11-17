@@ -4,15 +4,14 @@
 <div class="indice">
         <span class="badge fw-semibold" *ngIf="reste >= 0">
         <span class="text">
-            {{ reste }} usd
+            {{ reste | numberFormat:'fr-FR' }} usd
         </span>
         <i class="flaticon-arrow-up"></i>
     </span>
     <span class="badge fw-semibold down" *ngIf="reste < 0">
         <span class="text">
-            {{ reste }} usd
+            {{ reste | numberFormat:'fr-FR' }} usd
         </span>
         <i class="flaticon-down-filled-triangular-arrow"></i>
     </span>
 </div>
-
