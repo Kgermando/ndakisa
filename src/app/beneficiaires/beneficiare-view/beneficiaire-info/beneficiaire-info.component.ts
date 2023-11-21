@@ -7,7 +7,9 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { BeneficiareService } from '../../beneficiare.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlanRemboursementService } from '../../plan_remboursement.service';
+import { PlanRemboursementModel } from '../../models/plan_remousement.model';
 
 @Component({
   selector: 'app-beneficiaire-info',
@@ -16,8 +18,11 @@ import { Router } from '@angular/router';
 })
 export class BeneficiaireInfoComponent implements OnInit {
   @Input('beneficiaire') beneficiaire: BeneficiaireModel;
-  @Input() currentUser: UserModel; 
+  @Input() currentUser: UserModel;
 
+  planRemboursementList: PlanRemboursementModel[] = [];
+
+  id: any;
 
   delai_de_reajustement = 0;
   date_maturite_reajustement: Date;
@@ -25,27 +30,40 @@ export class BeneficiaireInfoComponent implements OnInit {
     constructor(
       public themeService: CustomizerSettingsService,
       private router: Router, 
+      private route: ActivatedRoute,
       private beneficiareService: BeneficiareService,
+      private planRemboursement: PlanRemboursementService,
       public dialog: MatDialog,
       private toastr: ToastrService
   ) {}
 
 
   ngOnInit(): void {
-    this.delai_de_reajustement = this.beneficiaire.plan_remboursements.reduce(function(sum, value) {
-        return sum + value.delai_reajustement;
-    },0);
+    this.id = this.route.snapshot.paramMap.get('id');
+      this.beneficiareService.get(this.id).subscribe(item => {
+        this.beneficiaire = item;
+        this.planRemboursement.refreshDataList$.subscribe(() => {
+          this.getAllDataPlan(this.beneficiaire.id);
+        });
+        this.getAllDataPlan(this.beneficiaire.id);  
+      });
+  }
 
-    if (this.delai_de_reajustement > 0) {
-      var days = this.delai_de_reajustement * 30;
-      var date = new Date(this.beneficiaire.date_maturite);
-      this.date_maturite_reajustement = new Date(date);
-      this.date_maturite_reajustement.setDate(date.getMonth() + days);
-
-      console.log('days', days);
-      console.log('date_maturite_reajustement', this.date_maturite_reajustement);
-    }
-
+  getAllDataPlan(id: number) {
+    this.planRemboursement.getAllData(id).subscribe((res) => {
+        this.planRemboursementList = res;
+        this.delai_de_reajustement = this.planRemboursementList.reduce(function(sum, value) {
+          return sum + value.delai_reajustement;
+        },0);
+    
+        if (this.delai_de_reajustement > 0) {
+          var days = this.delai_de_reajustement * 30;
+          var date = new Date(this.beneficiaire.date_maturite);
+          this.date_maturite_reajustement = new Date(date);
+          this.date_maturite_reajustement.setDate(date.getMonth() + days); 
+        }
+      }
+    );
   }
 
 

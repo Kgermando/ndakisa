@@ -71,6 +71,10 @@ export class BeneficiaireRemboursementsComponent {
       );
     }
 
+    isHiddenBadgeBlue(date_remboursement: Date) {
+      return formatDate(new Date(),'yyyy-MM','en_US') < formatDate(new Date(date_remboursement),'yyyy-MM','en_US');
+    }
+
     isActivatedBtn(delai: Date) {
       return formatDate(new Date(),'yyyy-MM','en_US') >= formatDate(new Date(delai),'yyyy-MM','en_US');
     }

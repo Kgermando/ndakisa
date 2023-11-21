@@ -7,11 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/users/models/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model'; 
-import { LogUserService } from 'src/app/users/log-user.service';
-import { FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LogUserService } from 'src/app/users/log-user.service'; 
 import { PlanRemboursementService } from '../plan_remboursement.service';
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-beneficiare-view',
@@ -22,7 +21,10 @@ export class BeneficiareViewComponent implements OnInit {
   isLoading = false; 
   currentUser: UserModel | any;
   beneficiaire: BeneficiaireModel; 
-  ELEMENT_DATA: PlanRemboursementModel[] = [];
+  ELEMENT_DATA: PlanRemboursementModel[] = []; 
+
+  delai_de_reajustement = 0;
+  date_maturite_reajustement: Date;
 
   constructor(
     public themeService: CustomizerSettingsService,
@@ -40,12 +42,15 @@ export class BeneficiareViewComponent implements OnInit {
       let id = this.route.snapshot.paramMap.get('id'); 
       this.authService.user().subscribe({
         next: (user) => {
-            this.currentUser = user; 
-            this.beneficiareService.get(Number(id)).subscribe(res => {
-              this.beneficiaire = res;
-              this.ELEMENT_DATA = this.beneficiaire.plan_remboursements;
-              this.isLoading = false;
+          this.currentUser = user;  
+          this.beneficiareService.get(Number(id)).subscribe(item => {
+            this.beneficiaire = item;
+            this.planRemboursementService.refreshDataList$.subscribe(() => {
+              this.getAllDataPlan(this.beneficiaire.id);
             });
+            this.getAllDataPlan(this.beneficiaire.id);  
+            this.isLoading = false;
+          });
         },
         error: (error) => {
           this.isLoading = false;
@@ -53,6 +58,23 @@ export class BeneficiareViewComponent implements OnInit {
           console.log(error);
         }
       });  
+    }
+
+    getAllDataPlan(id: number) {
+      this.planRemboursementService.getAllData(id).subscribe((res) => {
+          this.ELEMENT_DATA = res;
+          this.delai_de_reajustement = this.ELEMENT_DATA.reduce(function(sum, value) {
+            return sum + value.delai_reajustement;
+          },0);
+      
+          if (this.delai_de_reajustement > 0) {
+            var days = this.delai_de_reajustement * 30;
+            var date = new Date(this.beneficiaire.date_maturite);
+            this.date_maturite_reajustement = new Date(date);
+            this.date_maturite_reajustement.setDate(date.getMonth() + days); 
+          }
+        }
+      );
     }
 
     edit(id: number) {

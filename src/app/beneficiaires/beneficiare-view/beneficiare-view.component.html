@@ -4,20 +4,120 @@
  
 
 <mat-card class="mb-25 enrolled-created-box tagus-card" *ngIf="beneficiaire">
-    <div class="d-flex align-items-center justify-content-end">
-        <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
-            [matMenuTriggerFor]="iconMenu">
-            <i class="ri-menu-line"></i>
-        </button>
-        <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu" xPosition="before">
-            <button mat-menu-item type="button" 
-            class="bg-transparent border-none position-relative"
-            (click)="exportExcel()">
-                <i class="ri-printer-line"></i> Exporter
-            </button>
-        </mat-menu>
-    </div>
     <mat-card-content>
+        <div class="course-details-desc mb-25">
+            <div class="row align-items-center">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div class="d-md-flex justify-content-space-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">Béneficiaire</h6>
+                                        <h4 class="mb-0">{{ beneficiaire.name_beneficiaire }}</h4> 
+                                    </div> 
+                                    <div> 
+                                        <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
+                                            [matMenuTriggerFor]="iconMenu">
+                                            <i class="ri-menu-line"></i>
+                                        </button>
+                                        <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu" xPosition="before">
+                                            <button mat-menu-item type="button" 
+                                            class="bg-transparent border-none position-relative"
+                                            (click)="exportExcel()">
+                                                <i class="ri-printer-line"></i> Exporter
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                            </mat-panel-title> 
+                        </mat-expansion-panel-header>
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <!-- <li class="gray-color fw-semibold">
+                                    Total garantie
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ beneficiaire.montant_garantie | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li> -->
+                                <li class="gray-color fw-semibold">
+                                    Crédit accordé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} usd
+                                    </span> 
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Interêt
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ beneficiaire.interet_beneficiaire | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Montant à rembourser
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Montant remboursé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
+                                    </span>
+                                </li> 
+                                <li class="gray-color fw-semibold">
+                                    Reste à rembourser
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        <app-reste-a-rembourser-view [item]="beneficiaire"></app-reste-a-rembourser-view>
+                                    </span>
+                                </li> 
+                            </ul>
+                        </div> 
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                               
+                                <li class="gray-color fw-semibold">
+                                    Date valeur
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.date_valeur | date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Durée de credit
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.duree_credit }} mois
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Delai de grâce
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.delai_de_grace }} mois
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Total delai de réajustement
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ delai_de_reajustement }} mois
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold" *ngIf="delai_de_reajustement === 0">
+                                    Date maturité
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold" *ngIf="delai_de_reajustement > 0">
+                                    Date maturité après réajustement
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ date_maturite_reajustement | date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li>
+                                
+                            </ul> 
+                        </div> 
+                    </mat-expansion-panel> 
+                </mat-accordion>
+            </div>
+        </div>
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
             <mat-tab label="Plan d'amortissement">
                 <app-beneficiaire-remboursements [beneficiaire]="beneficiaire" [currentUser]="currentUser"></app-beneficiaire-remboursements>
