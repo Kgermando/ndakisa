@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BanqueModel } from '../../models/banque.model';
 import { UserModel } from 'src/app/users/models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 import { BanqueService } from '../../banque.service';
 import { Router } from '@angular/router';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';

@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/users/models/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model'; 
-import { LogUserService } from 'src/app/users/log-user.service'; 
+import { LogUserService } from 'src/app/logs/log-user.service'; 
 import { PlanRemboursementService } from '../plan_remboursement.service';
 import { formatDate } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';

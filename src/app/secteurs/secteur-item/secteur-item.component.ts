@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';
 import { UserModel } from 'src/app/users/models/user.model';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-secteur-item',

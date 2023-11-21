@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from '../user.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from '../models/user.model';
-import { LogUserService } from '../log-user.service';
+import { LogUserService } from '../../logs/log-user.service';
 
 @Component({
   selector: 'app-user-view',

@@ -74,7 +74,7 @@ import { ResteARembourserViewComponent } from './beneficiaires/beneficiare-view/
 import { EditSecteurDialogBox, SecteurComponent } from './secteurs/secteur/secteur.component';
 import { SecteurItemComponent } from './secteurs/secteur-item/secteur-item.component';
 import { BanqueConfigComponent } from './banques/banque-config/banque-config.component';
-import { LogUserListComponent } from './logs/log-user-list/log-user-list.component';
+import { LogExportXLSXDialogBox, LogUserListComponent } from './logs/log-user-list/log-user-list.component';
 import { BanqueItemComponent } from './banques/banque-config/banque-item/banque-item.component';
 
 registerLocaleData(localeFr);
@@ -153,6 +153,7 @@ registerLocaleData(localeFr);
     BanqueConfigComponent,
     LogUserListComponent,
     BanqueItemComponent,
+    LogExportXLSXDialogBox,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,8 @@ import { UserModel } from "../../users/models/user.model";
 
 export interface LogUserModel {
     id: number;
-    user: UserModel;
+    // user: UserModel;
+    matricule: string;
     date_operation: Date;
     type_operation: string; // Create, Update, Delete
     module: string; // Beneficiaire, Cohorte, Banque, Utilisateurs

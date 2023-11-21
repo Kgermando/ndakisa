@@ -13,7 +13,7 @@ import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { SecteurService } from '../../secteurs/secteur.service';
 import { SecteurModel } from '../../secteurs/models/secteur.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-beneficiare-add',

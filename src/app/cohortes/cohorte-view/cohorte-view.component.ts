@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { StatutList } from 'src/app/shared/tools/statut';
 import { CohorteModel } from '../models/cohorte.model';  
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';  
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-cohorte-view',

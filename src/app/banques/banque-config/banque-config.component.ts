@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { UserModel } from 'src/app/users/models/user.model';
 import { BanqueService } from '../banque.service';
 import { ToastrService } from 'ngx-toastr';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 import { BanqueModel } from '../models/banque.model';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBanqueDialogBox } from '../banque-list/banque-list.component';

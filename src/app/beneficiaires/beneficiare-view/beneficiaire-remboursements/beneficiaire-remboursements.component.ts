@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PlanRemboursementService } from '../../plan_remboursement.service';
 import { Validators } from 'ngx-editor';
 import { formatDate } from '@angular/common';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-beneficiaire-remboursements',

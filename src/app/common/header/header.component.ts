@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomizerSettingsService } from '../customizer-settings/customizer-settings.service';
 import { Auth } from '../classes/auth';
 import { UserModel } from 'src/app/users/models/user.model';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 
 @Component({

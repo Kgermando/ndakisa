@@ -10,7 +10,7 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model'; 
 import { PlanRemboursementModel } from 'src/app/beneficiaires/models/plan_remousement.model';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-banque-list',

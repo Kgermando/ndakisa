@@ -12,7 +12,7 @@ import { PlanRemboursementService } from '../plan_remboursement.service';
 import { PlanRemboursementModel } from '../models/plan_remousement.model';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 import { SecteurModel } from '../../secteurs/models/secteur.model';
 import { SecteurService } from '../../secteurs/secteur.service';
 

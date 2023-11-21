@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';  
 import { UserService } from '../user.service';
 import { UserModel } from '../models/user.model';
-import { LogUserService } from '../log-user.service';
+import { LogUserService } from '../../logs/log-user.service';
 
 
 @Component({

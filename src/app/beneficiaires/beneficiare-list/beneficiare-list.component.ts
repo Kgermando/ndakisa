@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BeneficiareService } from '../beneficiare.service';
 import { UserModel } from 'src/app/users/models/user.model';
+import { CohorteExportXLSXDialogBox } from 'src/app/cohortes/cohorte-list/cohorte-list.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-beneficiare-list',
@@ -20,7 +22,7 @@ export class BeneficiareListComponent implements OnInit {
   isLoading = false;
   currentUser: UserModel | any; 
   
-  ELEMENT_DATA: BeneficiaireModel[] = [];
+  ELEMENT_DATA: BeneficiaireModel[] = []; 
 
   displayedColumns: string[] = ['identifiant', 'name_beneficiaire', 'province', 'montant_a_rembourser', 'montant_rembourser', 'reste_a_rembourser', 'statut'];
 
@@ -36,6 +38,7 @@ export class BeneficiareListComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private beneficiareService: BeneficiareService,
+    private dialog: MatDialog
   ) {}
 
 
@@ -73,6 +76,15 @@ export class BeneficiareListComponent implements OnInit {
     } else {
         this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+
+  openExportDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CohorteExportXLSXDialogBox, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration, 
+    }); 
   }
 
 

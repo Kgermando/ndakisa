@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RoleDataList } from 'src/app/shared/tools/role-list';
 import { permissionDataList } from 'src/app/shared/tools/permission-list';
 import { UserModel } from '../models/user.model';
-import { LogUserService } from '../log-user.service';
+import { LogUserService } from '../../logs/log-user.service';
 
 @Component({
   selector: 'app-user-add',

@@ -4,10 +4,26 @@
 </div>
 <div *ngIf="!isLoading">
     <mat-card class="mb-25 tagus-card">
-        <mat-card-header class="border-bottom">
-            <h4 class="mb-0">Le journal</h4>
+        <mat-card-header>
+            <h4 class="mb-0">Le journal de navigation</h4>
+            <div class="d-flex  justify-content-end">
+                <form [formGroup]="dateRange">
+                    <mat-form-field>
+                        <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate formControlName="start" placeholder="Start Date">
+                        <input matEndDate formControlName="end" placeholder="End Date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                </form> 
+                <button mat-icon-button color="primary" matTooltip="Exporter en excel"
+                    (click)="openExportDialog('300ms', '100ms')">
+                    <mat-icon>print</mat-icon>
+                </button>
+            </div>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content> 
             <ul class="ps-0 mb-0 mt-0 list-unstyled tagus-timeline">
                 <li class="position-relative" *ngFor="let item of logUserList">
                     <img src="assets/img/icon/right-arrow.png" alt="right-arrow" class="icon">
@@ -20,15 +36,19 @@
                         <span class="badge text-bg-secondary" *ngIf="item.type_operation == 'Logout'">{{item.type_operation}}</span>
                         -{{ item.title }}
                     </h5>
-                    <h6 class="mb-0">{{item.user.matricule }}</h6>
+                    <h6 class="mb-0">
+                        <a [routerLink]="['/layouts/users', item.id, 'user-view']">
+                            {{item.matricule }}
+                        </a>
+                    </h6>
                     <span class="d-block muted-color mb-0 fs-14">{{ item.date_operation | date: 'dd/MM/yyyy HH:mm:ss EEEE' }}</span>
                     <p>{{ item.observation }}</p>
                 </li>
             </ul>
-            <app-paginator
+            <!-- <app-paginator
                 [lastPage]="lastPage"
                 (pageChanged)="load($event)"
-                ></app-paginator>
+                ></app-paginator> -->
         </mat-card-content>
     </mat-card>    
 </div>

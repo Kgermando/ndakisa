@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router'; 
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/users/models/user.model';
-import { LogUserService } from 'src/app/users/log-user.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-login',
