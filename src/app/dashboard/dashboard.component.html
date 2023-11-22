@@ -8,7 +8,7 @@
         [class.card-border-radius]="themeService.isCardBorderRadius()" 
     >
         <div class="top border-radius position-relative"> 
-            <h4>Plage de date</h4>
+            <h6 class="text-white">Plage de date</h6>
             <div class="d-flex align-items-center justify-content-center">
                 <form [formGroup]="dateRange" (ngSubmit)="onSubmit()">
                     <mat-form-field>
@@ -33,42 +33,45 @@
                 <mat-card class="single-stats-box tagus-card mb-25">
                     <div class="d-flex align-items-center">
                         <div class="icon">
-                            <i class="flaticon-donut-chart"></i>
+                            <!-- <i class="flaticon-donut-chart"></i> -->
+                            <mat-icon class="icon-mat">groups</mat-icon>
                         </div>
                         <div class="title">
                             <span class="d-block gray-color">Beneficiaires</span>
                             <h3>{{totalBeneficiaire}}</h3>
                         </div>
                     </div>
-                    <p class="position-relative up">Total des Beneficiaires</p>
+                    <p class="position-relative up">Nombre de Beneficiaires</p>
                 </mat-card>
             </div>
             <div class="col-md-4">
                 <mat-card class="single-stats-box tagus-card mb-25">
                     <div class="d-flex align-items-center">
                         <div class="icon">
-                            <i class="flaticon-goal"></i>
+                            <!-- <i class="flaticon-goal"></i> -->
+                            <mat-icon class="icon-mat">account_balance_wallet</mat-icon>
                         </div>
                         <div class="title">
                             <span class="d-block gray-color">Cohortes</span>
                             <h3>{{totalCohorte}}</h3>
                         </div>
                     </div>
-                    <p class="position-relative up">Total des Cohortes</p>
+                    <p class="position-relative up">Nombre de Cohortes</p>
                 </mat-card>
             </div>
             <div class="col-md-4">
                 <mat-card class="single-stats-box tagus-card mb-25">
                     <div class="d-flex align-items-center">
                         <div class="icon">
-                            <i class="flaticon-award"></i>
+                            <!-- <i class="flaticon-award"></i> -->
+                            <mat-icon class="icon-mat">account_balance</mat-icon>
                         </div>
                         <div class="title">
                             <span class="d-block gray-color">Banques</span>
                             <h3>{{totalBanque}}</h3>
                         </div>
                     </div>
-                    <p class="position-relative up">Total des banques</p>
+                    <p class="position-relative up">Nombre de banques</p>
                 </mat-card>
             </div>
         </div>

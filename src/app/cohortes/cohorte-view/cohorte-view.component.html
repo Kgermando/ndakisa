@@ -1,9 +1,16 @@
+
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+</div>
+ 
+
 <mat-card
     class="mb-25 tagus-card"
     [class.component-dark-theme]="themeService.isDark()"
     [class.card-border-radius]="themeService.isCardBorderRadius()" 
+    *ngIf="!isLoading && cohorte"
 >
-    <mat-card-content *ngIf="cohorte"> 
+    <mat-card-content> 
         <div class="course-details-desc">
             <div class="row align-items-center">
                 <mat-accordion>
@@ -21,13 +28,13 @@
                         <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
                             <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                 <li class="gray-color fw-semibold">
-                                    Total beneficiaire
+                                    Nombre beneficiaires
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ cohorte.beneficiaires.length }}
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Total banque
+                                    Nombre banques
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ totalBanque }} 
                                     </span>
@@ -45,15 +52,21 @@
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
+                                    Total interet
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalInteret | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                            </ul> 
+                        </div>
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
                                     Total à rembouser
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ montant_A_Rembourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li> 
-                            </ul> 
-                        </div>
-                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
-                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                 <li class="gray-color fw-semibold">
                                     Total remboursé
                                     <span class="d-block fw-semibold position-relative"> 
@@ -61,17 +74,16 @@
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Reste à rembouser
-                                    <span class="d-block fw-semibold position-relative"> 
+                                    Reste à rembouser 
+                                    <span class="d-block fw-semibold position-relative badge text-bg-success text" *ngIf="resteARembouser >= 0">
+                                        {{ resteARembouser | numberFormat:'fr-FR' }} usd
+                                    </span>
+
+                                    <span class="d-block fw-semibold position-relative badge text-bg-danger text" *ngIf="resteARembouser < 0">
                                         {{ resteARembouser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li> 
-                                <li class="gray-color fw-semibold">
-                                    Total interet
-                                    <span class="d-block fw-semibold position-relative"> 
-                                        {{ totalInteret | numberFormat:'fr-FR' }} usd
-                                    </span>
-                                </li> 
+                                
                                 <li class="gray-color fw-semibold">
                                     Statut
                                     <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15);" *ngIf="cohorte.statut_cohorte == 'Fermée'">Fermée</span>
@@ -90,12 +102,12 @@
             </div>
         </div>
         <div class="d-md-flex justify-content-space-between align-items-center mb-25">
-            <h5 class="mb-0">Liste des beneficiaires </h5>
+            <h5 class="mb-0">Liste de beneficiaires </h5>
             <div *ngIf="cohorte.statut_cohorte === 'Ouverte'">
                 <a mat-raised-button [routerLink]="['/layouts/beneficiaires', cohorte.id, 'beneficiaire-add']"
                     class="tagus" *ngIf="currentUser.permission === 'RC' || currentUser.permission === 'RCU' ||
                         currentUser.permission === 'CRUD'">
-                    Nouveau beneficiaire 
+                    Nouveau béneficiaire 
                 </a>
                 <button mat-icon-button color="warn" 
                         (click)="delete(cohorte.id)"

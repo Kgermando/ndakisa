@@ -94,7 +94,7 @@ export class BanqueListComponent implements OnInit {
       var pourcents = this.montantRembourse * 100 / this.montant_A_Rembourser;
       this.pourcent = parseFloat(pourcents.toFixed(2));
  
-      this.reste_A_Rembourser = this.montant_A_Rembourser - this.montantRembourse;
+      this.reste_A_Rembourser = this.montantRembourse - this.montant_A_Rembourser;
       this.isLoading = false;
     });
   }

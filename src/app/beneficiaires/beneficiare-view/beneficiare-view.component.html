@@ -3,7 +3,7 @@
 </div>
  
 
-<mat-card class="mb-25 enrolled-created-box tagus-card" *ngIf="beneficiaire">
+<mat-card class="mb-25 enrolled-created-box tagus-card" *ngIf="!isLoading && beneficiaire">
     <mat-card-content>
         <div class="course-details-desc mb-25">
             <div class="row align-items-center">
@@ -44,7 +44,7 @@
                                     Crédit accordé
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} usd
-                                    </span> 
+                                    </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
                                     Interêt
@@ -55,7 +55,7 @@
                                 <li class="gray-color fw-semibold">
                                     Montant à rembourser
                                     <span class="d-block fw-semibold position-relative"> 
-                                        <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
+                                        {{ beneficiaire.montant_a_debourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">

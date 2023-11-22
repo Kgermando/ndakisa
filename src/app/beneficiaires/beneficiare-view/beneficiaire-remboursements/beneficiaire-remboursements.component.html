@@ -139,15 +139,23 @@
                     </button>
                 </td>
                 <td>
-                    <button mat-icon-button color="primary" *ngIf="plan_remboursement.date_paiement"
-                     matTooltip="Pas de delai de réajustement">
-                        <mat-icon>schedule</mat-icon>
-                    </button>
-                    <button mat-icon-button color="warn" *ngIf="!plan_remboursement.date_paiement"
-                     (click)="openDelaiReajustementDialog('300ms', '100ms', plan_remboursement.id)"
-                     matTooltip="Ajouter un delai réajustement">
-                            <mat-icon>more_time</mat-icon>
-                    </button>
+                    <span *ngIf="beneficiaire.statut === 'Terminé' || beneficiaire.statut === 'Interrompu'">
+                        <button mat-icon-button color="primary"
+                            matTooltip="Remboursement Terminé ou Interrompu">
+                           <mat-icon>schedule</mat-icon>
+                        </button>
+                    </span>
+                    <span *ngIf="beneficiaire.statut === 'En cours'">
+                        <button mat-icon-button color="primary" *ngIf="plan_remboursement.date_paiement"
+                        matTooltip="Pas de delai de réajustement">
+                           <mat-icon>schedule</mat-icon>
+                       </button>
+                       <button mat-icon-button color="warn" *ngIf="!plan_remboursement.date_paiement"
+                        (click)="openDelaiReajustementDialog('300ms', '100ms', plan_remboursement.id)"
+                        matTooltip="Ajouter un delai réajustement">
+                               <mat-icon>more_time</mat-icon>
+                       </button>
+                    </span>
                 </td>
             </tr>
         </tbody>

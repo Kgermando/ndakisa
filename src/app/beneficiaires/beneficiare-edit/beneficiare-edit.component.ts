@@ -133,7 +133,7 @@ export class BeneficiareEditComponent implements OnInit {
             montant_garantie: item.montant_garantie,
             credit_accorde: item.credit_accorde,
             interet_beneficiaire: item.interet_beneficiaire,
-            montant_a_debourser: item.montant_a_debourser, 
+            montant_a_debourser: parseFloat(item.credit_accorde) + parseFloat(item.interet_beneficiaire), 
             delai_de_grace: item.delai_de_grace,
             duree_credit: item.duree_credit,
             date_valeur: item.date_valeur,
@@ -142,6 +142,8 @@ export class BeneficiareEditComponent implements OnInit {
           });
         }
       );
+
+      // this.onChanges();
         
       },
       error: (error) => {
@@ -159,6 +161,13 @@ export class BeneficiareEditComponent implements OnInit {
       }
     );
   } 
+
+
+  // onChanges(): void {
+  //   this.formGroup2.valueChanges.subscribe(val => {
+  //     this.formGroup2.value.montant_a_debourser = parseFloat(item.credit_accorde) + parseFloat(item.interet_beneficiaire)
+  //   });
+  // }
 
 
   onSubmit() {

@@ -80,8 +80,9 @@ export class CohorteViewComponent implements OnInit {
               if (item.banque.name_banque) {
                 this.banques.push(item.banque.name_banque);
               }
-            }; 
-            this.resteARembouser = this.montant_A_Rembourser - this.totalRembourse;
+            };
+            
+            this.resteARembouser = this.totalRembourse - this.montant_A_Rembourser;
             
             this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
             this.totalBanque = this.banqueFilter.length; 
@@ -167,7 +168,7 @@ export class EditCohorteDialogBox implements OnInit{
     this.formGroup = this.formBuilder.group({  
       name_cohorte: [''],
       contrat_ref: [''], 
-      statut: [''],
+      statut_cohorte: [''],
     }); 
     this.authService.user().subscribe({
       next: (user) => {
@@ -177,7 +178,7 @@ export class EditCohorteDialogBox implements OnInit{
           this.formGroup.patchValue({
             name_cohorte: item.name_cohorte,
             contrat_ref: item.contrat_ref,
-            statut_cohorte: item.statut,
+            statut_cohorte: item.statut_cohorte,
             signature: this.currentUser.matricule, 
             update_created: new Date(),
           });

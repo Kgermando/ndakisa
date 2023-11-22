@@ -1,6 +1,11 @@
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+</div>
+ 
+
 <mat-card class="mb-25 tagus-card" [class.component-dark-theme]="themeService.isDark()"
-    [class.card-border-radius]="themeService.isCardBorderRadius()" >
-    <mat-card-content *ngIf="banque"> 
+    [class.card-border-radius]="themeService.isCardBorderRadius()"  *ngIf="!isLoading && banque">
+    <mat-card-content> 
         <div class="course-details-desc">
             <div class="row align-items-center">
                 <mat-accordion>
@@ -10,7 +15,7 @@
                                 <div class="d-md-flex justify-content-space-between align-items-center">
                                     <div>
                                         <h6 class="mb-0">{{ banque.name_banque }} </h6>
-                                        <h4 class="mb-0">Liste des beneficiaires par banque</h4> 
+                                        <h4 class="mb-0">Liste de beneficiaires par banque</h4> 
                                     </div> 
                                     <div> 
                                         <!-- <button mat-icon-button color="warn" 
@@ -35,6 +40,12 @@
                         <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
                             <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                 <li class="gray-color fw-semibold">
+                                    Nombre beneficiaires
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ banque.beneficiaires.length }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
                                     Total garantie
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ totalGarantie | numberFormat:'fr-FR' }} usd
@@ -58,20 +69,24 @@
                                         {{ montant_A_Rembourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
+                            </ul> 
+                        </div> 
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                 <li class="gray-color fw-semibold">
                                     Montant remboursé
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ montantRembourse | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li> 
-                            </ul> 
-                        </div> 
-                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
-                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                 <li class="gray-color fw-semibold">
-                                    Reste à rembourser
-                                    <span class="d-block fw-semibold position-relative"> 
-                                       {{ reste_A_Rembourser | numberFormat:'fr-FR' }} usd
+                                    Reste à rembourser 
+                                    <span class="d-block fw-semibold position-relative badge text-bg-success text" *ngIf="reste_A_Rembourser >= 0">
+                                        {{ reste_A_Rembourser | numberFormat:'fr-FR' }} usd
+                                    </span>
+
+                                    <span class="d-block fw-semibold position-relative badge text-bg-danger text" *ngIf="reste_A_Rembourser < 0">
+                                        {{ reste_A_Rembourser | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
