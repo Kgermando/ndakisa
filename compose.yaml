@@ -1,15 +1,19 @@
-services:
-  web:
-    build:
-      context: .
-      target: builder
-    ports:
-      - 4201:4201
-    volumes:
-      - ./ndakisa:/project
-      - /project/node_modules 
-  
+version: '2.1'
 
-networks:
-  app-network:
-    driver: bridge
+services:
+  ndakisa:
+    image: ndakisa
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:80
+
+
+
+# docker rmi -f ndakisa-api  // Supprimer une image
+# docker compose build ndakisa
+# docker compose up --build -d ndakisa
+# docker compose up --rebuild -d ndakisa
+
+# https://github.com/kprasad99/angular-nginx-docker   // Reference
