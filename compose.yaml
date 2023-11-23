@@ -4,6 +4,7 @@ services:
   ndakisa:
     image: ndakisa
     build: .
+    restart: unless-stopped
     environment:
       NODE_ENV: production
     ports:
