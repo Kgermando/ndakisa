@@ -1,9 +1,12 @@
-version: '2.1'
+version: '3'
 
 services:
   ndakisa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ndakisa
     image: ndakisa
-    build: .
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -11,10 +14,9 @@ services:
       - 80:80
 
 
-
+# docker system prune
 # docker rmi -f ndakisa-api  // Supprimer une image
 # docker compose build ndakisa
-# docker compose up --build -d ndakisa
-# docker compose up --rebuild -d ndakisa
+# docker compose up --build -d ndakisa 
 
 # https://github.com/kprasad99/angular-nginx-docker   // Reference
