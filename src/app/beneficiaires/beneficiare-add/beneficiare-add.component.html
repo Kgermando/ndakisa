@@ -107,7 +107,7 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Select Secteur activité</mat-label>
                             <i class="ri-list-check"></i>
-                            <mat-select (selectionChange)="onChange($event)" formControlName="secteur_activite">
+                            <mat-select formControlName="secteur_activite">
                                 <mat-option  *ngFor="let secteur of secteurList" [value]="secteur">{{secteur.name_secteur}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="formGroup.controls['secteur_activite'].hasError('required')">

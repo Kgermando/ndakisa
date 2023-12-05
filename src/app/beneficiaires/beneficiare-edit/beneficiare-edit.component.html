@@ -169,9 +169,9 @@
                             <mat-form-field appearance="fill">
                                 <i class="ri-group-line"></i>
                                 <mat-label>Select banque</mat-label>
-                                <mat-select [compareWith]="compareFn" formControlName="banque">
+                                <mat-select [compareWith]="compareFn" (selectionChange)="onChangeBanque($event)" formControlName="banque">
                                     <mat-option *ngFor="let banque of banqueList" [value]="banque">{{banque.name_banque}}</mat-option>
-                                </mat-select> 
+                                </mat-select>  
                             </mat-form-field>
                         </div> 
                         <div class="col-lg-6 col-md-6 col-sm-6">

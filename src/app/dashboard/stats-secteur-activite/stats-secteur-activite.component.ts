@@ -8,7 +8,6 @@ import {
     ApexStroke,
     ApexChart
 } from "ng-apexcharts";
-import { DashboardService } from "../dashboard.service";
 
 export type ChartOptions = {
     series: ApexNonAxisChartSeries;
@@ -49,7 +48,7 @@ export class StatsSecteurActiviteComponent implements OnChanges {
             tooltip: {
                 y: {
                     formatter: function (val) {
-                        return "" + val + "Beneficiaires";
+                        return "" + val + " Beneficiaires";
                     },
                 },
             },
@@ -66,5 +65,4 @@ export class StatsSecteurActiviteComponent implements OnChanges {
             labels: this.secteurActiviteList.map((item: any) => item.name_secteur)
         };
     }
-
 }

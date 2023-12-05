@@ -4,8 +4,8 @@
             Statut:
             <span class="badge fw-medium d-block position-relative" style="color: rgb(61, 160, 15); font-size: medium;" *ngIf="beneficiaire.statut == 'En cours'">En cours</span>
             <span class="badge pending fw-medium d-block position-relative"  style="color: red; font-size: medium;" *ngIf="beneficiaire.statut == 'Interrompu'">Interrompu</span>
-            <span class="badge completed fw-medium d-block position-relative" style="color: blue; font-size: medium;" *ngIf="beneficiaire.statut == 'Terminé'">Terminé</span> 
-            
+            <span class="badge completed fw-medium d-block position-relative" style="color: blue; font-size: medium;" *ngIf="beneficiaire.statut == 'Terminé'">Terminé</span>  
+            <span class="badge completed fw-medium d-block position-relative" style="color: orange; font-size: medium;" *ngIf="beneficiaire.statut == 'En attente'">En attente</span> 
             <button mat-icon-button color="primary"  
                 (click)="openEditStatutDialog('300ms', '100ms', beneficiaire.id)"
                 *ngIf="currentUser.permission === 'RU' ||

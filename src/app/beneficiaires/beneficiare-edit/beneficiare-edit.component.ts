@@ -42,6 +42,7 @@ export class BeneficiareEditComponent implements OnInit {
   secteurList: SecteurModel[] = [];
 
   id: any; 
+  banqueId: any;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -54,6 +55,10 @@ export class BeneficiareEditComponent implements OnInit {
     private secteurService: SecteurService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
+
+  onChangeBanque(event: any) {
+    this.banqueId = event.value;
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -138,7 +143,10 @@ export class BeneficiareEditComponent implements OnInit {
             duree_credit: item.duree_credit,
             date_valeur: item.date_valeur,
             date_maturite: item.date_maturite,
-            delai_de_reajustement: item.delai_de_reajustement, 
+            delai_de_reajustement: item.delai_de_reajustement,
+            statut: (this.banqueId) ? 'En cours' : 'En attente',
+            signature: this.currentUser.matricule, 
+            update_created: new Date(),
           });
         }
       );
@@ -161,6 +169,8 @@ export class BeneficiareEditComponent implements OnInit {
       }
     );
   } 
+
+
 
 
   // onChanges(): void {

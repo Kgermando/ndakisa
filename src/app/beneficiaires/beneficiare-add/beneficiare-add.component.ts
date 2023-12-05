@@ -201,7 +201,7 @@ export class BeneficiareAddComponent implements OnInit {
           rccm: this.formGroup.value.rccm,
           adresse: this.capitalizeTest(this.formGroup.value.adresse),
           cohorte: this.id, 
-          statut:  'En cours', 
+          statut:  'En attente', 
           signature: this.currentUser.matricule,
           created: new Date(),
           update_created: new Date(),
@@ -218,7 +218,7 @@ export class BeneficiareAddComponent implements OnInit {
               this.isLoading = false;
               this.formGroup.reset();
               this.toastr.success('Ajouter avec succès!', 'Success!');
-              this.router.navigate(['/layouts/beneficiaires', res.id, 'beneficiaire-edit']); 
+              this.router.navigate(['/layouts/cohortes', this.id, 'cohorte-view']);
             });
           },
           error: (err) => {
