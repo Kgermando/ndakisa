@@ -23,8 +23,11 @@
                         {{element.cohorte.name_cohorte }} 
                     </a>
                 </td>
-                <td class="gray-color">
+                <td class="gray-color" *ngIf="element.banque">
                     {{element.banque.name_banque }} 
+                </td>
+                <td class="gray-color" *ngIf="!element.banque">
+                   -
                 </td>
                 <td class="gray-color">
                     <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">

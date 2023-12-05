@@ -13,6 +13,7 @@ import { PlanRemboursementService } from '../../plan_remboursement.service';
 import { Validators } from 'ngx-editor';
 import { formatDate } from '@angular/common';
 import { LogUserService } from 'src/app/logs/log-user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-beneficiaire-remboursements',
@@ -47,6 +48,7 @@ export class BeneficiaireRemboursementsComponent {
     public themeService: CustomizerSettingsService,  
     private router: Router,
     private route: ActivatedRoute,
+    private httpClient: HttpClient,
     private beneficiareService: BeneficiareService,
     private planRemboursement: PlanRemboursementService,
     private logService: LogUserService,
@@ -90,7 +92,8 @@ export class BeneficiaireRemboursementsComponent {
     isNotActivatedReajustementBtn(reajustement: Date) {
       return formatDate(new Date(),'yyyy-MM','en_US') < formatDate(new Date(reajustement),'yyyy-MM','en_US');
     }
-  
+
+
 
   delete(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
@@ -109,6 +112,23 @@ export class BeneficiaireRemboursementsComponent {
     }
   }
 
+
+  downloadRecipicE(date_paiement: Date, url: string) {
+    this.isLoadingDowload = true;
+    var date = formatDate(new Date(date_paiement),'yyyy-MM','en_US');
+      console.log('url', url);
+      console.log('date', date);
+      
+    this.httpClient.get(`${url}`,{responseType: "blob"}).subscribe((res:any) => { 
+      const downloadUrl= window.URL.createObjectURL(res);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${this.beneficiaire.name_beneficiaire}-${date}`;
+      link.click();
+      this.isLoadingDowload = false;
+    });
+  } 
+  
   downloadBordereau(date_paiement: Date, url: string) {
     try {
       this.isLoadingDowload = true; 

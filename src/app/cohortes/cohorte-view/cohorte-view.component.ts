@@ -77,7 +77,7 @@ export class CohorteViewComponent implements OnInit {
              }, 0);
 
             for (let item of this.ELEMENT_DATA) {
-              if (item.banque.name_banque) {
+              if (item.banque) {
                 this.banques.push(item.banque.name_banque);
               }
             };

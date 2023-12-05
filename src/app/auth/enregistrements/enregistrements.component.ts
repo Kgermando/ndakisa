@@ -51,14 +51,15 @@ export class EnregistrementsComponent implements OnInit {
         this.isLoading = true;
         var val = Math.floor(1000 + Math.random() * 9000);
         var body = {
+          photo: '-',
           nom: this.formGroup.value.nom,
           postnom: this.formGroup.value.postnom,
           prenom: this.formGroup.value.prenom,
           email: this.formGroup.value.email,
           telephone: this.formGroup.value.telephone,
           sexe: this.formGroup.value.sexe,
-          adresse: this.formGroup.value.adresse, 
-          matricule: `admin-${val}`.toLowerCase(), 
+          adresse: this.formGroup.value.adresse,
+          matricule: `admin-${val}`.toLowerCase(),
           roles: this.roleList,
           permission: 'CRUD',
           signature: '-',
