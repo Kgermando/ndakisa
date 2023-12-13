@@ -1,7 +1,12 @@
 
 <mat-card class="create-project-card tagus-card mb-25" *ngIf="beneficiare">
     <mat-card-header>
-        <h4 class="mb-0">Interface de {{ beneficiare.name_beneficiaire }} </h4>
+        <h4 class="mb-0">
+            <span class="gray-color fw-medium">
+                Interface de 
+            </span>
+            "{{ beneficiare.name_beneficiaire }}"
+        </h4>
     </mat-card-header>
     <mat-card-content>
         <mat-stepper #stepper class="tagus-wizard mb-25">
@@ -37,7 +42,7 @@
                             <div class="tagus-form-group">
                                 <label class="d-block mb-12 fw-semibold gray-color">Date de naissance </label>
                                 <mat-form-field appearance="fill" class="date-input">
-                                    <mat-label>MM/DD/YYYY</mat-label>
+                                    <mat-label>DD/MM/YYYY</mat-label>
                                     <input matInput [matDatepicker]="pickerNaissance" id="date_naissance" 
                                             formControlName="date_naissance" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerNaissance"></mat-datepicker-toggle>
@@ -180,9 +185,6 @@
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer le compte bancaire</mat-label>
                                 <input matInput type="text" formControlName="compte_bancaire" name="compte_bancaire">
-                                <mat-error *ngIf="formGroup2.controls['compte_bancaire'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -191,56 +193,53 @@
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer le Montant garantie</mat-label>
                                 <input matInput type="number" formControlName="montant_garantie" name="montant_garantie">
-                                <mat-error *ngIf="formGroup2.controls['montant_garantie'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
                             <label class="d-block mb-12 fw-semibold gray-color">Credit accordé </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer le Montant Credit accordé</mat-label>
-                                <input matInput type="number" formControlName="credit_accorde" name="credit_accorde">
-                                <mat-error *ngIf="formGroup2.controls['credit_accorde'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
+                                <input matInput type="number" formControlName="credit_accorde" name="credit_accorde"> 
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
                             <label class="d-block mb-12 fw-semibold gray-color">Interet </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer l'interet</mat-label>
                                 <input matInput type="number" formControlName="interet_beneficiaire" name="interet_beneficiaire">
-                                <mat-error *ngIf="formGroup2.controls['interet_beneficiaire'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <!-- <div class="col-lg-6 col-md-6 col-sm-6">
                             <label class="d-block mb-12 fw-semibold gray-color">Montant à rembourser </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer le Montant à rembourser</mat-label>
                                 <input matInput type="number" formControlName="montant_a_debourser" name="montant_a_debourser">
-                                <mat-error *ngIf="formGroup2.controls['montant_a_debourser'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
                             </mat-form-field>
+                        </div> -->
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="tagus-form-group">
+                                <label class="d-block mb-12 fw-semibold gray-color">Date de soumission </label>
+                                <mat-form-field appearance="fill" class="date-input">
+                                    <mat-label>DD/MM/YYYY</mat-label>
+                                    <input matInput [matDatepicker]="pickerDateSoumission" id="date_soumission" 
+                                            formControlName="date_soumission" required>
+                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateSoumission"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickerDateSoumission></mat-datepicker>  
+                                </mat-form-field> 
+                            </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="tagus-form-group">
                                 <label class="d-block mb-12 fw-semibold gray-color">Date valeur dû </label>
                                 <mat-form-field appearance="fill" class="date-input">
-                                    <mat-label>MM/DD/YYYY</mat-label>
+                                    <mat-label>DD/MM/YYYY</mat-label>
                                     <input matInput [matDatepicker]="pickerDateValeur" id="date_valeur" 
                                             formControlName="date_valeur" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDateValeur"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerDateValeur></mat-datepicker> 
-                                    <mat-error *ngIf="formGroup2.controls['date_valeur'].hasError('required')">
-                                        Ce champs est obligatoire
-                                    </mat-error>
+                                    <mat-datepicker #pickerDateValeur></mat-datepicker>  
                                 </mat-form-field> 
                             </div>
                         </div>
@@ -249,24 +248,18 @@
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer la durée de crédit en mois</mat-label>
-                                <input matInput type="number" formControlName="duree_credit" name="duree_credit">
-                                <mat-error *ngIf="formGroup2.controls['duree_credit'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
+                                <input matInput type="number" formControlName="duree_credit" name="duree_credit"> 
                             </mat-form-field>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="tagus-form-group">
                                 <label class="d-block mb-12 fw-semibold gray-color">Date de maturité </label>
                                 <mat-form-field appearance="fill" class="date-input">
-                                    <mat-label>MM/DD/YYYY</mat-label>
+                                    <mat-label>DD/MM/YYYY</mat-label>
                                     <input matInput [matDatepicker]="pickerDateMaturite" id="date_maturite" 
                                             formControlName="date_maturite" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDateMaturite"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerDateMaturite></mat-datepicker> 
-                                    <mat-error *ngIf="formGroup2.controls['date_maturite'].hasError('required')">
-                                        Ce champs est obligatoire
-                                    </mat-error>
+                                    <mat-datepicker #pickerDateMaturite></mat-datepicker>  
                                 </mat-form-field> 
                             </div>
                         </div>
@@ -275,11 +268,23 @@
                                 <label class="d-block mb-12 fw-semibold gray-color">Delai de grâce </label>
                                 <mat-form-field appearance="fill">
                                     <i class="ri-edit-2-line"></i>
-                                    <mat-label>Entrer le Delai de grâce</mat-label>
+                                    <mat-label>Entrer le Delai de grâce en mois</mat-label>
                                     <input matInput type="number" formControlName="delai_de_grace" name="delai_de_grace">
                                 </mat-form-field>
                             </div>
-                        </div>
+                        </div> 
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="tagus-form-group">
+                                <label class="d-block mb-12 fw-semibold gray-color">Systeme de remboursement</label>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Select systeme de remboursement</mat-label>
+                                    <i class="ri-list-check"></i>
+                                    <mat-select (selectionChange)="onChange($event)" formControlName="systeme_remboursement">
+                                        <mat-option *ngFor="let systeme of systemeRemboursementList" [value]="systeme">{{systeme}}</mat-option>
+                                    </mat-select> 
+                                </mat-form-field>
+                            </div> 
+                        </div> 
                     </div>
                     <div class="d-flex justify-content-center" *ngIf="isLoading">
                         <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
@@ -333,81 +338,69 @@
                     </table>
                 </div> 
 
-                <form [formGroup]="formGroup3" (ngSubmit)="onSubmit3()">
-                    <div class="row mb-25"> 
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="tagus-form-group">
-                                <!-- <label class="d-block mb-12 fw-semibold gray-color">Date de rembousement </label> -->
-                                <mat-form-field appearance="fill" class="date-input">
-                                    <mat-label>Rembousement</mat-label>
-                                    <input matInput [matDatepicker]="pickerDateRembousement" id="date_de_rembousement" 
-                                            formControlName="date_de_rembousement" required>
-                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateRembousement"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerDateRembousement></mat-datepicker> 
-                                    <mat-error *ngIf="formGroup3.controls['date_de_rembousement'].hasError('required')">
+                <div *ngIf="planRemboursementList.length < duree_credit">
+                    <form [formGroup]="formGroup3" (ngSubmit)="onSubmit3()">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="tagus-form-group">
+                                    <!-- <label class="d-block mb-12 fw-semibold gray-color">Date de rembousement </label> -->
+                                    <mat-form-field appearance="fill" class="date-input">
+                                        <mat-label>Rembousement</mat-label>
+                                        <input matInput [matDatepicker]="pickerDateRembousement" id="date_de_rembousement" 
+                                                formControlName="date_de_rembousement" required>
+                                        <mat-datepicker-toggle matIconSuffix [for]="pickerDateRembousement"></mat-datepicker-toggle>
+                                        <mat-datepicker #pickerDateRembousement></mat-datepicker>
+                                        <mat-error *ngIf="formGroup3.controls['date_de_rembousement'].hasError('required')">
+                                            Ce champs est obligatoire
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <mat-form-field appearance="fill">
+                                    <i class="ri-edit-2-line"></i>
+                                    <mat-label>Crédit debut periode</mat-label>
+                                    <input matInput type="number" formControlName="credit_en_debut_periode" name="credit_en_debut_periode">
+                                    <mat-error *ngIf="formGroup3.controls['credit_en_debut_periode'].hasError('required')">
                                         Ce champs est obligatoire
                                     </mat-error>
-                                </mat-form-field> 
+                                </mat-form-field>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <!-- <label class="d-block mb-12 fw-semibold gray-color">Crédit en debut periode </label> -->
-                            <mat-form-field appearance="fill">
-                                <i class="ri-edit-2-line"></i>
-                                <mat-label>Crédit debut periode</mat-label>
-                                <input matInput type="number" formControlName="credit_en_debut_periode" name="credit_en_debut_periode">
-                                <mat-error *ngIf="formGroup3.controls['credit_en_debut_periode'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <!-- <div class="col-lg-2 col-md-6 col-sm-6">
-                            <label class="d-block mb-12 fw-semibold gray-color">Mensualite </label>
-                            <mat-form-field appearance="fill">
-                                <i class="ri-edit-2-line"></i>
-                                <mat-label>Mensualité</mat-label>
-                                <input matInput type="number" formControlName="mensualite" name="mensualite">
-                                <mat-error *ngIf="formGroup3.controls['mensualite'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
-                            </mat-form-field>
-                        </div> -->
-                        <div class="col-lg-2 col-md-6 col-sm-6">
-                            <!-- <label class="d-block mb-12 fw-semibold gray-color">Capital </label> -->
-                            <mat-form-field appearance="fill">
-                                <i class="ri-edit-2-line"></i>
-                                <mat-label>Capital</mat-label>
-                                <input matInput type="number" formControlName="capital" name="capital">
-                                <mat-error *ngIf="formGroup3.controls['capital'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-sm-6">
-                            <!-- <label class="d-block mb-12 fw-semibold gray-color">Interêt </label> -->
-                            <mat-form-field appearance="fill">
-                                <i class="ri-edit-2-line"></i>
-                                <mat-label>Interêt'</mat-label>
-                                <input matInput type="number" formControlName="interet" name="interet">
-                                <mat-error *ngIf="formGroup3.controls['interet'].hasError('required')">
-                                    Ce champs est obligatoire
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col-lg-2 col-md-6 col-sm-6">
-                            <div class="d-flex justify-content-center" *ngIf="isLoadingPlanRemboursement">
-                                <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
-                            </div> 
-                            <div class="" *ngIf="!isLoadingPlanRemboursement">
-                                <button mat-flat-button class="success">
-                                    Ajouter
-                                </button> 
+                            <div class="col-lg-2 col-md-6 col-sm-6">
+                                <mat-form-field appearance="fill">
+                                    <i class="ri-edit-2-line"></i>
+                                    <mat-label>Capital</mat-label>
+                                    <input matInput type="number" formControlName="capital" name="capital">
+                                    <mat-error *ngIf="formGroup3.controls['capital'].hasError('required')">
+                                        Ce champs est obligatoire
+                                    </mat-error>
+                                </mat-form-field>
                             </div>
-                        </div>
-                        
-                    </div>
-                </form> 
+                            <div class="col-lg-2 col-md-6 col-sm-6">
+                                <mat-form-field appearance="fill">
+                                    <i class="ri-edit-2-line"></i>
+                                    <mat-label>Interêt'</mat-label>
+                                    <input matInput type="number" formControlName="interet" name="interet">
+                                    <mat-error *ngIf="formGroup3.controls['interet'].hasError('required')">
+                                        Ce champs est obligatoire
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            
+                            <div class="col-lg-2 col-md-6 col-sm-6">
+                                <div class="d-flex justify-content-center" *ngIf="isLoadingPlanRemboursement">
+                                    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+                                </div> 
+                                <div class="" *ngIf="!isLoadingPlanRemboursement">
+                                    <button mat-flat-button class="success">
+                                        Ajouter
+                                    </button> 
+                                </div>
+                            </div>
+                        </div> 
+                    </form> 
+                </div>
+                
                 <div class="mt-5">
                     <button mat-flat-button matStepperPrevious class="gray me-15">Retour</button>
                     <button mat-flat-button matStepperNext class="tagus" (click)="terminer(beneficiare.id)">Terminer</button> 

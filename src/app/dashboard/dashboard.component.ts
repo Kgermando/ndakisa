@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
     // tomorrow.toLocaleDateString();
  
     this.dateRange = this._formBuilder.group({
-      start: new FormControl(new Date('2023-10-20')),
+      start: new FormControl(new Date('2023-11-20')),
       end: new FormControl(tomorrow),
     });
  

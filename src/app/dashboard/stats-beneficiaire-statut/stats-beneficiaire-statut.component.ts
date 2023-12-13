@@ -65,7 +65,9 @@ export class StatsBeneficiaireStatutComponent implements OnChanges {
                 }
             },
             colors: this.statutBeneficiaireList.map((item: any) => {
-              if(item.statut == "En cours") {
+              if(item.statut == "En attente") {
+                  return "#FAAA0C";
+              } else if(item.statut == "En cours") {
                   return "#16A046";
               } else if(item.statut == "Interrompu") {
                   return "#FD1760";

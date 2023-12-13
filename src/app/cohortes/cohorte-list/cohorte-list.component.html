@@ -58,7 +58,7 @@
                             <app-cohorte-garantie [item]="item"></app-cohorte-garantie>
                         </td>
                         <td class="members-list">
-                            {{ item.beneficiaires.length }}
+                            <app-cohorte-nbre-beneficiaires [item]="item"></app-cohorte-nbre-beneficiaires>
                         </td>
                         <td class="gray-color">
                             <span class="badge fw-medium" *ngIf="item.statut_cohorte == 'Ouverte'">{{item.statut_cohorte}}</span>

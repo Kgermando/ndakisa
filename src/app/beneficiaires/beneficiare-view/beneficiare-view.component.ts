@@ -77,6 +77,18 @@ export class BeneficiareViewComponent implements OnInit {
       );
     }
 
+    getCompareDate(date1: Date, date2: Date): boolean {
+      var isTrue = false;
+      var isDate1 = formatDate(date1, 'yyyy-MM-dd', 'en-US');
+      var isDate2 = formatDate(date2, 'yyyy-MM-dd', 'en-US');
+      if (isDate1 === isDate2) {
+        isTrue = true;
+      } else {
+        isTrue = false;
+      }
+      return isTrue;
+    }
+
     edit(id: number) {
       this.router.navigate(['/layouts/beneficiaires', id, 'beneficiaire-edit']);
     }

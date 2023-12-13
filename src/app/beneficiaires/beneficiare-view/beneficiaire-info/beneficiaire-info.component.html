@@ -14,8 +14,8 @@
                     currentUser.permission === 'CRUD'" matTooltip="Chabger le statut">
                     <mat-icon>edit</mat-icon>
              </button>
-        </div> 
-         <div *ngIf="beneficiaire.statut === 'En cours'">
+        </div>
+         <div *ngIf="beneficiaire.statut === 'En attente'|| beneficiaire.statut === 'En cours'">
             <div *ngIf="currentUser"> 
                 <button mat-icon-button color="warn" 
                         (click)="delete(beneficiaire.id)"
@@ -96,6 +96,15 @@
                     <span class="d-block gray-color fw-medium">Adresse:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.adresse }}</span>
                 </li>
+                <li class="d-flex align-items-center justify-content-space-between"></li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date de création:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.created | date: 'dd/MM/yyyy' }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date de mis à jour:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.update_created | date: 'dd/MM/yyyy' }}</span>
+                </li>
             </ul>
         </mat-expansion-panel>
         <mat-expansion-panel>
@@ -151,6 +160,10 @@
             </mat-expansion-panel-header>
             <ul class="mb-0 mt-0 ps-0 content-list">
                 <li class="d-flex align-items-center justify-content-space-between">
+                    <span class="d-block gray-color fw-medium">Date de soumission:</span>
+                    <span class="d-block gray-color fw-medium">{{ beneficiaire.date_soumission | date: 'dd/MM/yyyy' }}</span>
+                </li>
+                <li class="d-flex align-items-center justify-content-space-between">
                     <span class="d-block gray-color fw-medium">Date valeur:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.date_valeur | date: 'dd/MM/yyyy' }}</span>
                 </li>
@@ -173,7 +186,7 @@
                 <li class="d-flex align-items-center justify-content-space-between">
                     <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement > 0">Date maturité après réajustement:</span>
                     <span class="d-block gray-color fw-medium" *ngIf="delai_de_reajustement > 0">{{ date_maturite_reajustement | date: 'dd/MM/yyyy' }}</span>
-                </li>
+                </li> 
             </ul>
         </mat-expansion-panel>
     </mat-accordion>

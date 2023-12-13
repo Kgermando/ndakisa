@@ -10,8 +10,8 @@
     [class.card-border-radius]="themeService.isCardBorderRadius()" 
     *ngIf="!isLoading && cohorte"
 >
-    <mat-card-content> 
-        <div class="course-details-desc">
+    <mat-card-content>
+        <div class="course-details-desc mb-10">
             <div class="row align-items-center">
                 <mat-accordion>
                     <mat-expansion-panel>
@@ -101,9 +101,10 @@
                 </mat-accordion>
             </div>
         </div>
-        <div class="d-md-flex justify-content-space-between align-items-center mb-25">
+        <div class="d-md-flex justify-content-space-between align-items-center mb-10">
             <h5 class="mb-0">Liste de beneficiaires </h5>
-            <div *ngIf="cohorte.statut_cohorte === 'Ouverte'">
+
+            <div class="d-flex align-items-center" *ngIf="cohorte.statut_cohorte === 'Ouverte'">
                 <a mat-raised-button [routerLink]="['/layouts/beneficiaires', cohorte.id, 'beneficiaire-add']"
                     class="tagus" *ngIf="currentUser.permission === 'RC' || currentUser.permission === 'RCU' ||
                         currentUser.permission === 'CRUD'">
@@ -124,7 +125,7 @@
                         currentUser.permission === 'CRUD'" matTooltip="Modifier cette cohorte">
                         <mat-icon>edit</mat-icon>
                 </button>
-            </div>
+            </div> 
         </div>
         <app-beneficiare-input [ELEMENT_DATA]="ELEMENT_DATA"></app-beneficiare-input>
     </mat-card-content>

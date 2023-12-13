@@ -114,6 +114,41 @@
                                 
                             </ul> 
                         </div> 
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                               
+                                <li class="gray-color fw-semibold">
+                                    Date de soumission
+                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_soumission, beneficiaire.created)">
+                                       -
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_soumission, beneficiaire.created)">
+                                        {{ beneficiaire.date_soumission | date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li> 
+                                <li class="gray-color fw-semibold">
+                                    Compte bancaire
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.compte_bancaire }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Date valeur
+                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_valeur, beneficiaire.created)">
+                                        -
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_valeur, beneficiaire.created)">
+                                        {{ beneficiaire.date_valeur| date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Systeme de remboursement
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.systeme_remboursement }}
+                                    </span>
+                                </li>
+                            </ul> 
+                        </div> 
                     </mat-expansion-panel> 
                 </mat-accordion>
             </div>

@@ -76,6 +76,8 @@ import { SecteurItemComponent } from './secteurs/secteur-item/secteur-item.compo
 import { BanqueConfigComponent } from './banques/banque-config/banque-config.component';
 import { LogExportXLSXDialogBox, LogUserListComponent } from './logs/log-user-list/log-user-list.component';
 import { BanqueItemComponent } from './banques/banque-config/banque-item/banque-item.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { CohorteNbreBeneficiairesComponent } from './cohortes/cohorte-nbre-beneficiaires/cohorte-nbre-beneficiaires.component';
 
 registerLocaleData(localeFr);
 
@@ -154,6 +156,8 @@ registerLocaleData(localeFr);
     LogUserListComponent,
     BanqueItemComponent,
     LogExportXLSXDialogBox,
+    FilterPipe,
+    CohorteNbreBeneficiairesComponent
   ],
   imports: [
     BrowserModule,

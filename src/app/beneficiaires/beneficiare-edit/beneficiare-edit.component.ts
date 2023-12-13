@@ -29,6 +29,7 @@ export class BeneficiareEditComponent implements OnInit {
   formGroup2!: FormGroup;
   formGroup3!: FormGroup; 
 
+
   currentUser: UserModel | any; 
   beneficiare: BeneficiaireModel;
  
@@ -40,9 +41,13 @@ export class BeneficiareEditComponent implements OnInit {
   banqueList: BanqueModel[] = [];
   planRemboursementList: PlanRemboursementModel[] = [];
   secteurList: SecteurModel[] = [];
+  systemeRemboursementList: string[] = ['Lineaire', 'Progressif']
 
   id: any; 
   banqueId: any;
+  duree_credit = 0;
+
+  systeme_remboursement: any;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -85,11 +90,13 @@ export class BeneficiareEditComponent implements OnInit {
       montant_garantie: [''],
       credit_accorde: [''],
       interet_beneficiaire: [''],
-      montant_a_debourser: [''], 
+      // montant_a_debourser: [''], 
       delai_de_grace: [''],
       duree_credit: [''],
+      date_soumission: [''],
       date_valeur: [''],
       date_maturite: [''],
+      systeme_remboursement: [''],
     });
 
     this.formGroup3 = this._formBuilder.group({
@@ -99,7 +106,7 @@ export class BeneficiareEditComponent implements OnInit {
       interet: ['', Validators.required],
       capital: ['', Validators.required],
     });
-
+ 
     this.authService.user().subscribe({
       next: (user) => {
         this.currentUser = user;
@@ -137,30 +144,31 @@ export class BeneficiareEditComponent implements OnInit {
             compte_bancaire: item.compte_bancaire,
             montant_garantie: item.montant_garantie,
             credit_accorde: item.credit_accorde,
-            interet_beneficiaire: item.interet_beneficiaire,
-            montant_a_debourser: parseFloat(item.credit_accorde) + parseFloat(item.interet_beneficiaire), 
+            interet_beneficiaire: item.interet_beneficiaire, 
             delai_de_grace: item.delai_de_grace,
             duree_credit: item.duree_credit,
+            date_soumission: item.date_soumission,
             date_valeur: item.date_valeur,
             date_maturite: item.date_maturite,
-            delai_de_reajustement: item.delai_de_reajustement,
-            statut: (this.banqueId) ? 'En cours' : 'En attente',
+            delai_de_reajustement: item.delai_de_reajustement, 
+            systeme_remboursement: item.systeme_remboursement,
             signature: this.currentUser.matricule, 
             update_created: new Date(),
+          }); 
+
+          this.duree_credit = item.duree_credit;
+          this.formGroup2.valueChanges.subscribe(val => {
+            this.duree_credit = +val.duree_credit;
           });
         }
       );
-
-      // this.onChanges();
-        
+       
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
         console.log(error);
       }
     });
-
-    
   }
 
   getAllData(id: number) {
@@ -169,21 +177,11 @@ export class BeneficiareEditComponent implements OnInit {
       }
     );
   } 
-
-
-
-
-  // onChanges(): void {
-  //   this.formGroup2.valueChanges.subscribe(val => {
-  //     this.formGroup2.value.montant_a_debourser = parseFloat(item.credit_accorde) + parseFloat(item.interet_beneficiaire)
-  //   });
-  // }
-
+ 
 
   onSubmit() {
     try {
-      if (this.formGroup.valid) {
-        this.isLoading = true; 
+      this.isLoading = true; 
         this.beneficiareService.update(this.id, this.formGroup.getRawValue()).subscribe({
           next: () => { 
             this.logService.createLog(
@@ -207,7 +205,6 @@ export class BeneficiareEditComponent implements OnInit {
             console.log(err);
           }
         });
-      } 
     } catch (error) {
       this.isLoading = false;
       console.log(error);
@@ -216,75 +213,131 @@ export class BeneficiareEditComponent implements OnInit {
 
   onSubmit2() {
     try {
-      if (this.formGroup2.valid) {
-        this.isLoading = true; 
-        this.beneficiareService.update(this.id, this.formGroup2.getRawValue()).subscribe({
-          next: () => {
-            this.logService.createLog(
-              this.currentUser.id, 
-              'Update', 
-              'Beneficiaire', 
-              `${this.beneficiare.name_beneficiaire}`,
-              'Modification des infos du Beneficiaire.'
-            ).subscribe(
-              () => {
-                this.isLoading = false;
-                this.formGroup.reset();
-                this.toastr.success('Modification effectuée!', 'Success!');
-                // this.router.navigate(['/layouts/cohortes/cohorte-list']);
-              }
-            );
-          },
-          error: (err) => {
-            this.isLoading = false;
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            console.log(err);
-          }
-        });
-      } 
+      this.isLoading = true;
+      var body = {
+        banque: this.formGroup2.value.banque,
+        compte_bancaire: this.formGroup2.value.compte_bancaire,
+        montant_garantie: this.formGroup2.value.montant_garantie,
+        credit_accorde: this.formGroup2.value.credit_accorde,
+        interet_beneficiaire: this.formGroup2.value.interet_beneficiaire,
+        montant_a_debourser: parseFloat(this.formGroup2.value.credit_accorde) + parseFloat(this.formGroup2.value.interet_beneficiaire), 
+        delai_de_grace: this.formGroup2.value.delai_de_grace,
+        duree_credit: this.formGroup2.value.duree_credit,
+        date_soumission: this.formGroup2.value.date_soumission,
+        date_valeur: this.formGroup2.value.date_valeur,
+        date_maturite: this.formGroup2.value.date_maturite,
+        delai_de_reajustement: this.formGroup2.value.delai_de_reajustement,
+        statut: 'En cours',
+        systeme_remboursement: this.formGroup2.value.systeme_remboursement,
+        signature: this.currentUser.matricule, 
+        update_created: new Date(),
+      };
+      this.beneficiareService.update(this.id, body).subscribe({
+        next: (res) => {
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Update', 
+            'Beneficiaire', 
+            `${this.beneficiare.name_beneficiaire}`,
+            'Modification des infos du Beneficiaire.'
+          ).subscribe(
+            () => {
+              this.isLoading = false;
+              this.formGroup.reset();
+              this.toastr.success('Modification effectuée!', 'Success!');
+              // this.router.navigate(['/layouts/cohortes/cohorte-list']);
+            }
+          );
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+          console.log(err);
+        }
+      });
     } catch (error) {
       this.isLoading = false;
       console.log(error);
     }
   }
 
+  onChange(event: any) {
+    this.systeme_remboursement = event.value;
+  }
+
   onSubmit3() {
     try {
       if (this.formGroup3.valid) {
-        this.isLoadingPlanRemboursement = true;
-        var body = {
-          cohorte: this.beneficiare.cohorte.id,
-          banque: this.beneficiare.banque.id,
-          beneficiaire: this.id,
-          date_de_rembousement: this.formGroup3.value.date_de_rembousement,
-          credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode, 
-          interet: this.formGroup3.value.interet,
-          capital: this.formGroup3.value.capital,
-          signature: this.currentUser.matricule,
-          created: new Date(),
-          update_created: new Date(),
-        };
-        this.planRemboursement.create(body).subscribe({
-          next: (res) => {
+        if (this.duree_credit > 0) {
+          if (this.systeme_remboursement == 'Lineaire') {
+            this.isLoadingPlanRemboursement = true;
+            for (let index = 0; index < this.duree_credit; index++) {
+
+              var date_de_rembousement = new Date(this.formGroup3.value.date_de_rembousement);
+              date_de_rembousement.setDate(date_de_rembousement.getDate() + (30 * index));
+
+              var mensualite =  parseFloat(this.formGroup3.value.interet) + parseFloat(this.formGroup3.value.capital);
+              var credit_en_debut_periode = parseFloat(this.formGroup3.value.credit_en_debut_periode) - (mensualite * index);
+  
+              var body = {
+                cohorte: this.beneficiare.cohorte.id,
+                banque: this.beneficiare.banque.id,
+                beneficiaire: this.id,
+                date_de_rembousement: date_de_rembousement,
+                credit_en_debut_periode: credit_en_debut_periode,
+                interet: this.formGroup3.value.interet,
+                capital: this.formGroup3.value.capital,
+                signature: this.currentUser.matricule,
+                created: new Date(),
+                update_created: new Date(),
+              };
+              this.planRemboursement.create(body).subscribe(res => {
+                console.log('body', res);
+              });
+            }
             this.logService.createLog(
               this.currentUser.id, 
               'Create', 
-              'Beneficiaire', 
+              'Plan de remboursement', 
               `${this.beneficiare.name_beneficiaire}`, 
               'Création du plan de remboursement'
             ).subscribe(() => {
               this.isLoadingPlanRemboursement = false;
               this.formGroup3.reset();
               this.toastr.success('Ajouter avec succès!', 'Success!');
+            }); 
+
+          } else if (this.systeme_remboursement == 'Progressif') {
+            this.isLoadingPlanRemboursement = true;
+            var body2 = {
+              cohorte: this.beneficiare.cohorte.id,
+              banque: this.beneficiare.banque.id,
+              beneficiaire: this.id,
+              date_de_rembousement: this.formGroup3.value.date_de_rembousement,
+              credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode,
+              interet: this.formGroup3.value.interet,
+              capital: this.formGroup3.value.capital,
+              signature: this.currentUser.matricule,
+              created: new Date(),
+              update_created: new Date(),
+            };
+            this.planRemboursement.create(body2).subscribe(res => {
+              this.logService.createLog(
+                this.currentUser.id, 
+                'Create', 
+                'Plan de remboursement', 
+                `${this.beneficiare.name_beneficiaire}`, 
+                'Création du plan de remboursement'
+              ).subscribe(() => {
+                this.isLoadingPlanRemboursement = false;
+                this.formGroup3.reset();
+                this.toastr.success('Ajouter avec succès!', 'Success!');
+              }); 
+
             });
-          },
-          error: (err) => {
-            this.isLoadingPlanRemboursement = false;
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-            console.log(err);
-          }
-        });
-      } 
+          } 
+        }
+      }  
     } catch (error) {
       this.isLoadingPlanRemboursement = false;
       console.log(error);
@@ -300,7 +353,7 @@ export class BeneficiareEditComponent implements OnInit {
       this.logService.createLog(
         this.currentUser.id, 
         'Delete', 
-        'Beneficiaire', 
+        'Plan de remboursement', 
         `${id}`, 
         'Suppression du plan de remboursement'
       ).subscribe(() => {

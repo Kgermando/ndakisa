@@ -34,7 +34,7 @@
                     <div class="tagus-form-group">
                         <label class="d-block mb-12 fw-semibold gray-color">Date de naissance </label>
                         <mat-form-field appearance="fill" class="date-input">
-                            <mat-label>MM/DD/YYYY</mat-label>
+                            <mat-label>DD/MM/YYYY</mat-label>
                             <input matInput [matDatepicker]="pickerNaissance" id="date_naissance" 
                                     formControlName="date_naissance" required>
                             <mat-datepicker-toggle matIconSuffix [for]="pickerNaissance"></mat-datepicker-toggle>
@@ -51,7 +51,7 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Select province</mat-label>
                             <i class="ri-list-check"></i>
-                            <mat-select  (selectionChange)="onChange($event)" formControlName="province">
+                            <mat-select (selectionChange)="onChange($event)" formControlName="province">
                                 <mat-option  *ngFor="let province of provinceList" [value]="province">{{province}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="formGroup.controls['province'].hasError('required')">

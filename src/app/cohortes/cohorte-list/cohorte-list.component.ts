@@ -22,6 +22,8 @@ export class CohorteListComponent implements OnInit {
 
   cohorteList: CohorteModel[] = [];
 
+  nbreBeneficiaire = 0;
+
   constructor(
     public themeService: CustomizerSettingsService, 
     private cohorteService: CohorteService, 
@@ -39,10 +41,12 @@ export class CohorteListComponent implements OnInit {
 
   getAllData() {
     this.cohorteService.getAll().subscribe(res => {
-      this.cohorteList = res;  
+      this.cohorteList = res; 
       this.isLoading = false;
     }); 
   }
+
+ 
  
  
   openCreateDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

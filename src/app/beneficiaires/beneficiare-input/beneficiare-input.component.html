@@ -1,7 +1,13 @@
 
 
 
-
+<div class="tagus-form-group">
+    <mat-form-field appearance="fill">
+        <i class="ri-search-line"></i>
+        <mat-label>Filter</mat-label>
+        <input matInput [(ngModel)]="searchText" #input>
+    </mat-form-field>
+</div>
 <div class="recent-files-table table-responsive mb-25">
     <table class="table">
         <thead>
@@ -16,10 +22,10 @@
                 <th class="fw-semibold gray-color">Téléphone</th>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let element of ELEMENT_DATA; let i = index"> 
+        <tbody *ngIf="(ELEMENT_DATA | filter: searchText).length > 0; else noResults">
+            <tr *ngFor="let element of ELEMENT_DATA | filter: searchText; index as i"> 
                 <td class="gray-color">
-                    <a [routerLink]="['/layouts/cohortes', element.cohorte.id, 'cohorte-view']">
+                    <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
                         {{element.cohorte.name_cohorte }} 
                     </a>
                 </td>
@@ -52,6 +58,9 @@
             </tr>
         </tbody>
     </table>
+    <ng-template #noResults>
+        <p *ngIf="searchText">Aucun resultat "{{searchText}}".</p>
+    </ng-template>
 </div> 
 
 

@@ -145,7 +145,7 @@
                            <mat-icon>schedule</mat-icon>
                         </button>
                     </span>
-                    <span *ngIf="beneficiaire.statut === 'En cours'">
+                    <span *ngIf="beneficiaire.statut === 'En attente' || beneficiaire.statut === 'En cours'">
                         <button mat-icon-button color="primary" *ngIf="plan_remboursement.date_paiement"
                         matTooltip="Pas de delai de réajustement">
                            <mat-icon>schedule</mat-icon>
@@ -160,4 +160,4 @@
             </tr>
         </tbody>
     </table>
-</div> 
+</div>

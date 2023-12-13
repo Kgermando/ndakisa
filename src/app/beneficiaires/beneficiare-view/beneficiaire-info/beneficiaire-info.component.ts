@@ -121,7 +121,7 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
 
   currentUser: UserModel | any;
 
-  statutList = ['En cours', 'Interrompu', 'Terminé'];
+  statutList = ['En attente', 'En cours', 'Interrompu', 'Terminé'];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
