@@ -157,9 +157,15 @@ export class BeneficiareEditComponent implements OnInit {
           }); 
 
           this.duree_credit = item.duree_credit;
+          this.systeme_remboursement = item.systeme_remboursement;
+
+
           this.formGroup2.valueChanges.subscribe(val => {
             this.duree_credit = +val.duree_credit;
+            this.systeme_remboursement = val.systeme_remboursement;
           });
+
+          
         }
       );
        
@@ -263,6 +269,7 @@ export class BeneficiareEditComponent implements OnInit {
 
   onChange(event: any) {
     this.systeme_remboursement = event.value;
+    console.log('systeme_remboursement', this.systeme_remboursement);
   }
 
   onSubmit3() {
@@ -283,6 +290,7 @@ export class BeneficiareEditComponent implements OnInit {
                 cohorte: this.beneficiare.cohorte.id,
                 banque: this.beneficiare.banque.id,
                 beneficiaire: this.id,
+                secteur_activite: this.beneficiare.secteur_activite.id,
                 date_de_rembousement: date_de_rembousement,
                 credit_en_debut_periode: credit_en_debut_periode,
                 interet: this.formGroup3.value.interet,
@@ -313,6 +321,7 @@ export class BeneficiareEditComponent implements OnInit {
               cohorte: this.beneficiare.cohorte.id,
               banque: this.beneficiare.banque.id,
               beneficiaire: this.id,
+              secteur_activite: this.beneficiare.secteur_activite.id,
               date_de_rembousement: this.formGroup3.value.date_de_rembousement,
               credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode,
               interet: this.formGroup3.value.interet,

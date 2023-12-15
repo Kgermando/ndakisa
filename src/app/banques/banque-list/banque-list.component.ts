@@ -18,8 +18,7 @@ import { LogUserService } from 'src/app/logs/log-user.service';
   styleUrls: ['./banque-list.component.scss']
 })
 export class BanqueListComponent implements OnInit {
-  displayedColumns: string[] = ['numero', 'name_banque', 'email', 'telephone', 'update_created'];
-  
+ 
   banque: BanqueModel;
   
   ELEMENT_DATA: BeneficiaireModel[] = [];

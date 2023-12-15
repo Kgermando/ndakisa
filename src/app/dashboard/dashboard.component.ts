@@ -63,12 +63,13 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void { 
     var date = new Date();
+    var yestday = new Date(date);
     var tomorrow = new Date(date);
+    yestday.setDate(date.getDate()-29);
     tomorrow.setDate(date.getDate()+1);
-    // tomorrow.toLocaleDateString();
  
     this.dateRange = this._formBuilder.group({
-      start: new FormControl(new Date('2023-11-20')),
+      start: new FormControl(yestday),
       end: new FormControl(tomorrow),
     });
  
@@ -261,22 +262,21 @@ export class DashboardComponent implements OnInit {
 
   getStatsProgress() { 
     this.dashboardService.progressionRemboursementSexeDate(this.start_date, this.end_date).subscribe(
-      res => {
-          this.dashboardService.progressionRemboursementSexeHomme(this.start_date, this.end_date).subscribe(
-              h => {
-                  this.dashboardService.progressionRemboursementSexeFemme(this.start_date, this.end_date).subscribe(
-                      f => {
-                        this.progressionRemboursementDateList = res;
-                        this.progressionRemboursementHommeList = h;
-                        this.progressionRemboursementFemmeList = f;
-                        this.isLoading = false; 
-                      } 
-                  );
+      date => {
+        this.dashboardService.progressionRemboursementSexeHomme(this.start_date, this.end_date).subscribe(
+          h => {
+            this.dashboardService.progressionRemboursementSexeFemme(this.start_date, this.end_date).subscribe(
+              f => {
+                this.progressionRemboursementDateList = date;
+                this.progressionRemboursementHommeList = h;
+                this.progressionRemboursementFemmeList = f;
+                this.isLoading = false; 
               } 
-          ); 
+            );
+          } 
+        ); 
       }
-      
-  );
+    );
   }
 
   getStatsSecteurActitivte() { 

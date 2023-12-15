@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+</div>
+ 
+
+<mat-card class="mb-25 tagus-card" [class.component-dark-theme]="themeService.isDark()"
+    [class.card-border-radius]="themeService.isCardBorderRadius()" *ngIf="!isLoading && secteur">
+    <mat-card-content> 
+        <div class="course-details-desc">
+            <div class="row align-items-center">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div class="d-md-flex justify-content-space-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">{{ secteur.name_secteur }} </h6>
+                                        <h4 class="mb-0">Liste de beneficiaires par secteur</h4> 
+                                    </div>  
+                                </div>
+                            </mat-panel-title> 
+                        </mat-expansion-panel-header>
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
+                                    Nombre beneficiaires
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ secteur.beneficiaires.length }}
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Total garantie
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalGarantie | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Crédit accordé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ totalCreditAccorde | numberFormat:'fr-FR' }} usd
+                                    </span> 
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Interêt
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ interet | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Montant à rembourser
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ montant_A_Rembourser | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                            </ul> 
+                        </div> 
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
+                                    Montant remboursé
+                                    <span class="d-block fw-semibold position-relative"> 
+                                        {{ montantRembourse | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li> 
+                                <li class="gray-color fw-semibold">
+                                    Reste à rembourser 
+                                    <span class="d-block fw-semibold position-relative badge text-bg-success text" *ngIf="reste_A_Rembourser >= 0">
+                                        {{ reste_A_Rembourser | numberFormat:'fr-FR' }} usd
+                                    </span>
+
+                                    <span class="d-block fw-semibold position-relative badge text-bg-danger text" *ngIf="reste_A_Rembourser < 0">
+                                        {{ reste_A_Rembourser | numberFormat:'fr-FR' }} usd
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Progession
+                                    <span class="d-block fw-semibold position-relative" *ngIf="pourcent"> 
+                                        <span class="fs-13 d-block mb-5">{{pourcent | numberFormat:'fr-FR' }} %</span>
+                                        <mat-progress-bar mode="determinate" value="{{pourcent}}"></mat-progress-bar>
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!pourcent">
+                                        <span class="fs-13 d-block mb-5">{{0 | numberFormat:'fr-FR' }} %</span>
+                                        <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
+                                    </span>
+                                </li>
+                            </ul> 
+                        </div> 
+                    </mat-expansion-panel> 
+                </mat-accordion>
+            </div>
+        </div>
+        <app-beneficiare-input [ELEMENT_DATA]="ELEMENT_DATA"></app-beneficiare-input>
+    </mat-card-content>
+</mat-card>

@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PlanRemboursementModel } from 'src/app/beneficiaires/models/plan_remousement.model'; 
 import { PlanRemboursementService } from 'src/app/beneficiaires/plan_remboursement.service'; 
 import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
@@ -9,7 +9,7 @@ import { CustomizerSettingsService } from 'src/app/common/customizer-settings/cu
   templateUrl: './remboursement-indice.component.html',
   styleUrls: ['./remboursement-indice.component.scss']
 })
-export class RemboursementIndiceComponent implements OnInit {
+export class RemboursementIndiceComponent implements OnChanges {
   @Input() id: number;
   @Input() plan_remboursement: PlanRemboursementModel;
 
@@ -25,8 +25,9 @@ export class RemboursementIndiceComponent implements OnInit {
     private planRemboursementService: PlanRemboursementService
   ) {}
 
+ 
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
       this.planRemboursementService.getAllData(this.id).subscribe(res => {
       this.planRemboursementList = res;
       this.planRemboursementIndiceList = this.planRemboursementList.filter(
@@ -39,7 +40,8 @@ export class RemboursementIndiceComponent implements OnInit {
         return sum + parseFloat(value.interet) + parseFloat(value.capital);
       },0);
 
-      this.indice = this.indiceRemboursement - this.indicePlanRemboursement;
+      var index = this.indiceRemboursement - this.indicePlanRemboursement;
+      this.indice = parseFloat(index.toFixed(2));
 
       // console.log('remboursementList', this.remboursementList);
     });

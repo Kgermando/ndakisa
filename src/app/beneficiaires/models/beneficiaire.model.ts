@@ -14,7 +14,7 @@ export interface BeneficiaireModel {
     email: string; 
     telephone: string; 
     raison_sociale: string; 
-    secteur_activite: SecteurModel; 
+    secteur_activite: SecteurModel;
     numero_impot: string; 
     id_nat: string;
     rccm: string;

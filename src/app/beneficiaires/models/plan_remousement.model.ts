@@ -1,12 +1,14 @@
 import { CohorteModel } from "src/app/cohortes/models/cohorte.model";
 import { BeneficiaireModel } from "./beneficiaire.model";
 import { BanqueModel } from "src/app/banques/models/banque.model";
+import { SecteurModel } from "src/app/secteurs/models/secteur.model";
 
 export interface PlanRemboursementModel {
     id: number;
     cohorte: CohorteModel; 
     banque: BanqueModel;
     beneficiaire: BeneficiaireModel;
+    secteur_activite: SecteurModel;
     date_de_rembousement: Date;
     delai_reajustement: number;
     credit_en_debut_periode: string;

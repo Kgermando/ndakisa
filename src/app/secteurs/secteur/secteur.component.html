@@ -56,7 +56,12 @@
                         <tbody>
                             <tr *ngFor="let secteur of secteurList; let i = index"> 
                                 <td class="gray-color">{{ i+1 }}</td> 
-                                <td class="gray-color">{{ secteur.name_secteur }}</td>
+                                <td class="gray-color">
+                                    <a  [routerLink]="['/layouts/beneficiaires/secteurs', secteur.id, 'secteur']"
+                                        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                        {{ secteur.name_secteur }}
+                                    </a>
+                                </td>
                                 <td class="gray-color" style="color: green !important;" *ngIf="secteur.statut">Actif</td>
                                 <td class="gray-color" style="color: red !important;" *ngIf="!secteur.statut">Inactif</td>
                                 <td class="gray-color">{{ secteur.created | date: 'dd/MM/yyyy' }}</td>

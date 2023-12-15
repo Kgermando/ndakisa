@@ -55,7 +55,12 @@
                         <tbody>
                             <tr *ngFor="let banque of banquelist; let i = index"> 
                                 <td class="gray-color">{{ i+1 }}</td> 
-                                <td class="gray-color">{{ banque.name_banque }}</td>
+                                <td class="gray-color">
+                                    <a  [routerLink]="['/layouts/banques', banque.id, 'banque-list']"
+                                        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                        {{ banque.name_banque }}
+                                    </a>
+                                </td>
                                 <td class="gray-color">{{ banque.created | date: 'dd/MM/yyyy' }}</td>
                                 <td class="gray-color">{{ banque.update_created | date: 'dd/MM/yyyy' }}</td>
                                 <td>

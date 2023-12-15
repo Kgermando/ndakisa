@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnChanges, OnInit } from '@angular/core';
 import { CustomizerSettingsService } from 'src/app/common/customizer-settings/customizer-settings.service';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './beneficiare-view.component.html',
   styleUrls: ['./beneficiare-view.component.scss']
 })
-export class BeneficiareViewComponent implements OnInit {
+export class BeneficiareViewComponent implements OnInit, OnChanges {
   isLoading = false; 
   currentUser: UserModel | any;
   beneficiaire: BeneficiaireModel; 
@@ -59,6 +59,20 @@ export class BeneficiareViewComponent implements OnInit {
         }
       });  
     }
+
+    ngOnChanges(): void {
+      this.isLoading = true;
+      let id = this.route.snapshot.paramMap.get('id'); 
+      this.beneficiareService.get(Number(id)).subscribe(item => {
+        this.beneficiaire = item;
+        this.planRemboursementService.refreshDataList$.subscribe(() => {
+          this.getAllDataPlan(this.beneficiaire.id);
+        });
+        this.getAllDataPlan(this.beneficiaire.id);  
+        this.isLoading = false;
+      });
+    }
+
 
     getAllDataPlan(id: number) {
       this.planRemboursementService.getAllData(id).subscribe((res) => {
