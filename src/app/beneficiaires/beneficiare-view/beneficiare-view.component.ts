@@ -26,6 +26,8 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
   delai_de_reajustement = 0;
   date_maturite_reajustement: Date;
 
+  pourcent = 0;
+
   constructor(
     public themeService: CustomizerSettingsService,
     private route: ActivatedRoute,
@@ -64,7 +66,7 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
       this.isLoading = true;
       let id = this.route.snapshot.paramMap.get('id'); 
       this.beneficiareService.get(Number(id)).subscribe(item => {
-        this.beneficiaire = item;
+        this.beneficiaire = item; 
         this.planRemboursementService.refreshDataList$.subscribe(() => {
           this.getAllDataPlan(this.beneficiaire.id);
         });
@@ -77,10 +79,14 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
     getAllDataPlan(id: number) {
       this.planRemboursementService.getAllData(id).subscribe((res) => {
           this.ELEMENT_DATA = res;
+          this.beneficiareService.tauxProgessionBeneficiaire(id).subscribe(res => {
+            this.pourcent = res[0].pourcentage;
+          });
+
           this.delai_de_reajustement = this.ELEMENT_DATA.reduce(function(sum, value) {
             return sum + value.delai_reajustement;
           },0);
-      
+          
           if (this.delai_de_reajustement > 0) {
             var days = this.delai_de_reajustement * 30;
             var date = new Date(this.beneficiaire.date_maturite);

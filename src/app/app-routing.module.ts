@@ -24,6 +24,7 @@ import { SecteurComponent } from './secteurs/secteur/secteur.component';
 import { BanqueConfigComponent } from './banques/banque-config/banque-config.component';
 import { LogUserListComponent } from './logs/log-user-list/log-user-list.component';
 import { SecteurViewComponent } from './secteurs/secteur-view/secteur-view.component';
+import { CorbeilComponent } from './corbeil/corbeil.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent, children: [
@@ -54,8 +55,11 @@ const routes: Routes = [
     { path: 'beneficiaires/:id/beneficiaire-add', component: BeneficiareAddComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-view', component: BeneficiareViewComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-edit', component: BeneficiareEditComponent, canActivate: [beneficiairesGuard]},
-    { path: 'beneficiaires/secteur-list', component: SecteurComponent, canActivate: [configurationGuard]},
-    { path: 'beneficiaires/secteurs/:id/secteur', component: SecteurViewComponent, canActivate: [configurationGuard]},
+
+    { path: 'secteurs/secteur-list', component: SecteurComponent, canActivate: [configurationGuard]},
+    { path: 'secteurs/:id/secteur', component: SecteurViewComponent, canActivate: [configurationGuard]},
+
+    { path: 'corbeil', component: CorbeilComponent, canActivate: [configurationGuard]},
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   ]},

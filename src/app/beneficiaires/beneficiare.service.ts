@@ -16,4 +16,9 @@ export class BeneficiareService extends ApiService {
   getAllBanque(id: number): Observable<any> {
     return this.http.get(`${this.endpoint}/get-all-banque/${id}`);
   }
+
+  tauxProgessionBeneficiaire(id: number): Observable<any> {
+    return this.http.get(`${this.endpoint}/taux-progression-beneficiaire/${id}`);
+  }
+ 
 }

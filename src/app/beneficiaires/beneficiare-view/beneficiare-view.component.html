@@ -142,12 +142,19 @@
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Systeme de remboursement
+                                    Progression
+                                    <span class="d-block fw-semibold position-relative">
+                                        <span class="fs-13 d-block mb-5">{{ pourcent | numberFormat:'fr-FR' }} %</span>
+                                        <mat-progress-bar mode="determinate" value="{{pourcent}}"></mat-progress-bar> 
+                                    </span>
+                                </li>
+                                <li class="gray-color fw-semibold">
+                                    Systeme remboursement
                                     <span class="d-block fw-semibold position-relative">
                                         {{ beneficiaire.systeme_remboursement }}
                                     </span>
                                 </li>
-                            </ul> 
+                            </ul>
                         </div> 
                     </mat-expansion-panel> 
                 </mat-accordion>

@@ -57,7 +57,7 @@
                             <tr *ngFor="let secteur of secteurList; let i = index"> 
                                 <td class="gray-color">{{ i+1 }}</td> 
                                 <td class="gray-color">
-                                    <a  [routerLink]="['/layouts/beneficiaires/secteurs', secteur.id, 'secteur']"
+                                    <a  [routerLink]="['/layouts/secteurs', secteur.id, 'secteur']"
                                         routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                         {{ secteur.name_secteur }}
                                     </a>

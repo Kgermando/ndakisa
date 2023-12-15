@@ -15,7 +15,7 @@ export class CohorteProgressComponent implements OnInit {
   pourcent = 0;
 
   constructor(private cohorteService: CohorteService) {}
-
+ 
   ngOnInit(): void {
     this.cohorteService.tauxProgessionCohorte(this.item.id).subscribe(res => {
       console.log('pourcent', res[0].pourcentage);
