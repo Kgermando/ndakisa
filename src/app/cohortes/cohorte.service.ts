@@ -20,7 +20,10 @@ export class CohorteService extends ApiService {
   nbreBeneficiaireCohorte(id: number): Observable<any> {
     return this.http.get(`${this.endpoint}/nbre-beneficiaire-cohorte/${id}`);
   }
- 
+
+  getTotalGarantie(id: number): Observable<any> {
+    return this.http.get(`${this.endpoint}/total-garantie/${id}`);
+  }
  
   downloadReport(start_date: string, end_date: string): Observable<any> {
     return this.http.post(`${this.endpoint}/download-xlsx/${start_date}/${end_date}`, {}, {responseType: 'blob'});

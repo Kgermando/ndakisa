@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanRemboursementService } from '../../plan_remboursement.service';
 import { PlanRemboursementModel } from '../../models/plan_remousement.model';
+import { LocalService } from 'src/app/shared/services/local.service';
+import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({
   selector: 'app-beneficiaire-info',
@@ -33,6 +35,7 @@ export class BeneficiaireInfoComponent implements OnInit {
       private route: ActivatedRoute,
       private beneficiareService: BeneficiareService,
       private planRemboursement: PlanRemboursementService,
+      private logService: LogUserService,
       public dialog: MatDialog,
       private toastr: ToastrService
   ) {}
@@ -74,18 +77,31 @@ export class BeneficiaireInfoComponent implements OnInit {
 
   delete(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-      this.beneficiareService
-        .delete(id)
+      this.logService.createLog(
+        this.currentUser.id,
+        'Corbeil', 
+        'Beneficiaire', 
+        `${this.beneficiaire.name_beneficiaire}`, 
+        'Mise en corbeil du Beneficiaire'
+      ).subscribe(() => {
+        var body = {
+          is_delete: true,
+          update_created: new Date(),
+        };
+        this.beneficiareService
+        .update(id, body)
         .subscribe({
           next: () => {
-            this.toastr.info('Supprimé avec succès!', 'Success!');
-            this.router.navigate(['/layouts/users/user-list']);
+            this.toastr.info('Mise en corbeil avec succès!', 'Success!');
+            this.router.navigate(['/layouts/beneficiaires/beneficiaire-list']);
           },
           error: err => {
             this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
             console.log(err);
           }
         });
+      });
+      
     }
   }
 

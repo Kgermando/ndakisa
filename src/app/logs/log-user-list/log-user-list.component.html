@@ -29,8 +29,10 @@
                     <img src="assets/img/icon/right-arrow.png" alt="right-arrow" class="icon">
                     <h5 class="mb-0">
                         <span class="badge text-bg-primary" *ngIf="item.type_operation == 'Create'">{{item.type_operation}}</span>
+                        <span class="badge text-bg-primary" *ngIf="item.type_operation == 'Restitution'">{{item.type_operation}}</span>
                         <span class="badge text-bg-warning" *ngIf="item.type_operation == 'Update'">{{item.type_operation}}</span>
                         <span class="badge text-bg-danger" *ngIf="item.type_operation == 'Delete'">{{item.type_operation}}</span>
+                        <span class="badge text-bg-danger" *ngIf="item.type_operation == 'Corbeil'">{{item.type_operation}}</span>
                         <span class="badge text-bg-info" *ngIf="item.type_operation == 'Export'">{{item.type_operation}}</span>
                         <span class="badge text-bg-success" *ngIf="item.type_operation == 'Login'">{{item.type_operation}}</span>
                         <span class="badge text-bg-secondary" *ngIf="item.type_operation == 'Logout'">{{item.type_operation}}</span>

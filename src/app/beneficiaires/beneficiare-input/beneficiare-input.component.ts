@@ -1,10 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { BeneficiaireModel } from '../models/beneficiaire.model';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { BeneficiaireModel } from '../models/beneficiaire.model'; 
 
 @Component({
   selector: 'app-beneficiare-input',
@@ -17,7 +12,9 @@ export class BeneficiareInputComponent implements OnChanges {
   
   searchText: string; 
 
-  ngOnChanges(changes: SimpleChanges): void { } 
+  ngOnChanges(changes: SimpleChanges): void { 
+    console.log('ELEMENT_DATA', this.ELEMENT_DATA) 
+  } 
 
  
 }

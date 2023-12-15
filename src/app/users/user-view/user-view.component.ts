@@ -54,13 +54,17 @@ export class UserViewComponent implements OnInit {
           'Delete', 
           'User', 
           `${this.user.prenom} ${this.user.nom}`,
-          'Suppression de l\'utilisateur.'
+          'Mise en corbeil de l\'utilisateur.'
         ).subscribe(() => {
+          var body = {
+            is_delete: true,
+            update_created: new Date(),
+          };
           this.userService
-          .delete(id)
+          .update(id, body)
           .subscribe({
             next: () => {
-              this.toastr.info('Supprimé avec succès!', 'Success!');
+              this.toastr.info('Mise en corbeil avec succès!', 'Success!');
               this.router.navigate(['/layouts/users/user-list']);
             },
             error: err => {
@@ -72,6 +76,33 @@ export class UserViewComponent implements OnInit {
         
       }
     }
+   
+      
+    // delete(id: number): void {
+    //   if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+    //     this.logService.createLog(
+    //       this.currentUser.id, 
+    //       'Delete', 
+    //       'User', 
+    //       `${this.user.prenom} ${this.user.nom}`,
+    //       'Suppression de l\'utilisateur.'
+    //     ).subscribe(() => {
+    //       this.userService
+    //       .delete(id) 
+    //       .subscribe({
+    //         next: () => {
+    //           this.toastr.info('Supprimé avec succès!', 'Success!');
+    //           this.router.navigate(['/layouts/users/user-list']);
+    //         },
+    //         error: err => {
+    //           this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+    //           console.log(err);
+    //         }
+    //       });
+    //     });
+        
+    //   }
+    // }
    
   
     toggleTheme() {

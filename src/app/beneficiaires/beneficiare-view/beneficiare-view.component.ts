@@ -113,32 +113,35 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
       this.router.navigate(['/layouts/beneficiaires', id, 'beneficiaire-edit']);
     }
 
-    delete(id: number): void {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-        this.logService.createLog(
-          this.currentUser.id, 
-          'Delete', 
-          'Beneficiaire', 
-          `${this.beneficiaire.name_beneficiaire}`, 
-          'Suppression du Beneficiaire'
-        ).subscribe(() => {
-          this.beneficiareService
-          .delete(id)
-          .subscribe({
-            next: () => {
-              this.toastr.info('Supprimé avec succès!', 'Success!');
-              this.router.navigate(['/layouts/beneficiaires/beneficiaire-list']);
-            },
-            error: err => {
-              this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-              console.log(err);
-            }
-          });
-        });
+    
+
+    // delete(id: number): void {
+    //   if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+    //     this.logService.createLog(
+    //       this.currentUser.id,
+    //       'Delete', 
+    //       'Beneficiaire', 
+    //       `${this.beneficiaire.name_beneficiaire}`, 
+    //       'Suppression du Beneficiaire'
+    //     ).subscribe(() => {
+    //       this.beneficiareService
+    //       .delete(id)
+    //       .subscribe({ 
+    //         next: () => {
+    //           this.toastr.info('Supprimé avec succès!', 'Success!');
+    //           this.router.navigate(['/layouts/beneficiaires/beneficiaire-list']);
+    //         },
+    //         error: err => {
+    //           this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+    //           console.log(err);
+    //         }
+    //       });
+    //     });
         
-      }
-    }
- 
+    //   }
+    // }
+
+  
     exportExcel() {
       this.isLoading = true; 
       var dateNow = new Date();

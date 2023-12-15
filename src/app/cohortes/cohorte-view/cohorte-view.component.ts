@@ -11,6 +11,9 @@ import { StatutList } from 'src/app/shared/tools/statut';
 import { CohorteModel } from '../models/cohorte.model';  
 import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';  
 import { LogUserService } from 'src/app/logs/log-user.service';
+import { BeneficiareService } from 'src/app/beneficiaires/beneficiare.service';
+import { PlanRemboursementService } from 'src/app/beneficiaires/plan_remboursement.service';
+import { PlanRemboursementModel } from 'src/app/beneficiaires/models/plan_remousement.model';
 
 @Component({
   selector: 'app-cohorte-view',
@@ -24,7 +27,8 @@ export class CohorteViewComponent implements OnInit {
 
   cohorte: CohorteModel; 
 
-  ELEMENT_DATA: BeneficiaireModel[] = []; 
+  ELEMENT_DATA: BeneficiaireModel[] = [];
+  remvoursementList: PlanRemboursementModel[] = [];
 
   banques: string[] = [];
   banqueFilter: string[] = [];
@@ -43,6 +47,8 @@ export class CohorteViewComponent implements OnInit {
     private router: Router,
     private authService: AuthService, 
     private cohorteService: CohorteService,
+    private beneficiaireService: BeneficiareService,
+    private planRemboursementService: PlanRemboursementService,
     private logService: LogUserService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
@@ -56,38 +62,42 @@ export class CohorteViewComponent implements OnInit {
           this.currentUser = user; 
           this.cohorteService.get(Number(id)).subscribe(res => {
             this.cohorte = res;
-            this.ELEMENT_DATA = this.cohorte.beneficiaires;
-            var rembousement = this.cohorte.plan_remboursements;
-
-            this.montant_global = this.ELEMENT_DATA.reduce(function(sum, value){
-              return sum + parseFloat(value.montant_garantie); 
-            }, 0);
-
-            this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
-              return sum + parseFloat(value.credit_accorde); 
-            }, 0);
-            this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
-              return sum + parseFloat(value.montant_a_debourser);
-            }, 0);
-            this.totalInteret = this.ELEMENT_DATA.reduce(function(sum, value){
-              return sum + parseFloat(value.interet_beneficiaire); 
-            }, 0);
-            this.totalRembourse = rembousement.reduce(function(sum, value){
-              return sum + parseFloat(value.montant_payer); 
-             }, 0);
-
-            for (let item of this.ELEMENT_DATA) {
-              if (item.banque) {
-                this.banques.push(item.banque.name_banque);
-              }
-            };
-            
-            this.resteARembouser = this.totalRembourse - this.montant_A_Rembourser;
-            
-            this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
-            this.totalBanque = this.banqueFilter.length; 
-            this.isLoading = false;
-          });  
+            this.beneficiaireService.getAllCohorte(this.cohorte.id).subscribe(beneficiaires => {
+              this.planRemboursementService.getAllPlanRemboursementCohorte(this.cohorte.id).subscribe(plan_remboursements => {
+                this.ELEMENT_DATA = beneficiaires;
+                this.remvoursementList = plan_remboursements;
+    
+                this.montant_global = this.ELEMENT_DATA.reduce(function(sum, value){
+                  return sum + parseFloat(value.montant_garantie); 
+                }, 0);
+    
+                this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
+                  return sum + parseFloat(value.credit_accorde); 
+                }, 0);
+                this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
+                  return sum + parseFloat(value.montant_a_debourser);
+                }, 0);
+                this.totalInteret = this.ELEMENT_DATA.reduce(function(sum, value){
+                  return sum + parseFloat(value.interet_beneficiaire); 
+                }, 0);
+                this.totalRembourse = this.remvoursementList.reduce(function(sum, value){
+                  return sum + parseFloat(value.montant_payer); 
+                 }, 0);
+    
+                for (let item of this.ELEMENT_DATA) {
+                  if (item.banque) {
+                    this.banques.push(item.banque.name_banque);
+                  }
+                };
+                
+                this.resteARembouser = this.totalRembourse - this.montant_A_Rembourser;
+                
+                this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
+                this.totalBanque = this.banqueFilter.length; 
+                this.isLoading = false;
+              });
+            });
+          });
         },
         error: (error) => {
           this.router.navigate(['/auth/login']);
@@ -101,24 +111,54 @@ export class CohorteViewComponent implements OnInit {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
         this.logService.createLog(
           this.currentUser.id, 
-          'Delete', 
+          'Corbeil', 
           'Cohorte', 
           `${this.cohorte.name_cohorte}`, 
-          'Suppression de la cohorte.'
-        ).subscribe(() => this.cohorteService
-        .delete(id)
-        .subscribe({
-          next: () => {
-            this.toastr.info('Success!', 'Supprimé avec succès!');
-            this.router.navigate(['layouts/cohortes/cohorte-list']);
-          },
-          error: err => {
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
-          }
-        }));
+          'Mise en corbeil de la cohorte.'
+        ).subscribe(() => {
+          var body = {
+            is_delete: true,
+            update_created: new Date(),
+          };
+          this.cohorteService
+          .update(id, body)
+          .subscribe({
+            next: () => {
+              this.toastr.info('Mise en corbeil avec succès!', 'Success!');
+              this.router.navigate(['layouts/cohortes/cohorte-list']);
+            },
+            error: err => {
+              this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+            }
+          })
+        }
+       );
         
       }
     }
+
+    // delete(id: number): void {
+    //   if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+    //     this.logService.createLog(
+    //       this.currentUser.id, 
+    //       'Delete', 
+    //       'Cohorte', 
+    //       `${this.cohorte.name_cohorte}`, 
+    //       'Suppression de la cohorte.'
+    //     ).subscribe(() => this.cohorteService
+    //     .delete(id) 
+    //     .subscribe({
+    //       next: () => {
+    //         this.toastr.info('Success!', 'Supprimé avec succès!');
+    //         this.router.navigate(['layouts/cohortes/cohorte-list']);
+    //       },
+    //       error: err => {
+    //         this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+    //       }
+    //     }));
+        
+    //   }
+    // }
 
     openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number): void {
       this.dialog.open(EditCohorteDialogBox, {

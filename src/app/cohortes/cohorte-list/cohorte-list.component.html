@@ -30,13 +30,13 @@
         </div>
     </mat-card-header>
     <mat-card-content>
-        <div class="all-projects-table table-responsive">
+        <div class="all-projects-table recent-files-table table-responsive">
             <table class="table">
                 <thead>
                     <tr>
                         <th class="fw-semibold main-color">Nom de la cohorte</th>
-                        <th class="fw-semibold gray-color">Remboursement</th>
-                        <th class="fw-semibold gray-color">Montant global</th>
+                        <th class="fw-semibold gray-color">Remboursements</th>
+                        <th class="fw-semibold gray-color">Crédit accordé</th>
                         <th class="fw-semibold gray-color">Beneficiaires</th>
                         <th class="fw-semibold gray-color">Statut</th>
                         <th class="fw-semibold gray-color">Mise à jour</th>
@@ -45,11 +45,14 @@
                 <tbody>
                     <tr *ngFor="let item of cohorteList">
                         <td>
-                            <h4 class="mb-0 fw-semibold">
-                                <a [routerLink]="['/layouts/cohortes', item.id, 'cohorte-view']">
-                                    {{ item.name_cohorte }}
-                                </a>
-                            </h4>
+                            <div class="name-info d-flex align-items-center">
+                                <img src="assets/img/icon/folder.png" alt="folder">
+                                <h5 class="mb-0 fw-semibold">
+                                    <a [routerLink]="['/layouts/cohortes', item.id, 'cohorte-view']">
+                                        {{ item.name_cohorte }}
+                                    </a>
+                                </h5>
+                            </div> 
                         </td>
                         <td class="gray-color text-start">
                             <app-cohorte-progress [item]="item"></app-cohorte-progress>

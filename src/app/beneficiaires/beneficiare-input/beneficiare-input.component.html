@@ -26,13 +26,13 @@
             <tr *ngFor="let element of ELEMENT_DATA | filter: searchText; index as i"> 
                 <td class="gray-color">
                     <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
-                        {{element.cohorte.name_cohorte }} 
+                        {{element.name_cohorte }} 
                     </a>
                 </td>
-                <td class="gray-color" *ngIf="element.banque">
-                    {{element.banque.name_banque }} 
+                <td class="gray-color" *ngIf="element.name_banque">
+                    {{element.name_banque }} 
                 </td>
-                <td class="gray-color" *ngIf="!element.banque">
+                <td class="gray-color" *ngIf="!element.name_banque">
                    -
                 </td>
                 <td class="gray-color">

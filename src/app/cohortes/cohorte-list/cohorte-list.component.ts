@@ -45,9 +45,6 @@ export class CohorteListComponent implements OnInit {
       this.isLoading = false;
     }); 
   }
-
- 
- 
  
   openCreateDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CreateCohorteDialogBox, {

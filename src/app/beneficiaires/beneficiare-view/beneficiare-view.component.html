@@ -3,7 +3,12 @@
 </div>
  
 
-<mat-card class="mb-25 enrolled-created-box tagus-card" *ngIf="!isLoading && beneficiaire">
+<mat-card 
+    class="mb-25 enrolled-created-box tagus-card"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.card-border-radius]="themeService.isCardBorderRadius()" 
+    *ngIf="!isLoading && beneficiaire"
+>
     <mat-card-content>
         <div class="course-details-desc mb-25">
             <div class="row align-items-center">

@@ -41,6 +41,7 @@
     margin-right: 20px!important;
 }
 
+
 // Some CSS is Available on the Style.scss file because of Angular Material CSS didn't work in Component CSS.
 .course-details-header {
     padding: 50px;
@@ -79,7 +80,7 @@
     padding: {
         // left: 25px;
         // right: 25px;
-        bottom: 10px;
+        bottom: 10;
     };
     .meta {
         border-bottom: 1px solid #F7FAFF;
@@ -213,81 +214,7 @@
             border-radius: 0 !important;
         }
     }
-}
-.component-rtl-enabled {
-    .course-details-header {
-        .time {
-            right: auto;
-            left: 0;
-        }
-    }
-    .course-details-desc {
-        .meta {
-            .list {
-                li {
-                    padding: {
-                        left: 0;
-                        right: 50px;
-                    };
-                    margin: {
-                        left: 50px;
-                        right: 0;
-                    };
-                    span {
-                        padding: {
-                            left: 0;
-                            right: 30px;
-                        };
-                        i {
-                            left: auto;
-                            right: 0;
-                        }
-                    }
-                    .d-flex {
-                        span {
-                            padding: {
-                                left: 0;
-                                right: 10px;
-                            };
-                        }
-                    }
-                    &::before {
-                        left: auto;
-                        right: 0;
-                    }
-                    &:first-child {
-                        padding-right: 0;
-                    }
-                    &:last-child {
-                        margin-left: 0;
-                    }
-                }
-            }
-        }
-        .td-checkbox {
-            .minus-margin {
-                margin: {
-                    left: 10px;
-                    right: -10px;
-                };
-            }
-        }
-    }
-    .btn-box {
-        a {
-            margin: {
-                right: 0;
-                left: 8px;
-            };
-        }
-        button {
-            margin: {
-                left: 0;
-                right: 8px;
-            };
-        }
-    }
-}
+} 
 
 @media only screen and (max-width : 767px) {
 
@@ -408,11 +335,12 @@
 }
 
 .badge {
-    font-size: 13px;
+    font-size: 10px;
     color: #757FEF;
     border-radius: 4px;
     padding: 4px 15px 5px;
     background: rgba(117, 127, 239, 0.1);
+
     &.pending {
         color: #EE368C;
         background: rgba(238, 54, 140, 0.1);

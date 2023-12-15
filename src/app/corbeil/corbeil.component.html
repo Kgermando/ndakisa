@@ -1,1 +1,44 @@
-<p>corbeil works!</p>
+<mat-card class="mb-25 tagus-card">
+    <mat-card-header class="border-bottom">
+        <h4 class="mb-0">Elements placés dans la corbeille</h4> 
+    </mat-card-header>
+    <mat-card-content> 
+        <div class="reports-table table-responsive mb-25">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="fw-semibold gray-color">N°</th>
+                        <th class="fw-semibold main-color">Type</th>
+                        <th class="fw-semibold gray-color">Titre</th>  
+                        <th class="fw-semibold gray-color">Mise à jour</th>
+                        <th class="fw-semibold gray-color">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of corbeilList; let i = index"> 
+                        <td class="gray-color">{{ i+1 }}</td>   
+                        <td class="gray-color">{{ item.type }}</td>
+                        <td class="gray-color">{{ item.title }}</td>
+                        <td class="gray-color">{{ item.update_created | date: 'dd/MM/yyyy' }}</td>
+                        <td>
+                            <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
+                                [matMenuTriggerFor]="actionMenu">
+                                <i class="ri-more-fill"></i>
+                            </button>
+                            <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                                <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                (click)="restaurer(item.id, item.type, item.title)">
+                                     <i class="ri-restart-line"></i> Restaurer
+                                </button> 
+                                <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                    (click)="delete(item.id, item.type, item.title)">
+                                        <i class="ri-delete-bin-7-line"></i> Supprimer
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </mat-card-content>
+</mat-card>

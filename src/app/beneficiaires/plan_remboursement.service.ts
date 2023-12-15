@@ -14,6 +14,15 @@ export class PlanRemboursementService extends ApiService {
     return this.http.get(`${this.endpoint}/get-all/${id}`);
   }
 
+  getAllPlanRemboursementCohorte(id: number): Observable<any> {
+    return this.http.get(`${this.endpoint}/get-plan-remboursement-cohorte/${id}`);
+  }
+
+  getAllPlanRemboursementBanque(id: number): Observable<any> {
+    return this.http.get(`${this.endpoint}/get-plan-remboursement-banque/${id}`);
+  }
+ 
+
   downloadReport(id: number): Observable<any> {
     return this.http.post(`${this.endpoint}/download-xlsx/${id}`, {}, {responseType: 'blob'});
   }

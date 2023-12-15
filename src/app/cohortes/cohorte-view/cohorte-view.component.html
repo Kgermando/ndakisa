@@ -30,7 +30,7 @@
                                 <li class="gray-color fw-semibold">
                                     Nombre beneficiaires
                                     <span class="d-block fw-semibold position-relative"> 
-                                        {{ cohorte.beneficiaires.length }}
+                                        {{ ELEMENT_DATA.length }}
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
@@ -48,11 +48,12 @@
                                 <li class="gray-color fw-semibold">
                                     Credit accordé
                                     <span class="d-block fw-semibold position-relative"> 
-                                        {{ totalCreditAccorde | numberFormat:'fr-FR' }} usd
+                                        <!-- {{ totalCreditAccorde | numberFormat:'fr-FR' }} usd -->
+                                        <app-cohorte-garantie [item]="cohorte"></app-cohorte-garantie>
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Total interet
+                                    Total interêt
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ totalInteret | numberFormat:'fr-FR' }} usd
                                     </span>
@@ -114,7 +115,7 @@
                         (click)="delete(cohorte.id)"
                     *ngIf="currentUser.permission === 'RD' ||
                         currentUser.permission === 'RUD' ||
-                        currentUser.permission === 'CRUD'" matTooltip="Supprimer cette cohorte">
+                        currentUser.permission === 'CRUD'" matTooltip="Mettre en corbeille cette cohorte">
                         <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button color="accent"  

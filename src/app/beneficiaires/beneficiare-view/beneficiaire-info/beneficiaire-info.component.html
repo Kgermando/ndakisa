@@ -21,7 +21,7 @@
                         (click)="delete(beneficiaire.id)"
                     *ngIf="currentUser.permission === 'RD' ||
                         currentUser.permission === 'RUD' ||
-                        currentUser.permission === 'CRUD'" matTooltip="Supprimer ce beneficiaire">
+                        currentUser.permission === 'CRUD'" matTooltip="Mettre en corbeille ce beneficiaire">
                         <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button color="accent"  
