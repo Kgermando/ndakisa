@@ -37,8 +37,7 @@ export class TrancheAgeComponent implements OnChanges {
   
   public chartOption: Partial<ChartOption>; 
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+  ngOnChanges(changes: SimpleChanges): void { 
     this.getTrancheAge();
   }
 

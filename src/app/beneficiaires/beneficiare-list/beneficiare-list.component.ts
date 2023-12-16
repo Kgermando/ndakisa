@@ -32,6 +32,8 @@ export class BeneficiareListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  montant_payer = 0;
+
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     public themeService: CustomizerSettingsService,

@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './beneficiare-view.component.html',
   styleUrls: ['./beneficiare-view.component.scss']
 })
-export class BeneficiareViewComponent implements OnInit, OnChanges {
+export class BeneficiareViewComponent implements OnInit {
   isLoading = false; 
   currentUser: UserModel | any;
   beneficiaire: BeneficiaireModel; 
@@ -27,6 +27,7 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
   date_maturite_reajustement: Date;
 
   pourcent = 0;
+  montant_payer = 0;
 
   constructor(
     public themeService: CustomizerSettingsService,
@@ -50,8 +51,8 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
             this.planRemboursementService.refreshDataList$.subscribe(() => {
               this.getAllDataPlan(this.beneficiaire.id);
             });
-            this.getAllDataPlan(this.beneficiaire.id);  
-            this.isLoading = false;
+            this.getAllDataPlan(this.beneficiaire.id);
+            this.isLoading = false; 
           });
         },
         error: (error) => {
@@ -60,23 +61,9 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
           console.log(error);
         }
       });  
-    }
+    } 
 
-    ngOnChanges(): void {
-      this.isLoading = true;
-      let id = this.route.snapshot.paramMap.get('id'); 
-      this.beneficiareService.get(Number(id)).subscribe(item => {
-        this.beneficiaire = item; 
-        this.planRemboursementService.refreshDataList$.subscribe(() => {
-          this.getAllDataPlan(this.beneficiaire.id);
-        });
-        this.getAllDataPlan(this.beneficiaire.id);  
-        this.isLoading = false;
-      });
-    }
-
-
-    getAllDataPlan(id: number) {
+    getAllDataPlan(id: number) { 
       this.planRemboursementService.getAllData(id).subscribe((res) => {
           this.ELEMENT_DATA = res;
           this.beneficiareService.tauxProgessionBeneficiaire(id).subscribe(res => {
@@ -86,13 +73,17 @@ export class BeneficiareViewComponent implements OnInit, OnChanges {
           this.delai_de_reajustement = this.ELEMENT_DATA.reduce(function(sum, value) {
             return sum + value.delai_reajustement;
           },0);
+
+          this.montant_payer = this.ELEMENT_DATA.reduce(function(sum, value){
+            return sum + parseFloat(value.montant_payer);
+          }, 0); 
           
           if (this.delai_de_reajustement > 0) {
             var days = this.delai_de_reajustement * 30;
             var date = new Date(this.beneficiaire.date_maturite);
             this.date_maturite_reajustement = new Date(date);
             this.date_maturite_reajustement.setDate(date.getMonth() + days); 
-          }
+          } 
         }
       );
     }

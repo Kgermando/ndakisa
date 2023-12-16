@@ -165,7 +165,7 @@ export class BeneficiareEditComponent implements OnInit {
             this.systeme_remboursement = val.systeme_remboursement;
           });
 
-          
+        
         }
       );
        
@@ -240,6 +240,10 @@ export class BeneficiareEditComponent implements OnInit {
       };
       this.beneficiareService.update(this.id, body).subscribe({
         next: (res) => {
+          this.duree_credit = res.duree_credit;
+          this.systeme_remboursement = res.systeme_remboursement;
+          console.log('this.duree_credit', this.duree_credit);
+          console.log('systeme_remboursement', this.systeme_remboursement);
           this.logService.createLog(
             this.currentUser.id, 
             'Update', 

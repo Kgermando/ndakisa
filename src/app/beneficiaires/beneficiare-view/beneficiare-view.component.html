@@ -38,13 +38,7 @@
                             </mat-panel-title> 
                         </mat-expansion-panel-header>
                         <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
-                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
-                                <!-- <li class="gray-color fw-semibold">
-                                    Total garantie
-                                    <span class="d-block fw-semibold position-relative"> 
-                                        {{ beneficiaire.montant_garantie | numberFormat:'fr-FR' }} usd
-                                    </span>
-                                </li> -->
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0"> 
                                 <li class="gray-color fw-semibold">
                                     Crédit accordé
                                     <span class="d-block fw-semibold position-relative"> 
@@ -66,7 +60,7 @@
                                 <li class="gray-color fw-semibold">
                                     Montant remboursé
                                     <span class="d-block fw-semibold position-relative"> 
-                                        <app-montant-rembourser [item]="beneficiaire"></app-montant-rembourser>
+                                        {{ montant_payer | numberFormat:'fr-FR'}} usd
                                     </span>
                                 </li> 
                                 <li class="gray-color fw-semibold">
@@ -81,27 +75,21 @@
                             <ul class="list mb-0 d-md-flex mt-0 ps-0">
                                
                                 <li class="gray-color fw-semibold">
+                                    Date de soumission
+                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_soumission, beneficiaire.created)">
+                                       -
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_soumission, beneficiaire.created)">
+                                        {{ beneficiaire.date_soumission | date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li> 
+                                <li class="gray-color fw-semibold">
                                     Date valeur
-                                    <span class="d-block fw-semibold position-relative">
-                                        {{ beneficiaire.date_valeur | date: 'dd/MM/yyyy' }}
+                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_valeur, beneficiaire.created)">
+                                        -
                                     </span>
-                                </li>
-                                <li class="gray-color fw-semibold">
-                                    Durée de credit
-                                    <span class="d-block fw-semibold position-relative">
-                                        {{ beneficiaire.duree_credit }} mois
-                                    </span>
-                                </li>
-                                <li class="gray-color fw-semibold">
-                                    Delai de grâce
-                                    <span class="d-block fw-semibold position-relative">
-                                        {{ beneficiaire.delai_de_grace }} mois
-                                    </span>
-                                </li>
-                                <li class="gray-color fw-semibold">
-                                    Total delai de réajustement
-                                    <span class="d-block fw-semibold position-relative">
-                                        {{ delai_de_reajustement }} mois
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_valeur, beneficiaire.created)">
+                                        {{ beneficiaire.date_valeur| date: 'dd/MM/yyyy' }}
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold" *ngIf="delai_de_reajustement === 0">
@@ -116,36 +104,38 @@
                                         {{ date_maturite_reajustement | date: 'dd/MM/yyyy' }}
                                     </span>
                                 </li>
-                                
-                            </ul> 
-                        </div> 
-                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
-                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
-                               
-                                <li class="gray-color fw-semibold">
-                                    Date de soumission
-                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_soumission, beneficiaire.created)">
-                                       -
-                                    </span>
-                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_soumission, beneficiaire.created)">
-                                        {{ beneficiaire.date_soumission | date: 'dd/MM/yyyy' }}
-                                    </span>
-                                </li> 
                                 <li class="gray-color fw-semibold">
                                     Compte bancaire
                                     <span class="d-block fw-semibold position-relative">
                                         {{ beneficiaire.compte_bancaire }}
                                     </span>
+                                </li> 
+                               
+                              
+                               
+                              
+                            </ul> 
+                        </div> 
+                        <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">
+                            <ul class="list mb-0 d-md-flex mt-0 ps-0">
+                                <li class="gray-color fw-semibold">
+                                    Durée de credit
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.duree_credit }} mois
+                                    </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Date valeur
-                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_valeur, beneficiaire.created)">
-                                        -
+                                    Delai de grâce
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ beneficiaire.delai_de_grace }} mois
                                     </span>
-                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_valeur, beneficiaire.created)">
-                                        {{ beneficiaire.date_valeur| date: 'dd/MM/yyyy' }}
+                                </li> 
+                                <li class="gray-color fw-semibold">
+                                    Total delai de réajustement
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ delai_de_reajustement }} mois
                                     </span>
-                                </li>
+                                </li> 
                                 <li class="gray-color fw-semibold">
                                     Progression
                                     <span class="d-block fw-semibold position-relative">
