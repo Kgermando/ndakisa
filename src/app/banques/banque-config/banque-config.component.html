@@ -47,6 +47,7 @@
                             <tr>
                                 <th class="fw-semibold gray-color">N°</th>
                                 <th class="fw-semibold main-color">Banque</th>
+                                <th class="fw-semibold gray-color">Statut</th> 
                                 <th class="fw-semibold gray-color">Crée le</th>  
                                 <th class="fw-semibold gray-color">Mise à jour </th>
                                 <th class="fw-semibold gray-color">Action</th>
@@ -61,6 +62,8 @@
                                         {{ banque.name_banque }}
                                     </a>
                                 </td>
+                                <td class="gray-color" style="color: green !important;" *ngIf="banque.statut">Actif</td>
+                                <td class="gray-color" style="color: red !important;" *ngIf="!banque.statut">Inactif</td>
                                 <td class="gray-color">{{ banque.created | date: 'dd/MM/yyyy' }}</td>
                                 <td class="gray-color">{{ banque.update_created | date: 'dd/MM/yyyy' }}</td>
                                 <td>

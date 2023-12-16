@@ -64,11 +64,13 @@ export class BeneficiareAddComponent implements OnInit {
       next: (user) => {
         this.currentUser = user;
         this.beneficiareService.getAll().subscribe((res) => {
-          this.beneficiareList = res;
+          var beneficiares = res;
+          this.beneficiareList = beneficiares.filter((v: BanqueModel) => v.statut == true);
           }
         );
         this.banqueService.getAll().subscribe((res) => {
-          this.banqueList = res;
+          var banques = res;
+          this.banqueList = banques.filter((v: BanqueModel) => v.statut == true);
         });
 
         this.secteurService.refreshDataList$.subscribe(() => {

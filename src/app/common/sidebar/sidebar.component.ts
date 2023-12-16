@@ -51,7 +51,8 @@ export class SidebarComponent {
 
     getAllData() {
         this.banqueService.getAllNav().subscribe((res) => {
-            this.banqueList = res;
+            var banques = res;
+            this.banqueList = banques.filter((v: BanqueModel) => v.statut == true);
           }
         );
     }

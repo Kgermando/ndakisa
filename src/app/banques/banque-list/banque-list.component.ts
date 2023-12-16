@@ -267,6 +267,7 @@ export class EditBanqueDialogBox implements OnInit{
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({  
       name_banque: [''],
+      statut: [''],
     }); 
     this.authService.user().subscribe({
       next: (user) => {
@@ -274,6 +275,7 @@ export class EditBanqueDialogBox implements OnInit{
         this.banqueService.get(parseInt(this.data['id'])).subscribe(item => {
           this.formGroup.patchValue({
             name_banque: item.name_banque,
+            statut: item.statut,
             signature: this.currentUser.matricule, 
             update_created: new Date(),
           });
@@ -302,7 +304,7 @@ export class EditBanqueDialogBox implements OnInit{
           ).subscribe(() => {
             this.isLoading = false;
             this.toastr.success('Modification enregistré!', 'Success!');
-            window.location.reload();
+            this.close();
           });
         },
         error: err => {

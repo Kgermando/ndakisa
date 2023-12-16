@@ -4,6 +4,7 @@ import { PlanRemboursementModel } from "src/app/beneficiaires/models/plan_remous
 export interface BanqueModel {
     id: number;
     name_banque: string;
+    statut: boolean;
     beneficiaires: BeneficiaireModel[];
     plan_remboursements: PlanRemboursementModel[];
     signature: string; 
