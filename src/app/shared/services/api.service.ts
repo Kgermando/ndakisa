@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Observable, Subject, tap } from 'rxjs'; 
 
 @Injectable({
   providedIn: 'root'

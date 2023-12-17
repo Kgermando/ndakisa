@@ -55,7 +55,7 @@ export class BeneficiareListComponent implements OnInit {
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
             this.isLoading = false;
-          });
+          }); 
         },
         error: (error) => {
           this.isLoading = false;
