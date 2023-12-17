@@ -137,6 +137,8 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
 
   currentUser: UserModel | any;
 
+  name_beneficiaire: string;
+
   statutList = ['En attente', 'En cours', 'Interrompu', 'Terminé'];
 
   constructor(
@@ -147,6 +149,7 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
       private authService: AuthService, 
       private toastr: ToastrService, 
       private beneficiareService: BeneficiareService,
+      private logService: LogUserService,
   ) {}
 
   ngOnInit(): void {
@@ -157,6 +160,7 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
       next: (user) => {
         this.currentUser = user; 
         this.beneficiareService.get(parseInt(this.data['id'])).subscribe(item => {
+          this.name_beneficiaire = item.name_beneficiaire;
           this.formGroup.patchValue({
             statut: item.statut,
             signature: this.currentUser.matricule, 
@@ -177,12 +181,18 @@ export class EditStatutBeneficiaireDialogBox implements OnInit{
       this.isLoading = true;
       this.beneficiareService.update(parseInt(this.data['id']), this.formGroup.getRawValue())
       .subscribe({
-        next: () => {
+        next: () => this.logService.createLog(
+          this.currentUser.id,
+          'Update', 
+          'Beneficiaire', 
+          `${this.name_beneficiaire}`, 
+          'Changement du statut Beneficiaire'
+        ).subscribe(() => {
           this.isLoading = false;
           this.toastr.success('Statut modifié!', 'Success!');
           this.close();
           window.location.reload();
-        },
+        }),
         error: err => {
           this.isLoading = false;
           console.log(err);

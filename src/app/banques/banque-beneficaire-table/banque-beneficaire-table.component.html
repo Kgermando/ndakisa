@@ -1,0 +1,57 @@
+
+<div class="tagus-form-group">
+    <mat-form-field appearance="fill">
+        <i class="ri-search-line"></i>
+        <mat-label>Filter</mat-label>
+        <input matInput [(ngModel)]="searchText" #input>
+    </mat-form-field>
+</div>
+<div class="recent-files-table table-responsive mb-25">
+    <table class="table">
+        <thead>
+            <tr> 
+                <th class="fw-semibold main-color">Cohorte </th> 
+                <th class="fw-semibold gray-color">Beneficiaire</th> 
+                <th class="fw-semibold gray-color">Sexe</th> 
+                <th class="fw-semibold gray-color">Province</th> 
+                <th class="fw-semibold gray-color">Identifiant</th>
+                <th class="fw-semibold gray-color">Email</th>
+                <th class="fw-semibold gray-color">Téléphone</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="(ELEMENT_DATA | filter: searchText).length > 0; else noResults">
+            <tr *ngFor="let element of ELEMENT_DATA | filter: searchText; index as i"> 
+                <td class="gray-color">
+                    <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                        {{element.name_cohorte }} 
+                    </a>
+                </td>  
+                <td class="gray-color">
+                    <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                        {{element.name_beneficiaire.toUpperCase()}}
+                    </a>
+                </td>
+                <td class="gray-color">
+                    {{element.sexe }} 
+                </td>
+                <td class="gray-color">
+                    {{element.province }} 
+                </td>
+                <td class="gray-color">
+                    {{element.identifiant }} 
+                </td> 
+                <td class="gray-color">
+                    {{element.email }} 
+                </td> 
+                <td class="gray-color">
+                    {{element.telephone }} 
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+    <ng-template #noResults>
+        <p *ngIf="searchText">Aucun resultat "{{searchText}}".</p>
+    </ng-template>
+</div>     
+
+

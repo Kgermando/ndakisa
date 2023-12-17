@@ -17,7 +17,7 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                <h6 class="mb-0">COHORTE</h6>
+                                <h6 class="mb-0">Cohorte</h6>
                                 <h4 class="mb-0">{{ cohorte.name_cohorte.toUpperCase() }}</h4> 
                                 <div class="d-md-flex meta mb-0 pb-0 justify-content-space-between align-items-center">
                                     <p>Créé le {{ cohorte.created | date: 'dd/MM/yyyy' }} </p>
@@ -126,8 +126,8 @@
                         currentUser.permission === 'CRUD'" matTooltip="Modifier cette cohorte">
                         <mat-icon>edit</mat-icon>
                 </button>
-            </div> 
+            </div>
         </div>
-        <app-beneficiare-input [ELEMENT_DATA]="ELEMENT_DATA"></app-beneficiare-input>
+        <app-cohorte-beneficaire-table [item]="cohorte"></app-cohorte-beneficaire-table>
     </mat-card-content>
 </mat-card>

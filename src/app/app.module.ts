@@ -50,7 +50,6 @@ import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/benefic
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
 import { CohorteProgressComponent } from './cohortes/cohorte-list/cohorte-progress/cohorte-progress.component'; 
-import { BeneficiareInputComponent } from './beneficiaires/beneficiare-input/beneficiare-input.component';
 import { PlanRemboursementService } from './beneficiaires/plan_remboursement.service';
 import { BeneficiaireInfoComponent, EditStatutBeneficiaireDialogBox } from './beneficiaires/beneficiare-view/beneficiaire-info/beneficiaire-info.component';
 import { AddDelaiReajustelentDialogBox, AddRemboursementDialogBox, BeneficiaireRemboursementsComponent } from './beneficiaires/beneficiare-view/beneficiaire-remboursements/beneficiaire-remboursements.component'; 
@@ -80,6 +79,9 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { CohorteNbreBeneficiairesComponent } from './cohortes/cohorte-nbre-beneficiaires/cohorte-nbre-beneficiaires.component';
 import { CorbeilComponent } from './corbeil/corbeil.component';
 import { SecteurViewComponent } from './secteurs/secteur-view/secteur-view.component';
+import { CohorteBeneficaireTableComponent } from './cohortes/cohorte-beneficaire-table/cohorte-beneficaire-table.component';
+import { BanqueBeneficaireTableComponent } from './banques/banque-beneficaire-table/banque-beneficaire-table.component';
+import { SecteurBeneficiareTableComponent } from './secteurs/secteur-beneficiare-table/secteur-beneficiare-table.component';
 
 registerLocaleData(localeFr);
 
@@ -127,7 +129,6 @@ registerLocaleData(localeFr);
     CohorteExportXLSXDialogBox,
     CreateBanqueDialogBox,
     EditBanqueDialogBox,
-    BeneficiareInputComponent,
     BeneficiaireInfoComponent,
     BeneficiaireRemboursementsComponent, 
     AddRemboursementDialogBox,
@@ -161,7 +162,10 @@ registerLocaleData(localeFr);
     FilterPipe,
     CohorteNbreBeneficiairesComponent,
     CorbeilComponent,
-    SecteurViewComponent
+    SecteurViewComponent,
+    CohorteBeneficaireTableComponent,
+    BanqueBeneficaireTableComponent,
+    SecteurBeneficiareTableComponent
   ],
   imports: [
     BrowserModule,

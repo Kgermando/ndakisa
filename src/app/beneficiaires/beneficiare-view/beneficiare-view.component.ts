@@ -42,7 +42,7 @@ export class BeneficiareViewComponent implements OnInit {
 
     ngOnInit(): void {
       this.isLoading = true;
-      let id = this.route.snapshot.paramMap.get('id'); 
+      let id = this.route.snapshot.paramMap.get('id');
       this.authService.user().subscribe({
         next: (user) => {
           this.currentUser = user;  

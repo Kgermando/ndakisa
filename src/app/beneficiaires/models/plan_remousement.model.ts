@@ -8,6 +8,7 @@ export interface PlanRemboursementModel {
     cohorte: CohorteModel; 
     banque: BanqueModel;
     beneficiaire: BeneficiaireModel;
+    name_beneficiaire: string; // Pour le dialog qui gere ADD/Edit de remboursement
     secteur_activite: SecteurModel;
     date_de_rembousement: Date;
     delai_reajustement: number;

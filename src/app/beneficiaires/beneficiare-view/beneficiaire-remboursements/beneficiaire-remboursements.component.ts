@@ -166,13 +166,14 @@ export class BeneficiaireRemboursementsComponent {
   } 
 
 
-  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string,id: number): void {
+  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string,id: number, name_beneficiaire: string): void {
     this.dialog.open(AddRemboursementDialogBox, {
       width: '600px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: {
-        id: id
+        id: id,
+        name_beneficiaire: name_beneficiaire
       }
     }); 
   }
@@ -202,6 +203,7 @@ export class AddRemboursementDialogBox implements OnInit {
 
   currentUser: UserModel | any; 
  
+  montant_payer: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -211,6 +213,7 @@ export class AddRemboursementDialogBox implements OnInit {
       private authService: AuthService, 
       private toastr: ToastrService, 
       private remboursementService: PlanRemboursementService,
+      private logService: LogUserService,
   ) {}
 
   ngOnInit(): void {
@@ -225,6 +228,7 @@ export class AddRemboursementDialogBox implements OnInit {
       next: (user) => {
         this.currentUser = user; 
         this.remboursementService.get(this.data.id).subscribe(item => { 
+          this.montant_payer = item.montant_payer;
             this.formGroup.patchValue({
               date_paiement: item.date_paiement,
               montant_payer: item.montant_payer,
@@ -257,12 +261,18 @@ export class AddRemboursementDialogBox implements OnInit {
         //   update_created: new Date(),
         // };
         this.remboursementService.update(this.data.id, this.formGroup.getRawValue()).subscribe({
-          next: () => {
+          next: () => this.logService.createLog(
+            this.currentUser.id, 
+            'Create', 
+            'Operation de remboursement',
+            `${this.data.name_beneficiaire}`,
+            'Téléchargement bordereau.'
+          ).subscribe(() => {
             this.isLoading = false;
             this.formGroup.reset();
             this.toastr.success('Ajouter avec succès!', 'Success!');
             this.close(); 
-          },
+          }),
           error: (err) => {
             this.isLoading = false;
             this.toastr.error('Une erreur s\'est produite!', 'Oupss!');

@@ -12,9 +12,9 @@
     <table class="table">
         <thead>
             <tr> 
-                <th class="fw-semibold main-color">Cohorte </th>
+                <th class="fw-semibold main-color">Cohorte </th> 
+                <th class="fw-semibold gray-color">Beneficiaire</th>
                 <th class="fw-semibold gray-color">Banque</th>
-                <th class="fw-semibold gray-color">Beneficiaire</th> 
                 <th class="fw-semibold gray-color">Sexe</th> 
                 <th class="fw-semibold gray-color">Province</th> 
                 <th class="fw-semibold gray-color">Identifiant</th>
@@ -23,10 +23,15 @@
             </tr>
         </thead>
         <tbody *ngIf="(ELEMENT_DATA | filter: searchText).length > 0; else noResults">
-            <tr *ngFor="let element of ELEMENT_DATA | filter: searchText; index as i"> 
+            <tr *ngFor="let element of ELEMENT_DATA | filter: searchText; index as i">
                 <td class="gray-color">
                     <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
                         {{element.name_cohorte }} 
+                    </a>
+                </td>
+                <td class="gray-color">
+                    <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
+                        {{element.name_beneficiaire.toUpperCase()}}
                     </a>
                 </td>
                 <td class="gray-color" *ngIf="element.name_banque">
@@ -34,12 +39,7 @@
                 </td>
                 <td class="gray-color" *ngIf="!element.name_banque">
                    -
-                </td>
-                <td class="gray-color">
-                    <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
-                        {{element.name_beneficiaire.toUpperCase()}}
-                    </a>
-                </td>
+                </td> 
                 <td class="gray-color">
                     {{element.sexe }} 
                 </td>
