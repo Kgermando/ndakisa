@@ -66,6 +66,7 @@ export class BanqueConfigComponent implements OnInit {
         this.isLoading = true;
         var body = {
           name_banque: this.capitalizeTest(this.formGroup.value.name_banque),
+          statut: true,
           signature: this.currentUser.matricule,
           created: new Date(),
           update_created: new Date(),
@@ -85,7 +86,7 @@ export class BanqueConfigComponent implements OnInit {
           },
           error: (err) => {
             this.isLoading = false;
-            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+            this.toastr.error(`${err.error.message}`, 'Oupss!');
             console.log(err);
           }
         });
