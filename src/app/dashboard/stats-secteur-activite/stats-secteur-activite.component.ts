@@ -58,6 +58,7 @@ export class StatsSecteurActiviteComponent implements OnChanges {
             },
             legend: {
                 offsetY: 0,
+                show: false,
                 fontSize: "14px",
                 position: "bottom",
                 horizontalAlign: "center"

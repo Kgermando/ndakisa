@@ -8,7 +8,6 @@ import {
     ApexDataLabels,
     ApexLegend,
 } from "ng-apexcharts";
-import { DashboardService } from "../dashboard.service";
 
 export type ChartOptions = {
     series: ApexNonAxisChartSeries;
@@ -76,7 +75,7 @@ export class StatsBanqueComponent implements OnChanges {
             },
             legend: {
                 offsetY: 0,
-                show: true,
+                show: false,
                 position: "bottom",
                 fontSize: "14px",
                 labels: {
