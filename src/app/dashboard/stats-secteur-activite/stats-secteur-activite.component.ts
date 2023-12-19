@@ -42,7 +42,7 @@ export class StatsSecteurActiviteComponent implements OnChanges {
             series: this.secteurActiviteList.map((item: any) => parseFloat(item.count)),
             // colors: ["#ee368c", "#757fef"],
             chart: {
-                height: 365,
+                height: 250,
                 type: "donut"
             },
             tooltip: {
