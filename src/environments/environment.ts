@@ -1,3 +1,3 @@
 export const environment = {
-    apiURL:'http://192.168.100.114:3002/api',
+    apiURL:'https://ndakisa-api-77eba5c546ce.herokuapp.com/api',
 };
