@@ -19,13 +19,13 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./beneficiare-list.component.scss']
 })
 export class BeneficiareListComponent implements OnInit {
+  displayedColumns: string[] = ['identifiant', 'name_beneficiaire', 'province', 'montant_a_rembourser', 'montant_rembourser', 'reste_a_rembourser', 'statut'];
+
   isLoading = false;
   currentUser: UserModel | any; 
   
   ELEMENT_DATA: BeneficiaireModel[] = []; 
-
-  displayedColumns: string[] = ['identifiant', 'name_beneficiaire', 'province', 'montant_a_rembourser', 'montant_rembourser', 'reste_a_rembourser', 'statut'];
-
+ 
   dataSource = new MatTableDataSource<BeneficiaireModel>(this.ELEMENT_DATA);
   selection = new SelectionModel<BeneficiaireModel>(true, []);
 

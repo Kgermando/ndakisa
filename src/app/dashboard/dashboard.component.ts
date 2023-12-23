@@ -60,16 +60,17 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService
   ) {}
 
-
   ngOnInit(): void { 
-    var date = new Date();
-    var yestday = new Date(date);
-    var tomorrow = new Date(date);
+    const date = new Date();
+    const yestday = new Date(date);
+    const tomorrow = new Date(date);
     yestday.setDate(date.getDate()-29);
     tomorrow.setDate(date.getDate()+1);
+
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
  
     this.dateRange = this._formBuilder.group({
-      start: new FormControl(yestday),
+      start: new FormControl(firstDay),
       end: new FormControl(tomorrow),
     });
  
