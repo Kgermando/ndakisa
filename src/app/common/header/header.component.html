@@ -67,7 +67,7 @@
                 <div *ngIf="currentUser">
                     <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="profile-btn main-color border-none bg-transparent position-relative">
                         <img [src]="currentUser.photo" class="rounded-circle" alt="admin" *ngIf="currentUser.photo">
-                        <img src="assets/img/admin.jpg" class="rounded-circle" alt="admin" *ngIf="!currentUser.photo">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/ndakisa-024.appspot.com/o/admin.jpg?alt=media&token=f5f051fe-98f0-4c90-8344-985c2f867082" class="rounded-circle" alt="admin" *ngIf="!currentUser.photo">
                         {{currentUser.title.toUpperCase()}}
                         <span class="fw-semibold">{{currentUser.prenom}} {{currentUser.nom}}</span>
                     </button>
