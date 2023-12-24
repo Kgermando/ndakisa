@@ -8,8 +8,7 @@ import {
     ApexYAxis,
     ApexLegend,
     ApexGrid
-} from "ng-apexcharts";
-import { DashboardService } from "../dashboard.service";
+} from "ng-apexcharts"; 
 
 type ApexXAxis = {
     type?: "category" | "datetime" | "numeric";

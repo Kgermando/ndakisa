@@ -10,8 +10,11 @@
                 mode="indeterminate">
             </mat-progress-spinner>
         </div> 
-        <div class="chart yourProgressChart" *ngIf="!isLoading && progressionRemboursementDateList.length > 0 && 
-            progressionRemboursementHommeList.length > 0 && progressionRemboursementFemmeList.length > 0">
+        <div class="chart yourProgressChart" *ngIf="!isLoading && 
+            progressionRemboursementDateList.length > 0 && 
+            progressionRemboursementHommeList.length > 0 || !isLoading && 
+            progressionRemboursementDateList.length > 0 && 
+            progressionRemboursementFemmeList.length > 0">
             <apx-chart
                 [series]="chartOptions.series!"
                 [chart]="chartOptions.chart!"

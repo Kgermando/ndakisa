@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CorbelService } from './corbel.service';
 import { CorbeilModel } from './models/corbeil.model';
 import { LogUserService } from '../logs/log-user.service';
@@ -9,6 +9,12 @@ import { BeneficiareService } from '../beneficiaires/beneficiare.service';
 import { ToastrService } from 'ngx-toastr';
 import { CohorteService } from '../cohortes/cohorte.service';
 import { UserService } from '../users/user.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CustomizerSettingsService } from '../common/customizer-settings/customizer-settings.service';
 
 @Component({
   selector: 'app-corbeil',
@@ -16,14 +22,24 @@ import { UserService } from '../users/user.service';
   styleUrls: ['./corbeil.component.scss']
 })
 export class CorbeilComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'type', 'title', 'update_created', 'action'];
 
   isLoading = false;
 
   currentUser: UserModel | any; 
 
-  corbeilList: CorbeilModel[] = [];
+  ELEMENT_DATA: CorbeilModel[] = [];
+  dataSource = new MatTableDataSource<CorbeilModel>(this.ELEMENT_DATA);
+  selection = new SelectionModel<CorbeilModel>(true, []);
 
-  constructor( private authService: AuthService,
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  constructor( 
+    private _liveAnnouncer: LiveAnnouncer,
+    public themeService: CustomizerSettingsService,
+    private authService: AuthService,
     private router: Router,
     private corbeilService: CorbelService,
     private logService: LogUserService,
@@ -41,17 +57,16 @@ export class CorbeilComponent implements OnInit {
        
         this.corbeilService.getAllCohorte().subscribe(cohortes => {
           var cohorteList = cohortes;
-          this.corbeilList.push(...cohorteList);
+          this.ELEMENT_DATA.push(...cohorteList);
           this.corbeilService.getAllBeneficiaire().subscribe(beneficiaire => {
             var beneficiaireList = beneficiaire;
-            this.corbeilList.push(...beneficiaireList);
+            this.ELEMENT_DATA.push(...beneficiaireList);
             this.corbeilService.getAllUser().subscribe(user => {
               var userList = user;
-              this.corbeilList.push(...userList);
-              console.log('cohorteList', cohorteList); 
-              console.log('beneficiaireList', beneficiaireList); 
-              console.log('userList', userList); 
-              console.log('corbeilList', this.corbeilList);
+              this.ELEMENT_DATA.push(...userList); 
+              this.dataSource = new MatTableDataSource<CorbeilModel>(this.ELEMENT_DATA);
+              this.dataSource.sort = this.sort;
+              this.dataSource.paginator = this.paginator;
               this.isLoading = false;
             });
           });
@@ -62,6 +77,20 @@ export class CorbeilComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+        this._liveAnnouncer.announce(`Sorted ${sortState.direction} ending`);
+    } else {
+        this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
   restaurer(id: number, type: string, title: string) {

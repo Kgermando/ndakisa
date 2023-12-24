@@ -62,7 +62,7 @@ export class BeneficiareEditComponent implements OnInit {
     private toastr: ToastrService) {}
 
   onChangeBanque(event: any) {
-    this.banqueId = event.value;
+    // this.banqueId = event.value;
   }
 
   ngOnInit(): void {
@@ -240,10 +240,10 @@ export class BeneficiareEditComponent implements OnInit {
       };
       this.beneficiareService.update(this.id, body).subscribe({
         next: (res) => {
+          this.banqueId = res.banque.id
           this.duree_credit = res.duree_credit;
           this.systeme_remboursement = res.systeme_remboursement;
-          console.log('this.duree_credit', this.duree_credit);
-          console.log('systeme_remboursement', this.systeme_remboursement);
+          
           this.logService.createLog(
             this.currentUser.id, 
             'Update', 
@@ -273,7 +273,6 @@ export class BeneficiareEditComponent implements OnInit {
 
   onChange(event: any) {
     this.systeme_remboursement = event.value;
-    console.log('systeme_remboursement', this.systeme_remboursement);
   }
 
   onSubmit3() {
@@ -290,10 +289,18 @@ export class BeneficiareEditComponent implements OnInit {
               var mensualite =  parseFloat(this.formGroup3.value.interet) + parseFloat(this.formGroup3.value.capital);
               var credit_en_debut_periode = parseFloat(this.formGroup3.value.credit_en_debut_periode) - (mensualite * index);
   
+              console.log('cohorte', this.beneficiare.cohorte.id);
+              console.log('banqueId', this.banqueId);
+              console.log('secteur_activite', this.beneficiare.secteur_activite.id);
+              if (!this.banqueId) {
+                this.banqueId = this.beneficiare.banque.id;
+                console.log('banque', this.beneficiare.banque.id);
+              }
+
               var body = {
                 cohorte: this.beneficiare.cohorte.id,
-                banque: this.beneficiare.banque.id,
-                beneficiaire: this.id,
+                banque: this.banqueId,
+                beneficiaire: this.beneficiare.id,
                 secteur_activite: this.beneficiare.secteur_activite.id,
                 date_de_rembousement: date_de_rembousement,
                 credit_en_debut_periode: credit_en_debut_periode,
@@ -324,7 +331,7 @@ export class BeneficiareEditComponent implements OnInit {
             var body2 = {
               cohorte: this.beneficiare.cohorte.id,
               banque: this.beneficiare.banque.id,
-              beneficiaire: this.id,
+              beneficiaire: this.beneficiare.id,
               secteur_activite: this.beneficiare.secteur_activite.id,
               date_de_rembousement: this.formGroup3.value.date_de_rembousement,
               credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode,

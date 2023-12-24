@@ -108,7 +108,7 @@ export class CohorteViewComponent implements OnInit {
     } 
 
     delete(id: number): void {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+      if (confirm('Êtes-vous sûr de vouloir mettre cet enregistrement en corbeil ?')) {
         this.logService.createLog(
           this.currentUser.id, 
           'Corbeil', 
