@@ -132,19 +132,19 @@ export class DashboardComponent implements OnInit {
 
 
   getTotal() {
-    this.dashboardService.totalBeneficiaire(this.start_date, this.end_date).subscribe(
+    this.dashboardService.totalBeneficiaire().subscribe(
       res =>  {
         this.totalBeneficiaireList = res;
         this.totalBeneficiaireList.map((item: any) => this.totalBeneficiaire = parseFloat(item.total));
       }
     );
-    this.dashboardService.totalCohorte(this.start_date, this.end_date).subscribe(
+    this.dashboardService.totalCohorte().subscribe(
       res =>  {
         this.totalCohorteList = res;
         this.totalCohorteList.map((item: any) => this.totalCohorte = parseFloat(item.total));
       }
     );
-    this.dashboardService.totalBanque(this.start_date, this.end_date).subscribe(
+    this.dashboardService.totalBanque().subscribe(
       res =>  {
         this.totalBanqueList = res;
         this.totalBanqueList.map((item: any) => this.totalBanque = parseFloat(item.total));

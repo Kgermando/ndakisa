@@ -10,16 +10,16 @@ export class DashboardService extends ApiService {
   endpoint: string = `${environment.apiURL}/dashboard`;
 
 
-  totalBeneficiaire(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/beneficiaires/${start_date}/${end_date}`);
+  totalBeneficiaire(): Observable<any> {
+    return this.http.get(`${this.endpoint}/beneficiaires`);
   }
 
-  totalCohorte(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/cohortes/${start_date}/${end_date}`);
+  totalCohorte(): Observable<any> {
+    return this.http.get(`${this.endpoint}/cohortes`);
   }
 
-  totalBanque(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/banques/${start_date}/${end_date}`);
+  totalBanque(): Observable<any> {
+    return this.http.get(`${this.endpoint}/banques`);
   }
 
   sexe(start_date: string, end_date: string): Observable<any> {
