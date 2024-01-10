@@ -94,7 +94,10 @@
                                 </li>
                                 <li class="gray-color fw-semibold" *ngIf="delai_de_reajustement === 0">
                                     Date maturité
-                                    <span class="d-block fw-semibold position-relative">
+                                    <span class="d-block fw-semibold position-relative" *ngIf="getCompareDate(beneficiaire.date_maturite, beneficiaire.created)">
+                                        -
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative" *ngIf="!getCompareDate(beneficiaire.date_maturite, beneficiaire.created)">
                                         {{ beneficiaire.date_maturite | date: 'dd/MM/yyyy' }}
                                     </span>
                                 </li>
