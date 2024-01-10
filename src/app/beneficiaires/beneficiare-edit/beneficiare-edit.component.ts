@@ -41,7 +41,7 @@ export class BeneficiareEditComponent implements OnInit {
   banqueList: BanqueModel[] = [];
   planRemboursementList: PlanRemboursementModel[] = [];
   secteurList: SecteurModel[] = [];
-  systemeRemboursementList: string[] = ['Lineaire', 'Progressif']
+  systemeRemboursementList: string[] = ['Lineaire', 'Progressif', 'Degressif']
 
   id: any; 
   banqueId: any;
@@ -326,7 +326,7 @@ export class BeneficiareEditComponent implements OnInit {
               this.toastr.success('Ajouter avec succès!', 'Success!');
             }); 
 
-          } else if (this.systeme_remboursement == 'Progressif') {
+          } else if (this.systeme_remboursement == 'Progressif' || this.systeme_remboursement == 'Degressif') {
             this.isLoadingPlanRemboursement = true;
             var body2 = {
               cohorte: this.beneficiare.cohorte.id,
