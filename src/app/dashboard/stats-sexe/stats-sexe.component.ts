@@ -7,8 +7,7 @@ import {
     ApexTooltip,
     ApexDataLabels,
     ApexLegend,
-} from "ng-apexcharts";
-import { DashboardService } from "../dashboard.service";
+} from "ng-apexcharts"; 
 
 export type ChartOptions = {
     series: ApexNonAxisChartSeries;
@@ -73,8 +72,14 @@ export class StatsSexeComponent implements OnChanges {
                 fontSize: '14px',
             },
             y: {
-                formatter: function(val:any) {
-                    return val + " " + "Beneficiaires";
+                formatter: function(val) { 
+                    var beneficiaire = "";
+                    if(val > 1) {
+                        beneficiaire = "Beneficiaires";
+                    } else {
+                        beneficiaire = "Beneficiaire";
+                    } 
+                    return val + " " + beneficiaire;
                 }
             }
         },

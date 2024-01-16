@@ -47,8 +47,14 @@ export class StatsSecteurActiviteComponent implements OnChanges {
             },
             tooltip: {
                 y: {
-                    formatter: function (val) {
-                        return "" + val + " Beneficiaires";
+                    formatter: function (val) { 
+                        var beneficiaire = "";
+                        if(val > 1) {
+                            beneficiaire = "Beneficiaires";
+                        } else {
+                            beneficiaire = "Beneficiaire";
+                        }
+                        return "" + val + beneficiaire;
                     },
                 },
             },

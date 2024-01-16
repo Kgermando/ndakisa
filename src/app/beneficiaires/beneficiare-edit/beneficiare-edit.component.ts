@@ -15,6 +15,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { LogUserService } from 'src/app/logs/log-user.service';
 import { SecteurModel } from '../../secteurs/models/secteur.model';
 import { SecteurService } from '../../secteurs/secteur.service';
+import { Papa } from 'ngx-papaparse';
 
 @Component({
   selector: 'app-beneficiare-edit',
@@ -32,6 +33,7 @@ export class BeneficiareEditComponent implements OnInit {
 
   currentUser: UserModel | any; 
   beneficiare: BeneficiaireModel;
+  planRemboursement: PlanRemboursementModel;
  
   sexeList: string[] = [
     'Femme', 'Homme'
@@ -54,11 +56,12 @@ export class BeneficiareEditComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private authService: AuthService,
     private beneficiareService: BeneficiareService,
-    private planRemboursement: PlanRemboursementService,
+    private planRemboursementService: PlanRemboursementService,
     private banqueService: BanqueService,
     private logService: LogUserService,
     private secteurService: SecteurService,
     public dialog: MatDialog,
+    private papa: Papa,
     private toastr: ToastrService) {}
 
   onChangeBanque(event: any) {
@@ -118,7 +121,7 @@ export class BeneficiareEditComponent implements OnInit {
         });
         this.beneficiareService.get(this.id).subscribe(item => {
           this.beneficiare = item;
-          this.planRemboursement.refreshDataList$.subscribe(() => {
+          this.planRemboursementService.refreshDataList$.subscribe(() => {
             this.getAllData(this.beneficiare.id);
           });
           this.getAllData(this.beneficiare.id); 
@@ -178,7 +181,7 @@ export class BeneficiareEditComponent implements OnInit {
   }
 
   getAllData(id: number) {
-    this.planRemboursement.getAllData(id).subscribe((res) => {
+    this.planRemboursementService.getAllData(id).subscribe((res) => {
         this.planRemboursementList = res;
       }
     );
@@ -275,45 +278,95 @@ export class BeneficiareEditComponent implements OnInit {
     this.systeme_remboursement = event.value;
   }
 
+
+  upload(event: any) {
+    this.isLoadingPlanRemboursement = true;
+    const file = event.target.files[0];
+    if (this.isValidCSVFile(file)) {
+      this.papa.parse(file, {
+        worker: true,
+        header: true,
+        delimiter: ';',
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        encoding: 'utf-8',
+        step: (row) => {
+          this.planRemboursement = row.data;
+          if (!this.banqueId) {
+            this.banqueId = this.beneficiare.banque.id;
+          }
+          var body = {
+            cohorte: this.beneficiare.cohorte.id,
+            banque: this.banqueId,
+            beneficiaire: this.beneficiare.id,
+            secteur_activite: this.beneficiare.secteur_activite.id,
+            date_de_rembousement: this.planRemboursement.date_de_rembousement,
+            credit_en_debut_periode: this.planRemboursement.credit_en_debut_periode,
+            interet: this.planRemboursement.interet,
+            capital: this.planRemboursement.capital,
+            signature: this.currentUser.matricule,
+            created: new Date(),
+            update_created: new Date(),
+          };
+          this.planRemboursementService.create(body).subscribe({
+            next: () => {},
+            error: (err) => {
+              this.isLoadingPlanRemboursement = false;
+              this.toastr.error(`${err.error.message}`, 'Oupss!');
+              console.log(err);
+            }
+          });
+        },
+        complete: () => { 
+          this.logService.createLog(
+            this.currentUser.id, 
+            'Create', 
+            'Plan de remboursement', 
+            `${this.beneficiare.name_beneficiaire}`, 
+            'Création du plan de remboursement'
+          ).subscribe(() => {
+            this.isLoadingPlanRemboursement = false;
+            this.formGroup3.reset();
+            console.log("All done!");
+            this.toastr.success('Ajouter avec succès!', 'Success!');
+          });
+        },
+        error: (error, file) => {
+          this.isLoadingPlanRemboursement = false;
+          this.toastr.error(`${error}`, 'Oupss!');
+          console.log(error);
+          console.log("file", file); 
+        },
+      });
+    } else {  
+      alert("Please import valid .csv file."); 
+    }
+      this.isLoadingPlanRemboursement = false;  
+    }
+ 
+
   onSubmit3() {
     try {
       if (this.formGroup3.valid) {
         if (this.duree_credit > 0) {
-          if (this.systeme_remboursement == 'Lineaire') {
-            this.isLoadingPlanRemboursement = true;
-            for (let index = 0; index < this.duree_credit; index++) {
-
-              var date_de_rembousement = new Date(this.formGroup3.value.date_de_rembousement);
-              date_de_rembousement.setDate(date_de_rembousement.getDate() + (30 * index));
-
-              var mensualite =  parseFloat(this.formGroup3.value.interet) + parseFloat(this.formGroup3.value.capital);
-              var credit_en_debut_periode = parseFloat(this.formGroup3.value.credit_en_debut_periode) - (mensualite * index);
-  
-              console.log('cohorte', this.beneficiare.cohorte.id);
-              console.log('banqueId', this.banqueId);
-              console.log('secteur_activite', this.beneficiare.secteur_activite.id);
-              if (!this.banqueId) {
-                this.banqueId = this.beneficiare.banque.id;
-                console.log('banque', this.beneficiare.banque.id);
-              }
-
-              var body = {
-                cohorte: this.beneficiare.cohorte.id,
-                banque: this.banqueId,
-                beneficiaire: this.beneficiare.id,
-                secteur_activite: this.beneficiare.secteur_activite.id,
-                date_de_rembousement: date_de_rembousement,
-                credit_en_debut_periode: credit_en_debut_periode,
-                interet: this.formGroup3.value.interet,
-                capital: this.formGroup3.value.capital,
-                signature: this.currentUser.matricule,
-                created: new Date(),
-                update_created: new Date(),
-              };
-              this.planRemboursement.create(body).subscribe(res => {
-                console.log('body', res);
-              });
-            }
+          this.isLoadingPlanRemboursement = true;
+          if (!this.banqueId) {
+            this.banqueId = this.beneficiare.banque.id;
+          }
+          var body = {
+            cohorte: this.beneficiare.cohorte.id,
+            banque: this.banqueId,
+            beneficiaire: this.beneficiare.id,
+            secteur_activite: this.beneficiare.secteur_activite.id,
+            date_de_rembousement: this.formGroup3.value.date_de_rembousement,
+            credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode,
+            interet: this.formGroup3.value.interet,
+            capital: this.formGroup3.value.capital,
+            signature: this.currentUser.matricule,
+            created: new Date(),
+            update_created: new Date(),
+          };
+          this.planRemboursementService.create(body).subscribe(res => {
             this.logService.createLog(
               this.currentUser.id, 
               'Create', 
@@ -324,44 +377,26 @@ export class BeneficiareEditComponent implements OnInit {
               this.isLoadingPlanRemboursement = false;
               this.formGroup3.reset();
               this.toastr.success('Ajouter avec succès!', 'Success!');
-            }); 
-
-          } else if (this.systeme_remboursement == 'Progressif' || this.systeme_remboursement == 'Degressif') {
-            this.isLoadingPlanRemboursement = true;
-            var body2 = {
-              cohorte: this.beneficiare.cohorte.id,
-              banque: this.beneficiare.banque.id,
-              beneficiaire: this.beneficiare.id,
-              secteur_activite: this.beneficiare.secteur_activite.id,
-              date_de_rembousement: this.formGroup3.value.date_de_rembousement,
-              credit_en_debut_periode: this.formGroup3.value.credit_en_debut_periode,
-              interet: this.formGroup3.value.interet,
-              capital: this.formGroup3.value.capital,
-              signature: this.currentUser.matricule,
-              created: new Date(),
-              update_created: new Date(),
-            };
-            this.planRemboursement.create(body2).subscribe(res => {
-              this.logService.createLog(
-                this.currentUser.id, 
-                'Create', 
-                'Plan de remboursement', 
-                `${this.beneficiare.name_beneficiaire}`, 
-                'Création du plan de remboursement'
-              ).subscribe(() => {
-                this.isLoadingPlanRemboursement = false;
-                this.formGroup3.reset();
-                this.toastr.success('Ajouter avec succès!', 'Success!');
-              }); 
-
             });
-          } 
+          });
+        
         }
       }  
     } catch (error) {
       this.isLoadingPlanRemboursement = false;
       console.log(error);
     }
+  }
+
+
+  downloadExcel() {
+    let link = document.createElement('a');
+    link.setAttribute('type', 'hidden');
+    link.href = '/assets/excel/remboursement_model.xlsx';
+    link.download = 'remboursement_model.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 
   terminer(id: number) {
@@ -377,7 +412,7 @@ export class BeneficiareEditComponent implements OnInit {
         `${id}`, 
         'Suppression du plan de remboursement'
       ).subscribe(() => {
-        this.planRemboursement
+        this.planRemboursementService
         .delete(id)
         .subscribe({
           next: () => {
@@ -391,6 +426,11 @@ export class BeneficiareEditComponent implements OnInit {
       }); 
     }
   }
+
+  isValidCSVFile(file: any) {  
+    return file.name.endsWith(".csv");  
+  }
+
 
   openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number): void {
     this.dialog.open(EditPlanRemboursementDialogBox, {
@@ -491,7 +531,7 @@ export class EditPlanRemboursementDialogBox implements OnInit{
             this.isLoading = false;
             this.toastr.success('Modification enregistré!', 'Success!');
             // window.location.reload();
-            this.close();
+            
           });
         },
         error: err => {

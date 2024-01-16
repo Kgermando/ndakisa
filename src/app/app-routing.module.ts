@@ -45,8 +45,8 @@ const routes: Routes = [
 
     { path: 'dashboard', component: DashboardComponent, canActivate: [dashboardGuard]},
 
-    { path: 'cohortes/cohorte-list', component: CohorteListComponent, canActivate: [cohortesGuard]}, 
-    { path: 'cohortes/:id/cohorte-view', component: CohorteViewComponent, canActivate: [cohortesGuard]}, 
+    { path: 'cohortes/cohorte-list', component: CohorteListComponent, canActivate: [cohortesGuard]},
+    { path: 'cohortes/:id/cohorte-view', component: CohorteViewComponent, canActivate: [cohortesGuard]},
 
     { path: 'banques/:id/banque-list', component: BanqueListComponent, canActivate: [banquesGuard]},
     { path: 'banques/config', component: BanqueConfigComponent, canActivate: [configurationGuard]},

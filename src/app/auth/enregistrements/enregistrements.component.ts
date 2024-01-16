@@ -34,13 +34,13 @@ export class EnregistrementsComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
-      nom: ['', Validators.required],
-      postnom: ['', Validators.required],
-      prenom: ['', Validators.required],
-      email: [''],
-      telephone: ['', Validators.required],
-      sexe: ['', Validators.required],
-      adresse: ['', Validators.required],
+      nom: ['Admin', Validators.required],
+      postnom: ['Admin', Validators.required],
+      prenom: ['Admin', Validators.required],
+      email: ['admin@fogec.cd'],
+      telephone: ['+243 00 000 00 00', Validators.required],
+      sexe: ['Homme', Validators.required],
+      adresse: ['-', Validators.required],
     });
   }
   

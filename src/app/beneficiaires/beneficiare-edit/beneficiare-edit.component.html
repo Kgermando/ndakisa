@@ -161,7 +161,9 @@
                         <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
                     </div>
                     <div class="mt-5" *ngIf="!isLoading">
-                        <button mat-flat-button matStepperNext class="tagus" [disabled]="!formGroup.valid">Suivant</button>
+                        <button mat-flat-button matStepperNext class="tagus" [disabled]="!formGroup.valid">
+                            Enregister & Suivant
+                        </button>
                     </div>
                 </form>
             </mat-step>
@@ -291,7 +293,7 @@
                     </div>
                     <div class="mt-5" *ngIf="!isLoading">
                         <button mat-flat-button matStepperPrevious class="gray me-15">Retour</button>
-                        <button mat-flat-button matStepperNext class="tagus">Suivant</button>
+                        <button mat-flat-button matStepperNext class="tagus">Enregister & Suivant</button>
                     </div>
                 </form>
             </mat-step>
@@ -336,8 +338,18 @@
                             </tr>
                         </tbody>
                     </table>
-                </div> 
-
+                </div>
+                <div class="d-flex justify-content-start p-25" *ngIf="planRemboursementList.length == 0">
+                    <div class="d-flex justify-content-center p-25" *ngIf="isLoadingPlanRemboursement">
+                        <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+                    </div>
+                    <div class="tagus-form-group" *ngIf="!isLoadingPlanRemboursement">
+                        <input type="file" class="upload" (change)="upload($event)" accept=".csv">  
+                    </div>
+                    <div class="tagus-form-group pl-10" *ngIf="!isLoadingPlanRemboursement">
+                        <button (click)="downloadExcel()"> Téléchager le modèle</button>
+                    </div>
+                </div>
                 <div *ngIf="planRemboursementList.length < duree_credit">
                     <form [formGroup]="formGroup3" (ngSubmit)="onSubmit3()">
                         <div class="row">

@@ -55,8 +55,8 @@ export class StatsCohorteRemboursementComponent implements OnChanges {
     this.chartOptions = {
         series: [
             {
-                name: "Beneficiares",
-                data: this.cohorteList.map((item: any) => parseFloat(item.beneficiaire)),
+                name: "Total béneficiare",
+                data: this.cohorteList.map((item: any) => parseInt(item.beneficiaire)), 
             }
         ],
         chart: {
@@ -64,33 +64,10 @@ export class StatsCohorteRemboursementComponent implements OnChanges {
             type: "bar",
             events: {
                 click: function(chart, w, e) {
-                    // console.log(chart, w, e)
+                    console.log(chart, w, e)
                 }
             }
-        },
-        // colors: [
-        //     "#008FFB",
-        //     "#00E396",
-        //     "#FEB019",
-        //     "#FF4560",
-        //     "#775DD0",
-        //     "#546E7A",
-        //     "#26a69a",
-        //     "#D10CE8",
-        //     "#546E7A",
-        //     "#26a69a",
-        //     "#D10CE8",
-        //     "#546E7A",
-        //     "#26a69a",
-        //     "#D10CE8",
-        //     "#FEB019",
-        //     "#26a69a",
-        //     "#00E396",
-        //     "#FEB019",
-        //     "#FF4560",
-        //     "#775DD0",
-        //     "#D10CE8"
-        // ],
+        }, 
         plotOptions: {
             bar: {
                 columnWidth: "45%",
@@ -109,30 +86,7 @@ export class StatsCohorteRemboursementComponent implements OnChanges {
         xaxis: {
             categories: this.cohorteList.map((item: any) => item.name_cohorte),
             labels: {
-                style: {
-                    // colors: [
-                    //     "#008FFB",
-                    //     "#00E396",
-                    //     "#FEB019",
-                    //     "#FF4560",
-                    //     "#775DD0",
-                    //     "#546E7A",
-                    //     "#26a69a",
-                    //     "#D10CE8",
-                    //     "#546E7A",
-                    //     "#26a69a",
-                    //     "#D10CE8",
-                    //     "#546E7A",
-                    //     "#26a69a",
-                    //     "#D10CE8",
-                    //     "#FEB019",
-                    //     "#26a69a",
-                    //     "#00E396",
-                    //     "#FEB019",
-                    //     "#FF4560",
-                    //     "#775DD0",
-                    //     "#D10CE8"
-                    // ],
+                style: { 
                     fontSize: "12px"
                 }
             }

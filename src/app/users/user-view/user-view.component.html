@@ -6,8 +6,7 @@
         <mat-card class="mb-25 personal-info-card tagus-card" [class.component-dark-theme]="themeService.isDark()">
             <mat-card-header class="border-bottom">
                 <div class="d-flex align-items-center">
-                    <img [src]="user.photo" width="57" class="rounded-circle" alt="user" *ngIf="user.photo">
-                    <img src="assets/img/user/user22.jpg" width="57" class="rounded-circle" alt="user" *ngIf="!user.photo">
+                    <img src="assets/img/user/user22.jpg" width="57" class="rounded-circle" alt="user">
                     <div class="ms-15">
                         <h5 class="mb-5">{{ user.matricule.toUpperCase() }}</h5>
                         <span class="d-block gray-color success" *ngIf="user.statut_user">Actif</span>
