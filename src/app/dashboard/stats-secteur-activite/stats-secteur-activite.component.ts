@@ -54,7 +54,7 @@ export class StatsSecteurActiviteComponent implements OnChanges {
                         } else {
                             beneficiaire = "Beneficiaire";
                         }
-                        return "" + val + beneficiaire;
+                        return "" + val + " " + beneficiaire;
                     },
                 },
             },
