@@ -82,6 +82,11 @@ import { SecteurViewComponent } from './secteurs/secteur-view/secteur-view.compo
 import { CohorteBeneficaireTableComponent } from './cohortes/cohorte-beneficaire-table/cohorte-beneficaire-table.component';
 import { BanqueBeneficaireTableComponent } from './banques/banque-beneficaire-table/banque-beneficaire-table.component';
 import { SecteurBeneficiareTableComponent } from './secteurs/secteur-beneficiare-table/secteur-beneficiare-table.component';
+import { AddModuleSupportDialogBox, SupportComponent } from './helps/support/support.component';
+import { EditSupportModuleDialogBox, SupportSectionComponent } from './helps/support-section/support-section.component';
+import { SupportDocumentationComponent } from './helps/support-documentation/support-documentation.component';
+import { SuppurtAddComponent } from './helps/support/suppurt-add/suppurt-add.component';
+import { SuppurtEditComponent } from './helps/support/suppurt-edit/suppurt-edit.component';
 
 registerLocaleData(localeFr);
 
@@ -165,7 +170,14 @@ registerLocaleData(localeFr);
     SecteurViewComponent,
     CohorteBeneficaireTableComponent,
     BanqueBeneficaireTableComponent,
-    SecteurBeneficiareTableComponent
+    SecteurBeneficiareTableComponent,
+    SupportComponent,
+    SupportSectionComponent,
+    SupportDocumentationComponent,
+    SuppurtAddComponent,
+    SuppurtEditComponent,
+    EditSupportModuleDialogBox,
+    AddModuleSupportDialogBox
   ],
   imports: [
     BrowserModule,

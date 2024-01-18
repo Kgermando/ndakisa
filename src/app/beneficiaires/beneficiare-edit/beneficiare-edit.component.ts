@@ -393,7 +393,7 @@ export class BeneficiareEditComponent implements OnInit {
     let link = document.createElement('a');
     link.setAttribute('type', 'hidden');
     link.href = '/assets/excel/remboursement_model.xlsx';
-    link.download = 'remboursement_model.xlsx';
+    link.download = 'Model_remboursement.xlsx';
     document.body.appendChild(link);
     link.click();
     link.remove();

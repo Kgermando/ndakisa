@@ -25,6 +25,11 @@ import { BanqueConfigComponent } from './banques/banque-config/banque-config.com
 import { LogUserListComponent } from './logs/log-user-list/log-user-list.component';
 import { SecteurViewComponent } from './secteurs/secteur-view/secteur-view.component';
 import { CorbeilComponent } from './corbeil/corbeil.component';
+import { SupportComponent } from './helps/support/support.component';
+import { SupportSectionComponent } from './helps/support-section/support-section.component';
+import { SupportDocumentationComponent } from './helps/support-documentation/support-documentation.component';
+import { SuppurtAddComponent } from './helps/support/suppurt-add/suppurt-add.component';
+import { SuppurtEditComponent } from './helps/support/suppurt-edit/suppurt-edit.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent, children: [
@@ -60,6 +65,13 @@ const routes: Routes = [
     { path: 'secteurs/:id/secteur', component: SecteurViewComponent, canActivate: [configurationGuard]},
 
     { path: 'corbeil', component: CorbeilComponent, canActivate: [configurationGuard]},
+
+    { path: 'helps/support', component: SupportComponent},
+    { path: 'helps/support/:id_module/section', component: SupportSectionComponent },
+    { path: 'helps/support/:id/documentation', component: SupportDocumentationComponent },
+    { path: 'helps/support/:id_module/add', component: SuppurtAddComponent },
+    { path: 'helps/support/:id/edit', component: SuppurtEditComponent },
+    
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   ]},
