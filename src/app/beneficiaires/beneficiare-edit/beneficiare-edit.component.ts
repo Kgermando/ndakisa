@@ -300,9 +300,9 @@ export class BeneficiareEditComponent implements OnInit {
           this.planRemboursement = row.data;
 
           var date = this.planRemboursement.date_de_rembousement.toString().split('/');
-          var dateY = date[0];
+          var dateD = date[0];
           var dateM = date[1];
-          var dateD = date[2];
+          var dateY = date[2];
           var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));   
 
           if (!this.banqueId) {
