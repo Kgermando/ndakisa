@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, LOCALE_ID, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -15,7 +15,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { LogUserService } from 'src/app/logs/log-user.service';
 import { SecteurModel } from '../../secteurs/models/secteur.model';
 import { SecteurService } from '../../secteurs/secteur.service';
-import { Papa } from 'ngx-papaparse';
+import { Papa } from 'ngx-papaparse'; 
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-beneficiare-edit',
@@ -51,6 +52,7 @@ export class BeneficiareEditComponent implements OnInit {
 
   systeme_remboursement: any;
 
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
@@ -62,14 +64,16 @@ export class BeneficiareEditComponent implements OnInit {
     private secteurService: SecteurService,
     public dialog: MatDialog,
     private papa: Papa,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService,
+    @Inject(LOCALE_ID) public locale: string,) {}
 
   onChangeBanque(event: any) {
     // this.banqueId = event.value;
   }
 
+ 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id'); 
     this.formGroup = this._formBuilder.group({
       photo: [''],
       name_beneficiaire: [''],
@@ -157,7 +161,7 @@ export class BeneficiareEditComponent implements OnInit {
             systeme_remboursement: item.systeme_remboursement,
             signature: this.currentUser.matricule, 
             update_created: new Date(),
-          }); 
+          });
 
           this.duree_credit = item.duree_credit;
           this.systeme_remboursement = item.systeme_remboursement;
@@ -168,10 +172,11 @@ export class BeneficiareEditComponent implements OnInit {
             this.systeme_remboursement = val.systeme_remboursement;
           });
 
-        
+          if (!this.banqueId) {
+            this.banqueId = this.beneficiare.banque.id;
+          } 
         }
-      );
-       
+      ); 
       },
       error: (error) => {
         this.router.navigate(['/auth/login']);
@@ -290,8 +295,16 @@ export class BeneficiareEditComponent implements OnInit {
         dynamicTyping: true,
         skipEmptyLines: true,
         encoding: 'utf-8',
+        withCredentials: true,
         step: (row) => {
           this.planRemboursement = row.data;
+
+          var date = this.planRemboursement.date_de_rembousement.toString().split('/');
+          var dateY = date[0];
+          var dateM = date[1];
+          var dateD = date[2];
+          var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));   
+
           if (!this.banqueId) {
             this.banqueId = this.beneficiare.banque.id;
           }
@@ -300,7 +313,7 @@ export class BeneficiareEditComponent implements OnInit {
             banque: this.banqueId,
             beneficiaire: this.beneficiare.id,
             secteur_activite: this.beneficiare.secteur_activite.id,
-            date_de_rembousement: this.planRemboursement.date_de_rembousement,
+            date_de_rembousement: date_de_rembousement,
             credit_en_debut_periode: this.planRemboursement.credit_en_debut_periode,
             interet: this.planRemboursement.interet,
             capital: this.planRemboursement.capital,
@@ -427,6 +440,30 @@ export class BeneficiareEditComponent implements OnInit {
     }
   }
 
+  deleteAllItem(id: number): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer toutes ces lignes ?')) {
+      this.logService.createLog(
+        this.currentUser.id, 
+        'Delete', 
+        'Plan de remboursement', 
+        `${id}`, 
+        'Suppression de tous le plan de remboursement'
+      ).subscribe(() => {
+        this.planRemboursementService
+        .deleteAll(id)
+        .subscribe({
+          next: () => {
+            this.toastr.info('Supprimé avec succès!', 'Success!');
+          },
+          error: err => {
+            this.toastr.error('Une erreur s\'est produite!', 'Oupss!');
+            console.log(err);
+          }
+        });
+      }); 
+    }
+  }
+
   isValidCSVFile(file: any) {  
     return file.name.endsWith(".csv");  
   }
@@ -442,6 +479,9 @@ export class BeneficiareEditComponent implements OnInit {
       }
     }); 
   } 
+
+
+
 
   
   compareFn(c1: BanqueModel, c2: BanqueModel): boolean {

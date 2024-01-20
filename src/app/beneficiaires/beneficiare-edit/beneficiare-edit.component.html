@@ -299,50 +299,60 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Plan de rembousement</ng-template>
-                <div class="recent-files-table table-responsive mb-25">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="fw-semibold gray-color">Echéance</th>
-                                <th class="fw-semibold main-color">Date de remboursement </th>
-                                <th class="fw-semibold gray-color">Credit en debut periode</th>
-                                <th class="fw-semibold gray-color">Capital</th> 
-                                <th class="fw-semibold gray-color">Interet</th> 
-                                <th class="fw-semibold gray-color">Mensualité</th>
-                                <th class="fw-semibold gray-color">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let remboursement of planRemboursementList; let i = index"> 
-                                <td class="gray-color">{{ i+1 }}</td>
-                                <td class="gray-color">{{ remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
-                                <td class="gray-color">{{ remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} usd</td>
-                                <td class="gray-color">{{ remboursement.capital | numberFormat:'fr-FR' }} usd</td>
-                                <td class="gray-color">{{ remboursement.interet | numberFormat:'fr-FR' }} usd</td>
-                                <td class="gray-color">{{ +remboursement.interet + +remboursement.capital | numberFormat:'fr-FR' }} usd</td>
-                                <td>
-                                    <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" [matMenuTriggerFor]="actionMenu">
-                                        <i class="ri-more-fill"></i>
-                                    </button>
-                                    <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
-                                        <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
-                                        (click)="openEditDialog('300ms', '100ms', remboursement.id)">
-                                            <i class="ri-edit-line"></i> Modifier
+                    <div class="recent-files-table table-responsive mb-25">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="fw-semibold gray-color">Echéance</th>
+                                    <th class="fw-semibold main-color">Date de remboursement </th>
+                                    <th class="fw-semibold gray-color">Credit en debut periode</th>
+                                    <th class="fw-semibold gray-color">Capital</th> 
+                                    <th class="fw-semibold gray-color">Interet</th> 
+                                    <th class="fw-semibold gray-color">Mensualité</th>
+                                    <th class="fw-semibold gray-color">Actions
+                                        <button mat-icon-button 
+                                            *ngIf="currentUser.permission === 'RD' ||
+                                                currentUser.permission === 'RUD' ||
+                                                currentUser.permission === 'CRUD'" 
+                                                matTooltip="Supprimer définitivement"
+                                                (click)="deleteAllItem(beneficiare.id)">
+                                                <mat-icon>delete_sweep</mat-icon>
                                         </button>
-                                        <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
-                                         (click)="deleteItem(remboursement.id)">
-                                            <i class="ri-close-circle-line"></i> Retirer
-                                        </button> 
-                                    </mat-menu>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-flex justify-content-start p-25" *ngIf="planRemboursementList.length == 0">
-                    <div class="d-flex justify-content-center p-25" *ngIf="isLoadingPlanRemboursement">
-                        <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let remboursement of planRemboursementList; index as i">
+                                    <td class="gray-color">{{ i+1 }}</td>
+                                    <td class="gray-color">{{ remboursement.date_de_rembousement | date: 'EEEE le dd/MM/yyyy' }}</td>
+                                    <td class="gray-color">{{ remboursement.credit_en_debut_periode | numberFormat:'fr-FR' }} usd</td>
+                                    <td class="gray-color">{{ remboursement.capital | numberFormat:'fr-FR' }} usd</td>
+                                    <td class="gray-color">{{ remboursement.interet | numberFormat:'fr-FR' }} usd</td>
+                                    <td class="gray-color">{{ +remboursement.interet + +remboursement.capital | numberFormat:'fr-FR' }} usd</td>
+                                    <td>
+                                        <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" [matMenuTriggerFor]="actionMenu">
+                                            <i class="ri-more-fill"></i>
+                                        </button>
+                                        <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                                            <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                            (click)="openEditDialog('300ms', '100ms', remboursement.id)">
+                                                <i class="ri-edit-line"></i> Modifier
+                                            </button>
+                                            <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                             (click)="deleteItem(remboursement.id)">
+                                                <i class="ri-close-circle-line"></i> Retirer
+                                            </button>
+                                        </mat-menu>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                
+                <div class="d-flex justify-content-center p-25" *ngIf="isLoadingPlanRemboursement">
+                    <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+                </div>
+                <div class="d-flex justify-content-start p-25" *ngIf="planRemboursementList.length == 0 && banqueId">
                     <div class="tagus-form-group" *ngIf="!isLoadingPlanRemboursement">
                         <input type="file" class="upload" (change)="upload($event)" accept=".csv">  
                     </div>
@@ -350,7 +360,7 @@
                         <button (click)="downloadExcel()"> Téléchager le modèle</button>
                     </div>
                 </div>
-                <div *ngIf="planRemboursementList.length < duree_credit">
+                <div *ngIf="planRemboursementList.length > duree_credit">
                     <form [formGroup]="formGroup3" (ngSubmit)="onSubmit3()">
                         <div class="row">
                             <div class="col-lg-3 col-md-6 col-sm-6">

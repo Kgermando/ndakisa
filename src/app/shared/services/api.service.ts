@@ -58,7 +58,16 @@ export abstract class ApiService {
       this._refreshDataList$.next();
       this._refreshData$.next();
     }));
-  } 
+  }
+  
+
+  // Delete plan_remboursement
+  deleteAll(id: number): Observable<any> {
+    return this.http.get(`${this.endpoint}/delete-all/${id}`).pipe(tap(() => {
+      this._refreshDataList$.next();
+      this._refreshData$.next();
+    }));
+  }
 
 
   // Get file

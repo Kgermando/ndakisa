@@ -87,6 +87,7 @@ import { EditSupportModuleDialogBox, SupportSectionComponent } from './helps/sup
 import { SupportDocumentationComponent } from './helps/support-documentation/support-documentation.component';
 import { SuppurtAddComponent } from './helps/support/suppurt-add/suppurt-add.component';
 import { SuppurtEditComponent } from './helps/support/suppurt-edit/suppurt-edit.component';
+import { PlanRemboursementCheckComponent } from './beneficiaires/plan-remboursement-check/plan-remboursement-check.component';
 
 registerLocaleData(localeFr);
 
@@ -177,7 +178,8 @@ registerLocaleData(localeFr);
     SuppurtAddComponent,
     SuppurtEditComponent,
     EditSupportModuleDialogBox,
-    AddModuleSupportDialogBox
+    AddModuleSupportDialogBox,
+    PlanRemboursementCheckComponent
   ],
   imports: [
     BrowserModule,
