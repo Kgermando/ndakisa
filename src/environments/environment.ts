@@ -1,3 +1,3 @@
 export const environment = {
-    apiURL:'https://ndakisa-api-production.up.railway.app/api',
+    apiURL:'https://parsimonious-temper-production.up.railway.app/api',
 };
