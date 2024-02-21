@@ -115,17 +115,17 @@
             </mat-expansion-panel-header>
             <ul class="mb-0 mt-0 ps-0 content-list">
                 <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.cohorte">
-                    <span class="d-block gray-color fw-medium">Cohorte:</span>
+                    <span class="d-block gray-color fw-medium">Portefeuille:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.cohorte.name_cohorte }} </span>
                 </li>
                 <li class="d-flex align-items-center justify-content-space-between" *ngIf="beneficiaire.banque">
                     <span class="d-block gray-color fw-medium">Banque:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.banque.name_banque }} </span>
                 </li>
-                <li class="d-flex align-items-center justify-content-space-between">
+                <!-- <li class="d-flex align-items-center justify-content-space-between">
                     <span class="d-block gray-color fw-medium">Montant garantie:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.montant_garantie | numberFormat:'fr-FR' }} usd</span>
-                </li>
+                </li> -->
                 <li class="d-flex align-items-center justify-content-space-between">
                     <span class="d-block gray-color fw-medium">Credit accordé:</span>
                     <span class="d-block gray-color fw-medium">{{ beneficiaire.credit_accorde | numberFormat:'fr-FR' }} usd</span>

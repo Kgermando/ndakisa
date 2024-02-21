@@ -12,17 +12,20 @@
     <table class="table">
         <thead>
             <tr> 
-                <th class="fw-semibold gray-color">Beneficiaire</th>
+                <th class="fw-semibold gray-color">Identifiant</th>
+                <th class="fw-semibold gray-color">Nom complet</th>
                 <th class="fw-semibold gray-color">Banque</th>
                 <th class="fw-semibold gray-color">Sexe</th> 
-                <th class="fw-semibold gray-color">Province</th> 
-                <th class="fw-semibold gray-color">Identifiant</th>
+                <th class="fw-semibold gray-color">Province</th>  
                 <th class="fw-semibold gray-color">Email</th>
                 <th class="fw-semibold gray-color">Téléphone</th>
             </tr>
         </thead>
         <tbody *ngIf="(ELEMENT_DATA | filter: searchText).length > 0; else noResults">
             <tr *ngFor="let element of ELEMENT_DATA | filter: searchText; index as i">  
+                <td class="gray-color">
+                    {{element.identifiant }} 
+                </td> 
                 <td class="gray-color">
                     <a [routerLink]="['/layouts/beneficiaires', element.id, 'beneficiaire-view']">
                         {{element.name_beneficiaire.toUpperCase()}}
@@ -39,9 +42,6 @@
                 </td>
                 <td class="gray-color">
                     {{element.province }} 
-                </td>
-                <td class="gray-color">
-                    {{element.identifiant }} 
                 </td> 
                 <td class="gray-color">
                     {{element.email }} 

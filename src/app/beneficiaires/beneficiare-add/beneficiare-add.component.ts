@@ -65,7 +65,8 @@ export class BeneficiareAddComponent implements OnInit {
         this.currentUser = user;
         this.beneficiareService.getAll().subscribe((res) => {
           var beneficiares = res;
-          this.beneficiareList = beneficiares.filter((v: BanqueModel) => v.statut == true);
+          // this.beneficiareList = beneficiares.filter((v: BanqueModel) => v.statut == true);
+          this.beneficiareList = beneficiares;
           }
         );
         this.banqueService.getAll().subscribe((res) => {

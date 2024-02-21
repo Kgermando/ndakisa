@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,8 +15,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { LogUserService } from 'src/app/logs/log-user.service';
 import { SecteurModel } from '../../secteurs/models/secteur.model';
 import { SecteurService } from '../../secteurs/secteur.service';
-import { Papa } from 'ngx-papaparse'; 
-import { Subscription } from 'rxjs';
+import { Papa } from 'ngx-papaparse';  
 
 @Component({
   selector: 'app-beneficiare-edit',
@@ -94,7 +93,7 @@ export class BeneficiareEditComponent implements OnInit {
     this.formGroup2 = this._formBuilder.group({
       banque: [''],
       compte_bancaire: [''],
-      montant_garantie: [''],
+      // montant_garantie: [''],
       credit_accorde: [''],
       interet_beneficiaire: [''],
       // montant_a_debourser: [''], 
@@ -149,7 +148,7 @@ export class BeneficiareEditComponent implements OnInit {
           this.formGroup2.patchValue({
             banque: item.banque,
             compte_bancaire: item.compte_bancaire,
-            montant_garantie: item.montant_garantie,
+            // montant_garantie: item.montant_garantie,
             credit_accorde: item.credit_accorde,
             interet_beneficiaire: item.interet_beneficiaire, 
             delai_de_grace: item.delai_de_grace,
@@ -231,7 +230,7 @@ export class BeneficiareEditComponent implements OnInit {
       var body = {
         banque: this.formGroup2.value.banque,
         compte_bancaire: this.formGroup2.value.compte_bancaire,
-        montant_garantie: this.formGroup2.value.montant_garantie,
+        // montant_garantie: this.formGroup2.value.montant_garantie,
         credit_accorde: this.formGroup2.value.credit_accorde,
         interet_beneficiaire: this.formGroup2.value.interet_beneficiaire,
         montant_a_debourser: parseFloat(this.formGroup2.value.credit_accorde) + parseFloat(this.formGroup2.value.interet_beneficiaire), 
@@ -284,7 +283,7 @@ export class BeneficiareEditComponent implements OnInit {
   }
 
 
-  upload(event: any) {
+  upload(event: any) { 
     this.isLoadingPlanRemboursement = true;
     const file = event.target.files[0];
     if (this.isValidCSVFile(file)) {
@@ -330,7 +329,8 @@ export class BeneficiareEditComponent implements OnInit {
             }
           });
         },
-        complete: () => { 
+        complete: () => {
+
           this.logService.createLog(
             this.currentUser.id, 
             'Create', 
@@ -478,12 +478,19 @@ export class BeneficiareEditComponent implements OnInit {
         id: id
       }
     }); 
-  } 
+  }  
 
+  openUploadDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number): void {
+    this.dialog.open(PlanRemboursementUploadCSVDialogBox, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        id: id
+      }
+    }); 
+  }  
 
-
-
-  
   compareFn(c1: BanqueModel, c2: BanqueModel): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
@@ -592,4 +599,147 @@ export class EditPlanRemboursementDialogBox implements OnInit{
 
 }
 
+
+
+@Component({
+  selector: 'plan-remboursement-upload-csv-dialog',
+  templateUrl: './plan-remboursement-upload-csv.html',
+})
+export class PlanRemboursementUploadCSVDialogBox implements OnInit {
+  isLoading = false;
+  PlanRemboursementList: PlanRemboursementModel[] = [];
+  planRemboursement: PlanRemboursementModel;
+  currentUser: UserModel; 
+  beneficiare: BeneficiaireModel;
+
+  banqueId: any;
+  duree_credit = 0;
+
+  systeme_remboursement: any;
+
+
+  pourcent = 0;
+
+  @ViewChild('csvReader') csvReader: any;
+
+  constructor( 
+      public dialogRef: MatDialogRef<PlanRemboursementUploadCSVDialogBox>, 
+      private toastr: ToastrService,
+      private router: Router,
+      private authService: AuthService,
+      private beneficiareService: BeneficiareService,
+      private planRemboursementService: PlanRemboursementService,
+      private papa: Papa,
+      private logService: LogUserService,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
+
+  ngOnInit() { 
+    this.authService.user().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+        this.beneficiareService.get(parseInt(this.data['id'])).subscribe(res => {
+          this.beneficiare = res;
+        })
+      },
+      error: (error) => { 
+        this.router.navigate(['/auth/login']);
+        console.log(error);
+      }
+    }); 
+  }
+
+  
+  async upload(event: any) {
+    const file = event.target.files[0];
+    if (this.isValidCSVFile(file)) {
+      this.isLoading = true;
+      this.papa.parse(file, {
+        worker: true,
+        header: true,
+        delimiter: ';',
+        skipEmptyLines: true,
+        // encoding: 'utf-8',
+        complete: (results) => {
+          this.PlanRemboursementList = results.data;
+          if (this.PlanRemboursementList.length > 100) {
+            this.isLoading = false;
+            this.toastr.info('Veuillez reduire les lignes en dessous de 100.', 'Success!');
+          } else {
+            for (let index = 0; index < this.PlanRemboursementList.length; index++) {
+              this.planRemboursement = this.PlanRemboursementList[index]; 
+              var date = this.planRemboursement.date_de_rembousement.toString().split('/');
+              var dateD = date[0];
+              var dateM = date[1];
+              var dateY = date[2];
+              var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));   
+    
+              if (!this.banqueId) {
+                this.banqueId = this.beneficiare.banque.id;
+              }
+              var body = {
+                cohorte: this.beneficiare.cohorte.id,
+                banque: this.banqueId,
+                beneficiaire: this.beneficiare.id,
+                secteur_activite: this.beneficiare.secteur_activite.id,
+                date_de_rembousement: date_de_rembousement,
+                credit_en_debut_periode: this.planRemboursement.credit_en_debut_periode,
+                interet: this.planRemboursement.interet,
+                capital: this.planRemboursement.capital,
+                signature: this.currentUser.matricule,
+                created: new Date(),
+                update_created: new Date(),
+              };
+              this.planRemboursementService.create(body).subscribe({
+                next: () => {
+                  var pourcents = (index + 1) * 100 / this.PlanRemboursementList.length;
+                  this.pourcent = parseInt(pourcents.toFixed(0));
+                  if (this.pourcent == 100) {  
+                    this.isLoading = false;
+                    console.log("All done!");
+                    this.toastr.success('Importation effectuée avec succès!', 'Success!');
+                  }
+                },
+                error: (err) => {
+                  this.isLoading = false;
+                  this.toastr.error(`${err.error.message}`, 'Oupss!');
+                  console.log(err);
+                  this.close();
+                }
+              }); 
+            }
+            this.logService.createLog(
+              this.currentUser.id, 
+              'Create', 
+              'Plan de remboursement', 
+              `${this.beneficiare.name_beneficiaire}`, 
+              'Création du plan de remboursement'
+            ).subscribe(() => {
+              console.log("All done!");
+              this.toastr.success('Ajouter avec succès!', 'Success!');
+            });
+          } 
+        },
+        error: (error, file) => { 
+          this.toastr.error(`${error}`, 'Oupss!');
+          console.log(error);
+          console.log("file", file);
+          // this.close();
+        },
+      });
+    } else {  
+      alert("Please import valid .csv file."); 
+    }      
+  }
+ 
+  
+  isValidCSVFile(file: any) {  
+    return file.name.endsWith(".csv");  
+  }  
+
+  close(){
+    this.dialogRef.close(true);
+  }
+
+}
 

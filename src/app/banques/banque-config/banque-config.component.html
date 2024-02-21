@@ -12,11 +12,11 @@
                             <label class="d-block mb-12 fw-semibold gray-color">Nom de la banque </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
-                                <mat-label>Entrer le nom du secteur</mat-label>
+                                <mat-label>Entrer le nom</mat-label>
                                 <input matInput type="text" id="name_banque" formControlName="name_banque" required>
                                 <mat-error *ngIf="formGroup.controls['name_banque'].hasError('required')">
                                     Ce champs est obligatoire
-                                </mat-error>
+                                </mat-error> 
                             </mat-form-field>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                             <tr>
                                 <th class="fw-semibold gray-color">N°</th>
                                 <th class="fw-semibold main-color">Banque</th>
-                                <th class="fw-semibold gray-color">Statut</th> 
+                                <th class="fw-semibold gray-color">Statut</th>  
                                 <th class="fw-semibold gray-color">Crée le</th>  
                                 <th class="fw-semibold gray-color">Mise à jour </th>
                                 <th class="fw-semibold gray-color">Action</th>
@@ -63,7 +63,7 @@
                                     </a>
                                 </td>
                                 <td class="gray-color" style="color: green !important;" *ngIf="banque.statut">Actif</td>
-                                <td class="gray-color" style="color: red !important;" *ngIf="!banque.statut">Inactif</td>
+                                <td class="gray-color" style="color: red !important;" *ngIf="!banque.statut">Inactif</td> 
                                 <td class="gray-color">{{ banque.created | date: 'dd/MM/yyyy' }}</td>
                                 <td class="gray-color">{{ banque.update_created | date: 'dd/MM/yyyy' }}</td>
                                 <td>
@@ -73,7 +73,11 @@
                                     </button>
                                     <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
                                         <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
-                                            (click)="openEditDialog('300ms', '100ms', banque.id)">
+                                            (click)="openEditDialog('300ms', '100ms', banque.id)" matTooltip="Ajouter le montant guarantie">
+                                            <i class="ri-edit-line"></i> Ajouter guarantie
+                                        </button>
+                                        <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                            (click)="openEditDialog('300ms', '100ms', banque.id)" matTooltip="Modifier la banque">
                                             <i class="ri-edit-line"></i> Modifier
                                         </button>
                                         <app-banque-item [item]="banque" [currentUser]="currentUser"></app-banque-item>

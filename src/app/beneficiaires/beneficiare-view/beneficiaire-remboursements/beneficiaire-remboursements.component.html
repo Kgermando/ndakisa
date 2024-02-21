@@ -33,10 +33,10 @@
                 <td class="gray-color">{{ plan_remboursement.capital | numberFormat:'fr-FR' }} usd</td> 
                 <td class="gray-color">{{ plan_remboursement.interet | numberFormat:'fr-FR' }} usd</td>
                 <td class="gray-color">{{ +plan_remboursement.interet + +plan_remboursement.capital | numberFormat:'fr-FR' }} usd</td>
-                <td class="gray-color" *ngIf="plan_remboursement.date_paiement">
+                <td class="gray-color" *ngIf="plan_remboursement.date_paiement && plan_remboursement.montant_payer != '0'">
                     {{ plan_remboursement.date_paiement | date: 'EE le dd/MM/yyyy' }}
                 </td>
-                <td class="gray-color" *ngIf="!plan_remboursement.date_paiement">
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
                     --
                 </td>
                 <td class="gray-color" *ngIf="plan_remboursement.montant_payer != '0'">
@@ -45,91 +45,48 @@
                 <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
                     --
                 </td>
-                <td *ngIf="plan_remboursement.date_paiement">
+                <td *ngIf="plan_remboursement.montant_payer != '0'">
                     <app-remboursement-indice [plan_remboursement]="plan_remboursement" [id]="id"></app-remboursement-indice>
                 </td>
-                <td class="gray-color" *ngIf="!plan_remboursement.date_paiement">
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
                     --
                 </td>
-                <td class="gray-color" *ngIf="plan_remboursement.file_scan">
-                    <!-- {{ plan_remboursement.file_scan }} -->
+                <td class="gray-color" *ngIf="plan_remboursement.file_scan && plan_remboursement.montant_payer != '0'">
                     <button mat-icon-button (click)="downloadBordereau(plan_remboursement.date_paiement, 
                             plan_remboursement.file_scan)"
                         matTooltip="Télécharger le bordereau de remboursement">
                         <mat-icon>download</mat-icon>
                     </button>
                 </td>
-                <td class="gray-color" *ngIf="!plan_remboursement.file_scan">
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
                     --
                 </td>
-                <td class="gray-color">{{ plan_remboursement.observation }}</td>
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer != '0'">
+                    {{ plan_remboursement.observation }}
+                </td>
+                <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
+                    --
+                </td>
                 <td *ngIf="beneficiaire.statut === 'En cours'">
                     <button mat-icon-button color="primary" 
-                            (click)="openEditDialog('300ms', '100ms', plan_remboursement.id, 
-                                plan_remboursement.name_beneficiaire)" 
-                                *ngIf="currentUser.permission === 'RC' ||
-                                currentUser.permission === 'RCU' ||
-                                currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0"
-                                matTooltip="Ajouter le remboursement">
-                                <mat-icon>add_circle_outline</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" 
-                            (click)="openEditDialog('300ms', '100ms', plan_remboursement.id, 
-                                plan_remboursement.name_beneficiaire)"
-                            *ngIf="currentUser.permission === 'RU' ||
-                                currentUser.permission === 'RCU' || 
-                                currentUser.permission === 'RUD' || 
-                                currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0"
-                                matTooltip="Modifier le remboursement">
-                                <mat-icon>edit</mat-icon>
-                        </button>
-                    <!-- <div *ngIf="isActivatedBtn(beneficiaire.delai_de_grace)">
-                        <div *ngIf="isActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
-                            <button mat-icon-button color="primary" 
-                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)" 
-                                    *ngIf="currentUser.permission === 'RC' ||
-                                    currentUser.permission === 'RCU' ||
-                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0"
-                                    matTooltip="Ajouter le remboursement">
-                                    <mat-icon>add</mat-icon>
-                            </button>
-                            <button mat-icon-button color="primary" 
-                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)"
-                                *ngIf="currentUser.permission === 'RU' ||
-                                    currentUser.permission === 'RCU' || 
-                                    currentUser.permission === 'RUD' || 
-                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0"
-                                    matTooltip="Modifier le remboursement">
-                                    <mat-icon>edit</mat-icon>
-                            </button>
-                        </div> 
-                    </div>
-                    <div *ngIf="isNotActivatedBtn(beneficiaire.delai_de_grace)">
-                        <div *ngIf="isNotActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
-                            <button mat-icon-button color="accent" matTooltip="En attente du delai">
-                                <mat-icon>fiber_manual_record</mat-icon>
-                            </button>
-                        </div>
-                        <div *ngIf="isActivatedReajustementBtn(plan_remboursement.date_de_rembousement)">
-                            <button mat-icon-button color="primary" 
-                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)"
-                                *ngIf="currentUser.permission === 'RC' ||
-                                    currentUser.permission === 'RCU' ||
-                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0"
-                                    matTooltip="Ajouter le remboursement">
-                                    <mat-icon>add</mat-icon>
-                            </button>
-                            <button mat-icon-button color="primary" 
-                                (click)="openEditDialog('300ms', '100ms', plan_remboursement.id)" 
-                                    *ngIf="currentUser.permission === 'RU' ||
-                                    currentUser.permission === 'RCU' || 
-                                    currentUser.permission === 'RUD' || 
-                                    currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0"
-                                    matTooltip="Modifier le remboursement">
-                                    <mat-icon>edit</mat-icon>
-                            </button>
-                        </div> 
-                    </div> -->
+                        (click)="openEditDialog('300ms', '100ms', plan_remboursement.id, 
+                            plan_remboursement.name_beneficiaire)" 
+                            *ngIf="currentUser.permission === 'RC' ||
+                            currentUser.permission === 'RCU' ||
+                            currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer == 0"
+                            matTooltip="Ajouter le remboursement">
+                            <mat-icon>add_circle_outline</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" 
+                        (click)="openEditDialog('300ms', '100ms', plan_remboursement.id, 
+                            plan_remboursement.name_beneficiaire)"
+                        *ngIf="currentUser.permission === 'RU' ||
+                            currentUser.permission === 'RCU' || 
+                            currentUser.permission === 'RUD' || 
+                            currentUser.permission === 'CRUD' && +plan_remboursement.montant_payer > 0"
+                            matTooltip="Modifier le remboursement">
+                            <mat-icon>edit</mat-icon>
+                    </button>
                 </td>
                 <td *ngIf="beneficiaire.statut === 'Interrompu'">
                     <button mat-icon-button color="accent" matTooltip="Remboursement Interrompu">
@@ -150,10 +107,10 @@
                     </span>
                     <span *ngIf="beneficiaire.statut === 'En attente' || beneficiaire.statut === 'En cours'">
                         <button mat-icon-button color="primary" *ngIf="plan_remboursement.date_paiement"
-                        matTooltip="Pas de delai de réajustement">
+                          matTooltip="Pas encore de delai de réajustement">
                            <mat-icon>schedule</mat-icon>
-                       </button>
-                       <button mat-icon-button color="warn" *ngIf="!plan_remboursement.date_paiement"
+                        </button>
+                        <button mat-icon-button color="warn" *ngIf="!plan_remboursement.date_paiement"
                         (click)="openDelaiReajustementDialog('300ms', '100ms', plan_remboursement.id)"
                         matTooltip="Ajouter un delai réajustement">
                                <mat-icon>more_time</mat-icon>

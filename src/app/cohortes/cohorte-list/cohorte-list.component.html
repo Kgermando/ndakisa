@@ -12,11 +12,11 @@
     [class.component-dark-theme]="themeService.isDark()" 
     [class.card-border-radius]="themeService.isCardBorderRadius()" *ngIf="!isLoading">
     <mat-card-header>
-        <h5 class="mb-0">TOUTES LES COHORTES</h5>
+        <h4 class="mb-0">Liste des Portefeuilles</h4>
         <div>
             <button mat-flat-button class="default-btn tagus m-0 margin" style="margin-right: 10px !important;"
                  (click)="openCreateDialog('300ms', '100ms')">
-                <i class="ri-add-fill"></i> Nouvelle cohorte
+                <i class="ri-add-fill"></i> Ajouter un portefeuille
             </button> 
             <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
                     [matMenuTriggerFor]="iconMenu">
@@ -36,7 +36,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="fw-semibold main-color">Nom de la cohorte</th>
+                        <th class="fw-semibold main-color">Portefeuille</th>
                         <th class="fw-semibold gray-color">Remboursements</th>
                         <th class="fw-semibold gray-color">Crédit accordé</th>
                         <th class="fw-semibold gray-color">Beneficiaires</th>

@@ -1,6 +1,6 @@
 <button mat-menu-item type="button" 
     class="bg-transparent border-none position-relative" *ngIf="beneficiaireList"
     [disabled]="beneficiaireList.length > 0"
-            (click)="delete(item.id)">
+            (click)="delete(item.id)" matTooltip="Supprimer la banque">
     <i class="ri-close-circle-line"></i> Supprimer
 </button> 

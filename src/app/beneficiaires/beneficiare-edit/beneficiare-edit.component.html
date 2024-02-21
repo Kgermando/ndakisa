@@ -189,14 +189,14 @@
                                 <input matInput type="text" formControlName="compte_bancaire" name="compte_bancaire">
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <!-- <div class="col-lg-6 col-md-6 col-sm-6">
                             <label class="d-block mb-12 fw-semibold gray-color">Montant garantie </label>
                             <mat-form-field appearance="fill">
                                 <i class="ri-edit-2-line"></i>
                                 <mat-label>Entrer le Montant garantie</mat-label>
                                 <input matInput type="number" formControlName="montant_garantie" name="montant_garantie">
                             </mat-form-field>
-                        </div>
+                        </div> -->
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <label class="d-block mb-12 fw-semibold gray-color">Credit accordé </label>
                             <mat-form-field appearance="fill">
@@ -299,6 +299,31 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Plan de rembousement</ng-template>
+                
+                <div class="d-flex justify-content-end p-25" *ngIf="planRemboursementList.length == 0 && banqueId">
+                    <mat-menu #appMenu="matMenu">
+                        <button mat-menu-item class="submitBtnMenu" (click)="downloadExcel()">
+                            <span class="submitBtnMenuSpan">
+                                <i class="ri-add-fill"></i>    
+                                Génerer le modèle du plan de remboursement
+                            </span>
+                        </button>
+                    </mat-menu>
+                    <mat-button-toggle-group>
+                        <mat-button-toggle class="submitBtn" (click)="openUploadDialog('300ms', '100ms', beneficiare.id)">
+                            <div class="d-flex justify-content-center" *ngIf="!isLoading">
+                                <span><i class="ri-add-fill"></i> Uploader le plan de remboursement  </span>
+                            </div> 
+                            <div class="d-flex justify-content-center" *ngIf="isLoading">
+                                <mat-spinner color="primary" [diameter]="10"></mat-spinner> 
+                                <p class="text-white ml-2">Patientez-svp...</p>
+                            </div>
+                        </mat-button-toggle>
+                        <mat-button-toggle [matMenuTriggerFor]="appMenu" class="submitBtnDrop">
+                            <mat-icon>arrow_drop_down</mat-icon>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
                     <div class="recent-files-table table-responsive mb-25">
                         <table class="table">
                             <thead>
@@ -348,8 +373,7 @@
                             </tbody>
                         </table>
                     </div>
-                
-                <div class="d-flex justify-content-center p-25" *ngIf="isLoadingPlanRemboursement">
+                <!-- <div class="d-flex justify-content-center p-25" *ngIf="isLoadingPlanRemboursement">
                     <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
                 </div>
                 <div class="d-flex justify-content-start p-25" *ngIf="planRemboursementList.length == 0 && banqueId">
@@ -358,8 +382,8 @@
                     </div>
                     <div class="tagus-form-group pl-10" *ngIf="!isLoadingPlanRemboursement">
                         <button (click)="downloadExcel()"> Téléchager le modèle</button>
-                    </div>
-                </div>
+                    </div> 
+                </div> -->
                 <div *ngIf="planRemboursementList.length > duree_credit">
                     <form [formGroup]="formGroup3" (ngSubmit)="onSubmit3()">
                         <div class="row">

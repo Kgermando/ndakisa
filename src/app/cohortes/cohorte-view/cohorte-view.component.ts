@@ -14,6 +14,7 @@ import { LogUserService } from 'src/app/logs/log-user.service';
 import { BeneficiareService } from 'src/app/beneficiaires/beneficiare.service';
 import { PlanRemboursementService } from 'src/app/beneficiaires/plan_remboursement.service';
 import { PlanRemboursementModel } from 'src/app/beneficiaires/models/plan_remousement.model';
+import { BanqueCohorteService } from 'src/app/banques/banque-cohorte.service';
 
 @Component({
   selector: 'app-cohorte-view',
@@ -33,7 +34,7 @@ export class CohorteViewComponent implements OnInit {
   banques: string[] = [];
   banqueFilter: string[] = [];
 
-  montant_global = 0;
+  totalGarantie = 0;
   totalBanque = 0;
   totalCreditAccorde = 0;
   montant_A_Rembourser = 0;
@@ -49,6 +50,7 @@ export class CohorteViewComponent implements OnInit {
     private cohorteService: CohorteService,
     private beneficiaireService: BeneficiareService,
     private planRemboursementService: PlanRemboursementService,
+    private banqueCohorteService: BanqueCohorteService,
     private logService: LogUserService,
     public dialog: MatDialog,
     private toastr: ToastrService) {}
@@ -64,37 +66,38 @@ export class CohorteViewComponent implements OnInit {
             this.cohorte = res;
             this.beneficiaireService.getAllCohorte(this.cohorte.id).subscribe(beneficiaires => {
               this.planRemboursementService.getAllPlanRemboursementCohorte(this.cohorte.id).subscribe(plan_remboursements => {
-                this.ELEMENT_DATA = beneficiaires;
-                this.remvoursementList = plan_remboursements;
-    
-                this.montant_global = this.ELEMENT_DATA.reduce(function(sum, value){
-                  return sum + parseFloat(value.montant_garantie); 
-                }, 0);
-    
-                this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
-                  return sum + parseFloat(value.credit_accorde); 
-                }, 0);
-                this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
-                  return sum + parseFloat(value.montant_a_debourser);
-                }, 0);
-                this.totalInteret = this.ELEMENT_DATA.reduce(function(sum, value){
-                  return sum + parseFloat(value.interet_beneficiaire); 
-                }, 0);
-                this.totalRembourse = this.remvoursementList.reduce(function(sum, value){
-                  return sum + parseFloat(value.montant_payer); 
-                 }, 0);
-    
-                for (let item of this.ELEMENT_DATA) {
-                  if (item.banque) {
-                    this.banques.push(item.banque.name_banque);
-                  }
-                };
-                
-                this.resteARembouser = this.totalRembourse - this.montant_A_Rembourser;
-                
-                this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
-                this.totalBanque = this.banqueFilter.length; 
-                this.isLoading = false;
+                this.banqueCohorteService.getTotalGuarantieCohorte(this.cohorte.id).subscribe(res => {
+                  this.ELEMENT_DATA = beneficiaires;
+                  this.remvoursementList = plan_remboursements;
+
+                  this.totalGarantie = res[0].montant_garantie;
+  
+      
+                  this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
+                    return sum + parseFloat(value.credit_accorde); 
+                  }, 0);
+                  this.montant_A_Rembourser = this.ELEMENT_DATA.reduce(function(sum, value){
+                    return sum + parseFloat(value.montant_a_debourser);
+                  }, 0);
+                  this.totalInteret = this.ELEMENT_DATA.reduce(function(sum, value){
+                    return sum + parseFloat(value.interet_beneficiaire); 
+                  }, 0);
+                  this.totalRembourse = this.remvoursementList.reduce(function(sum, value){
+                    return sum + parseFloat(value.montant_payer); 
+                   }, 0);
+      
+                  for (let item of this.ELEMENT_DATA) {
+                    if (item.banque) {
+                      this.banques.push(item.banque.name_banque);
+                    }
+                  };
+                  
+                  this.resteARembouser = this.totalRembourse - this.montant_A_Rembourser;
+                  
+                  this.banqueFilter = this.banques.filter((item, i, arr) => arr.findIndex((t) => t=== item) === i);
+                  this.totalBanque = this.banqueFilter.length; 
+                  this.isLoading = false;
+                });
               });
             });
           });

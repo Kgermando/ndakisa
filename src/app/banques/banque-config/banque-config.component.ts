@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LogUserService } from 'src/app/logs/log-user.service';
 import { BanqueModel } from '../models/banque.model';
 import { MatDialog } from '@angular/material/dialog';
-import { EditBanqueDialogBox } from '../banque-list/banque-list.component';
+import { EditBanqueDialogBox } from '../banque-list/banque-list.component'; 
 
 @Component({
   selector: 'app-banque-config',
@@ -27,7 +27,7 @@ export class BanqueConfigComponent implements OnInit {
     private router: Router,
     private _formBuilder: FormBuilder,
     private authService: AuthService,
-    private banqueService: BanqueService, 
+    private banqueService: BanqueService,  
     private logService: LogUserService,
     private toastr: ToastrService,
     public dialog: MatDialog,
@@ -55,10 +55,10 @@ export class BanqueConfigComponent implements OnInit {
 
   getAllData() {
     this.banqueService.getAll().subscribe(res => {
-      this.banquelist = res; 
+      this.banquelist = res;
     });
   }
-
+ 
 
   onSubmit() {
     try {
@@ -108,10 +108,11 @@ export class BanqueConfigComponent implements OnInit {
       }
     }); 
   } 
-
+ 
 
   capitalizeTest(text: string): string {
     return (text && text[0].toUpperCase() + text.slice(1).toLowerCase()) || text;
   } 
 
 }
+ 

@@ -51,6 +51,8 @@ export class DashboardComponent implements OnInit {
   progressionRemboursementFemmeList: any[] = [];
   progressionRemboursementDateList: any[] = [];
 
+  progressionRemboursementParSexeList: any[] = [];
+
   totalOuverte = 0;
   totalFermee = 0;
 
@@ -82,7 +84,7 @@ export class DashboardComponent implements OnInit {
       this.getStatsBanque(); 
       this.getStatsBeneficiaireStatut();
       this.getStatsCohorteStatut();
-      this.getStatsCohorteRemboursement();
+      this.getStatsBeneficiaireParCohorte();
       this.getStatsGurantieRemboursement();
       this.getStatsNombre();
       this.getStatsProgress();
@@ -114,7 +116,7 @@ export class DashboardComponent implements OnInit {
 
       this.getStatsCohorteStatut();
 
-      this.getStatsCohorteRemboursement();
+      this.getStatsBeneficiaireParCohorte();
 
       this.getStatsGurantieRemboursement();
 
@@ -151,7 +153,7 @@ export class DashboardComponent implements OnInit {
       }
     );
 
-    this.dashboardService.tauxParticipatiionProvince(this.start_date, this.end_date).subscribe(
+    this.dashboardService.tauxParticipatiionProvince().subscribe(
       res => {
         this.tauxParticipatiionProvinceList = res; 
       }
@@ -160,7 +162,7 @@ export class DashboardComponent implements OnInit {
 
   getStatsSexe() { 
     this.isLoading = true;
-    this.dashboardService.sexe(this.start_date, this.end_date).subscribe(
+    this.dashboardService.sexe().subscribe(
       res => {
         this.sexeList = res;
         this.isLoading = false;
@@ -169,7 +171,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getStatsAge() {
-    this.dashboardService.ageBeneficiaires(this.start_date, this.end_date).subscribe(
+    this.dashboardService.tranchAgeBeneficiaires().subscribe(
       res => {
         this.trancheAgeList = res;
         this.isLoading = false;
@@ -219,7 +221,7 @@ export class DashboardComponent implements OnInit {
     );
   } 
   getStatsBeneficiaireStatut() { 
-    this.dashboardService.statutBeneficiaires(this.start_date, this.end_date).subscribe(
+    this.dashboardService.statutBeneficiaires().subscribe(
       res => {
         this.statutBeneficiaireList = res;
         this.isLoading = false;
@@ -243,8 +245,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getStatsCohorteRemboursement() { 
-    this.dashboardService.remboursementCohorte(this.start_date, this.end_date).subscribe(
+  getStatsBeneficiaireParCohorte() { 
+    this.dashboardService.beneficiaireParCohorte().subscribe(
       res => {
           this.cohorteList = res;
           this.isLoading = false;
@@ -262,6 +264,10 @@ export class DashboardComponent implements OnInit {
   }
 
   getStatsProgress() { 
+    this.dashboardService.progressionRemboursementParSexe(this.start_date, this.end_date).subscribe(res => {
+      this.progressionRemboursementParSexeList = res;
+      console.log("progressionRemboursementParSexeList0", this.progressionRemboursementParSexeList)
+    })
     this.dashboardService.progressionRemboursementSexeDate(this.start_date, this.end_date).subscribe(
       date => {
         this.dashboardService.progressionRemboursementSexeHomme(this.start_date, this.end_date).subscribe(

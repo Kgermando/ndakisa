@@ -45,7 +45,7 @@ import { BeneficiareListComponent } from './beneficiaires/beneficiare-list/benef
 import { CohorteService } from './cohortes/cohorte.service';
 import { BanqueService } from './banques/banque.service';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
-import { BeneficiareEditComponent, EditPlanRemboursementDialogBox } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
+import { BeneficiareEditComponent, EditPlanRemboursementDialogBox, PlanRemboursementUploadCSVDialogBox } from './beneficiaires/beneficiare-edit/beneficiare-edit.component';
 import { BeneficiareAddComponent } from './beneficiaires/beneficiare-add/beneficiare-add.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { BeneficiareService } from './beneficiaires/beneficiare.service';
@@ -88,6 +88,10 @@ import { SupportDocumentationComponent } from './helps/support-documentation/sup
 import { SuppurtAddComponent } from './helps/support/suppurt-add/suppurt-add.component';
 import { SuppurtEditComponent } from './helps/support/suppurt-edit/suppurt-edit.component';
 import { PlanRemboursementCheckComponent } from './beneficiaires/plan-remboursement-check/plan-remboursement-check.component';
+import { BanqueCohorteService } from './banques/banque-cohorte.service';
+import { SecteurService } from './secteurs/secteur.service';
+import { LogUserService } from './logs/log-user.service';
+import { BanqueGarantieComponent, CreateBanqueCohorteDialogBox, EditBanqueCohorteDialogBox } from './banques/banque-garantie/banque-garantie.component';
 
 registerLocaleData(localeFr);
 
@@ -179,7 +183,11 @@ registerLocaleData(localeFr);
     SuppurtEditComponent,
     EditSupportModuleDialogBox,
     AddModuleSupportDialogBox,
-    PlanRemboursementCheckComponent
+    PlanRemboursementCheckComponent,
+    CreateBanqueCohorteDialogBox,
+    BanqueGarantieComponent,
+    EditBanqueCohorteDialogBox,
+    PlanRemboursementUploadCSVDialogBox
   ],
   imports: [
     BrowserModule,
@@ -205,6 +213,9 @@ registerLocaleData(localeFr);
     BeneficiareService,
     DashboardService,
     PlanRemboursementService,
+    BanqueCohorteService,
+    SecteurService,
+    LogUserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CredentialInterceptor,

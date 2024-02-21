@@ -29,7 +29,7 @@ export class SecteurViewComponent implements OnInit {
   totalCreditAccorde = 0; 
   pourcent = 0;
 
-  totalGarantie = 0; 
+  // totalGarantie = 0; 
   interet = 0;
   montant_A_Rembourser = 0;
   montantRembourse = 0;
@@ -65,13 +65,14 @@ export class SecteurViewComponent implements OnInit {
   public loadData(id: any): void {
     this.isLoading = true;
     this.secteurService.get(Number(id)).subscribe(res => {
+
       this.secteur = res; 
       this.ELEMENT_DATA = this.secteur.beneficiaires;
       this.remvoursementList = this.secteur.plan_remboursements;
 
-      this.totalGarantie = this.ELEMENT_DATA.reduce(function(sum, value){
-        return sum + parseFloat(value.montant_garantie); 
-      }, 0);
+      // this.totalGarantie = this.ELEMENT_DATA.reduce(function(sum, value){
+      //   return sum + parseFloat(value.montant_garantie); 
+      // }, 0);
       this.totalCreditAccorde = this.ELEMENT_DATA.reduce(function(sum, value){
         return sum + parseFloat(value.credit_accorde); 
       }, 0);

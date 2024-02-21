@@ -1,0 +1,77 @@
+
+<div class="row"> 
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <mat-card class="mb-25 tagus-card">
+            <mat-card-header class="border-bottom">
+                <h5 class="mb-0">Garanties pour cette banque</h5> 
+                <a mat-raised-button  (click)="openBanqueCohorteDialog('300ms', '100ms', item.id)" 
+                    class="tagus" *ngIf="currentUser.permission === 'RC' || currentUser.permission === 'RCU' ||
+                        currentUser.permission === 'CRUD'">
+                    Ajouter une garantie
+                </a>
+            </mat-card-header>
+            <mat-card-content> 
+                <div class="reports-table table-responsive mb-25">
+                    <table class="table">
+                        <thead>
+                            <tr> 
+                                <th class="fw-semibold main-color">Portefeuille</th>
+                                <th class="fw-semibold gray-color">Statut</th>  
+                                <th class="fw-semibold gray-color">Garantie</th>  
+                                <th class="fw-semibold gray-color">Crée le</th>  
+                                <th class="fw-semibold gray-color">Mise à jour </th>
+                                <th class="fw-semibold gray-color">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let garantie of guarantieBanqueList">  
+                                <td class="gray-color"> 
+                                    <a [routerLink]="['/layouts/cohortes', garantie.id, 'cohorte-view']"
+                                        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                        {{ garantie.name_cohorte }}
+                                    </a>
+                                </td>
+                                <td class="gray-color">
+                                    <span class="badge fw-medium" *ngIf="garantie.statut_cohorte == 'Ouverte'">{{garantie.statut_cohorte}}</span>
+                                    <span class="badge fw-medium completed" *ngIf="garantie.statut_cohorte == 'Fermée'">{{garantie.statut_cohorte}}</span>
+                                </td>
+                                <td class="gray-color">{{ garantie.montant_garantie | numberFormat:'fr-FR' }} usd</td>
+                                <td class="gray-color">{{ garantie.created | date: 'dd/MM/yyyy' }}</td>
+                                <td class="gray-color">{{ garantie.update_created | date: 'dd/MM/yyyy' }}</td>
+                                <td>
+                                    <span *ngIf="garantie.statut_cohorte == 'Ouverte'">
+                                        <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
+                                            [matMenuTriggerFor]="actionMenu">
+                                            <i class="ri-more-fill"></i>
+                                        </button>
+                                        <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                                            <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                                (click)="openEditBanqueCohorteDialog('300ms', '100ms', garantie.id)" 
+                                                *ngIf="currentUser.permission === 'RU' ||
+                                                            currentUser.permission === 'RCU' || 
+                                                            currentUser.permission === 'RUD' || 
+                                                            currentUser.permission === 'CRUD'" 
+                                                matTooltip="Modifier la garantie">
+                                                <i class="ri-edit-line"></i> Modifier
+                                            </button>
+                                            <button mat-menu-item type="button" class="bg-transparent border-none position-relative"
+                                                (click)="delete(garantie.id)" 
+                                                *ngIf="currentUser.permission === 'RU' ||
+                                                    currentUser.permission === 'RCU' || 
+                                                    currentUser.permission === 'RUD' || 
+                                                    currentUser.permission === 'CRUD'" 
+                                                matTooltip="Supprimer la garantie">
+                                                <i class="ri-edit-line"></i> Supprimer
+                                            </button>
+                                        </mat-menu>
+                                    </span> 
+                                    <span *ngIf="garantie.statut_cohorte == 'Fermée'">--</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -17,11 +17,15 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                <h6 class="mb-0">Cohorte</h6>
+                                <h6 class="mb-0">Portefeuille </h6>
                                 <h4 class="mb-0">{{ cohorte.name_cohorte.toUpperCase() }}</h4> 
                                 <div class="d-md-flex meta mb-0 pb-0 justify-content-space-between align-items-center">
                                     <p>Créé le {{ cohorte.created | date: 'dd/MM/yyyy' }} </p>
-                                    <p>Mise à jour le {{ cohorte.update_created | date: 'dd/MM/yyyy HH:mm' }} </p>
+                                    <div class="gray-color">
+                                        <p class="mb-0">Ref: {{ cohorte.contrat_ref }}</p>
+                                        <p class="mb-0">Mise à jour le {{ cohorte.update_created | date: 'dd/MM/yyyy HH:mm' }} </p>
+                                    </div>
+                                   
                                 </div>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -40,9 +44,9 @@
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
-                                    Montant global
+                                    Total garantie
                                     <span class="d-block fw-semibold position-relative"> 
-                                        {{ montant_global | numberFormat:'fr-FR' }} usd
+                                        {{ totalGarantie | numberFormat:'fr-FR' }} usd
                                     </span>
                                 </li>
                                 <li class="gray-color fw-semibold">
@@ -111,21 +115,21 @@
                         currentUser.permission === 'CRUD'">
                     Nouveau béneficiaire 
                 </a>
+                <button mat-icon-button color="accent"  
+                (click)="openEditDialog('300ms', '100ms', cohorte.id)"
+                *ngIf="currentUser.permission === 'RU' ||
+                    currentUser.permission === 'RCU' || 
+                    currentUser.permission === 'RUD' || 
+                    currentUser.permission === 'CRUD'" matTooltip="Modifier ce portefeuille">
+                    <mat-icon>edit</mat-icon>
+                 </button>
                 <button mat-icon-button color="warn" 
                         (click)="delete(cohorte.id)"
                     *ngIf="currentUser.permission === 'RD' ||
                         currentUser.permission === 'RUD' ||
-                        currentUser.permission === 'CRUD'" matTooltip="Mettre en corbeille cette cohorte">
+                        currentUser.permission === 'CRUD'" matTooltip="Mettre ce portefeuille en corbeille">
                         <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button color="accent"  
-                    (click)="openEditDialog('300ms', '100ms', cohorte.id)"
-                    *ngIf="currentUser.permission === 'RU' ||
-                        currentUser.permission === 'RCU' || 
-                        currentUser.permission === 'RUD' || 
-                        currentUser.permission === 'CRUD'" matTooltip="Modifier cette cohorte">
-                        <mat-icon>edit</mat-icon>
-                </button>
+                </button> 
             </div>
         </div>
         <app-cohorte-beneficaire-table [item]="cohorte"></app-cohorte-beneficaire-table>

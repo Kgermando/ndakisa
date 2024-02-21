@@ -16,23 +16,6 @@
                                     <div>
                                         <h6 class="mb-0">{{ banque.name_banque }} </h6>
                                         <h4 class="mb-0">Liste de beneficiaires par banque</h4> 
-                                    </div> 
-                                    <div> 
-                                        <!-- <button mat-icon-button color="warn" 
-                                                (click)="delete(banque.id)"
-                                            *ngIf="currentUser.permission === 'RD' ||
-                                                currentUser.permission === 'RUD' ||
-                                                currentUser.permission === 'CRUD'" matTooltip="Mettre dans le corbeil">
-                                                <mat-icon>delete</mat-icon>
-                                        </button>
-                                        <button mat-icon-button color="accent"  
-                                        (click)="openEditDialog('300ms', '100ms', banque.id)"
-                                            *ngIf="currentUser.permission === 'RU' ||
-                                                currentUser.permission === 'RCU' || 
-                                                currentUser.permission === 'RUD' || 
-                                                currentUser.permission === 'CRUD'" matTooltip="Modifier ce document">
-                                                <mat-icon>edit</mat-icon>
-                                        </button> -->
                                     </div>
                                 </div>
                             </mat-panel-title> 
@@ -78,7 +61,7 @@
                                     <span class="d-block fw-semibold position-relative"> 
                                         {{ montantRembourse | numberFormat:'fr-FR' }} usd
                                     </span>
-                                </li> 
+                                </li>
                                 <li class="gray-color fw-semibold">
                                     Reste à rembourser 
                                     <span class="d-block fw-semibold position-relative badge text-bg-success text" *ngIf="reste_A_Rembourser >= 0">
@@ -92,11 +75,11 @@
                                 <li class="gray-color fw-semibold">
                                     Progession
                                     <span class="d-block fw-semibold position-relative" *ngIf="pourcent"> 
-                                        <span class="fs-13 d-block mb-5">{{pourcent | numberFormat:'fr-FR' }} %</span>
+                                        <span class="fs-13 d-block mb-5">{{ pourcent | numberFormat:'fr-FR' }} %</span>
                                         <mat-progress-bar mode="determinate" value="{{pourcent}}"></mat-progress-bar>
                                     </span>
                                     <span class="d-block fw-semibold position-relative" *ngIf="!pourcent">
-                                        <span class="fs-13 d-block mb-5">{{0 | numberFormat:'fr-FR' }} %</span>
+                                        <span class="fs-13 d-block mb-5">{{ 0 | numberFormat:'fr-FR' }} %</span>
                                         <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
                                     </span>
                                 </li>
@@ -104,8 +87,15 @@
                         </div> 
                     </mat-expansion-panel> 
                 </mat-accordion>
-            </div>  
-        </div> 
-        <app-banque-beneficaire-table [item]="banque"></app-banque-beneficaire-table>
+            </div>
+        </div>
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+            <mat-tab label="Beneficiaires">
+                <app-banque-beneficaire-table [item]="banque"></app-banque-beneficaire-table>
+            </mat-tab>
+            <mat-tab label="Garanties">
+                <app-banque-garantie [item]="banque" [currentUser]="currentUser"></app-banque-garantie>
+            </mat-tab>
+        </mat-tab-group>
     </mat-card-content>
 </mat-card>

@@ -9,8 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanRemboursementService } from '../../plan_remboursement.service';
-import { PlanRemboursementModel } from '../../models/plan_remousement.model';
-import { LocalService } from 'src/app/shared/services/local.service';
+import { PlanRemboursementModel } from '../../models/plan_remousement.model'; 
 import { LogUserService } from 'src/app/logs/log-user.service';
 
 @Component({

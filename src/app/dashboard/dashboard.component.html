@@ -49,11 +49,11 @@
                             <mat-icon class="icon-mat">account_balance_wallet</mat-icon>
                         </div>
                         <div class="title">
-                            <span class="d-block gray-color">Cohortes</span>
+                            <span class="d-block gray-color">Portefeuilles</span>
                             <h3>{{totalCohorte}}</h3>
                         </div>
                     </div>
-                    <p class="position-relative up">Nombre de Cohortes</p>
+                    <p class="position-relative up">Nombre de portefeuilles</p>
                 </mat-card>
             </div>
             <div class="col-md-4">
@@ -87,13 +87,15 @@
 
 <div class="row">
     <div class="col-lg-8">
+        <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
 
         <app-stats-progress 
             [progressionRemboursementHommeList]="progressionRemboursementHommeList"
             [progressionRemboursementFemmeList]="progressionRemboursementFemmeList" 
             [progressionRemboursementDateList]="progressionRemboursementDateList"
+            [progressionRemboursementParSexeList]="progressionRemboursementParSexeList"
             [isLoading]="isLoading">
-        </app-stats-progress> 
+        </app-stats-progress>  
 
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-6"> 
@@ -104,11 +106,9 @@
             </div>
         </div>
 
-        <app-tranche-age [trancheAgeList]="trancheAgeList" [isLoading]="isLoading"></app-tranche-age>
-
-        <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
-
         <app-stats-cohorte-remboursement [cohorteList]="cohorteList" [isLoading]="isLoading"></app-stats-cohorte-remboursement>
+
+        <app-tranche-age [trancheAgeList]="trancheAgeList" [isLoading]="isLoading"></app-tranche-age> 
  
     </div>
     <div class="col-lg-4">

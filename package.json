@@ -30,6 +30,7 @@
     "chartjs-plugin-annotation": "^2.1.2",
     "chartjs-plugin-datalabels": "^2.2.0",
     "echarts": "^5.4.2",
+    "firebase-tools": "^13.3.0",
     "ng-apexcharts": "^1.8.0",
     "ng2-charts": "^5.0.3",
     "ngx-color-picker": "^15.0.0",

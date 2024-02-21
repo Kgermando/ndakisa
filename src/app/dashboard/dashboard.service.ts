@@ -22,13 +22,13 @@ export class DashboardService extends ApiService {
     return this.http.get(`${this.endpoint}/banques`);
   }
 
-  sexe(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/sexe/${start_date}/${end_date}`);
+  sexe(): Observable<any> {
+    return this.http.get(`${this.endpoint}/sexe`);
   }
 
 
-  ageBeneficiaires(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/age/${start_date}/${end_date}`);
+  tranchAgeBeneficiaires(): Observable<any> {
+    return this.http.get(`${this.endpoint}/tranche-age`);
   }
 
   totalGarantie(start_date: string, end_date: string): Observable<any> {
@@ -37,6 +37,18 @@ export class DashboardService extends ApiService {
 
   totalCreditAccorde(start_date: string, end_date: string): Observable<any> {
     return this.http.get(`${this.endpoint}/credit-accorde/${start_date}/${end_date}`);
+  }
+
+  participationParBanque(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/participation-par-banque/${start_date}/${end_date}`);
+  }
+
+  statutBeneficiaires(): Observable<any> {
+    return this.http.get(`${this.endpoint}/statut-beneficiaire`);
+  }
+
+  tauxParticipatiionProvince(): Observable<any> {
+    return this.http.get(`${this.endpoint}/taux-participation-province`);
   }
 
   totalARembourser(start_date: string, end_date: string): Observable<any> {
@@ -51,28 +63,21 @@ export class DashboardService extends ApiService {
     return this.http.get(`${this.endpoint}/reste-a-rembourser/${start_date}/${end_date}`);
   }
 
-  participationParBanque(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/participation-par-banque/${start_date}/${end_date}`);
+  statutCohorte(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/statut-cohorte/${start_date}/${end_date}`);
+  }
+  
+  secteurActivite(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/secteurs-activites/${start_date}/${end_date}`);
   }
 
-  statutBeneficiaires(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/statut-beneficiaire/${start_date}/${end_date}`);
-  }
-
-  tauxParticipatiionProvince(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/taux-participation-province/${start_date}/${end_date}`);
-  }
 
   remboursementTotalEtReste(start_date: string, end_date: string): Observable<any> {
     return this.http.get(`${this.endpoint}/total-remboursement-reste/${start_date}/${end_date}`);
   } 
 
-  remboursementCohorte(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/remboursement-cohorte/${start_date}/${end_date}`);
-  }
-
-  statutCohorte(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/statut-cohorte/${start_date}/${end_date}`);
+  beneficiaireParCohorte(): Observable<any> {
+    return this.http.get(`${this.endpoint}/beneficiaire-cohorte`);
   }
 
   progressionRemboursementSexeHomme(start_date: string, end_date: string): Observable<any> {
@@ -87,8 +92,11 @@ export class DashboardService extends ApiService {
     return this.http.get(`${this.endpoint}/progression-cohorte-date/${start_date}/${end_date}`);
   }
 
-  secteurActivite(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/secteurs-activites/${start_date}/${end_date}`);
+  progressionRemboursementParSexe(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/progression-remboursements-sexe/${start_date}/${end_date}`);
   }
+ 
+
+
 
 }

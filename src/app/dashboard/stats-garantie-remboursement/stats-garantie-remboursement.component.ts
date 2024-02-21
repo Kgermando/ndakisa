@@ -12,8 +12,7 @@ import {
     ApexFill,
     ApexGrid,
     ApexTooltip
-} from "ng-apexcharts";
-import { DashboardService } from "../dashboard.service";
+} from "ng-apexcharts"; 
 
 export type ChartOptions = {
     series: ApexAxisChartSeries;
