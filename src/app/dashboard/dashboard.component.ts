@@ -230,7 +230,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getStatsCohorteStatut() {
-    this.dashboardService.statutCohorte(this.start_date, this.end_date).subscribe(
+    this.dashboardService.statutCohorte().subscribe(
       res => {
         this.statutCohorteList = res;
         for(let item of this.statutCohorteList) {
@@ -287,7 +287,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getStatsSecteurActitivte() { 
-    this.dashboardService.secteurActivite(this.start_date, this.end_date).subscribe(
+    this.dashboardService.secteurActivite().subscribe(
       res => {
         this.secteurActiviteList = res;
       }

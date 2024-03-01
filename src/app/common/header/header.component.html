@@ -27,27 +27,27 @@
                 <mat-menu class="menu-dropdown" #notificationMenu="matMenu" xPosition="before">
                     <div class="menu-header d-flex align-items-center justify-content-space-between">
                         <h5 class="m-0">Notifications</h5>
-                        <!-- <button type="button" class="bg-transparent p-0 border-none">Mark all as read</button> -->
                     </div>
-                    <!-- <ul class="menu-body">
-                        <li class="position-relative" *ngFor="let notify of notifyList">
-                            <div class="d-flex">
-                                <i class="flaticon-file-1 icon"></i>
-                                <div class="title">
-                                    <h6>{{ notify.title }}</h6>
-                                    <span><i class="flaticon-timer"></i> {{ notify.created | dateAgo }}</span>
+                    <ul class="menu-body">
+                        <li class="position-relative" *ngFor="let notify of notificationList">
+                            <a [routerLink]="['/layouts/notifications', notify.id, 'notification']" class="fw-medium position-relative">
+                                <div class="d-flex">
+                                    <i class="flaticon-bell-2 icon"></i>
+                                    <div class="title">
+                                        <h6>{{ notify.name_beneficiaire }}</h6>
+                                        <span class="color"><i class="flaticon-timer"></i> {{ notify.date_de_rembousement | dateAgo }}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                             <div class="d-flex justify-content-center" *ngIf="isLoading">
                                 <mat-spinner color="warn" [diameter]="5"></mat-spinner>
-                            </div>
-                            <a [routerLink]="[notify.route]" class="link-btn" *ngIf="!isLoading"></a> 
-                            <button class="close-btn bg-transparent border-none p-0" (click)="isRead(notify.id)"
-                                *ngIf="!isLoading"><i class="flaticon-close"></i></button>
+                            </div> 
                         </li>
-                    </ul> -->
+                    </ul>
                     <div class="menu-footer">
-                        <a routerLink="/layouts/notify" class="fw-medium position-relative">Voir plus <i class="flaticon-chevron"></i></a>
+                        <a routerLink="/layouts/notifications/notification-list" class="fw-medium position-relative">
+                            Voir plus <i class="flaticon-chevron"></i>
+                        </a>
                     </div>
                 </mat-menu>
             </li>

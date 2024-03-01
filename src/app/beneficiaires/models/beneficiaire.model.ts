@@ -11,7 +11,7 @@ export interface BeneficiaireModel {
     date_naissance: Date; 
     province: string; 
     identifiant: string; 
-    email: string; 
+    email: string;
     telephone: string; 
     raison_sociale: string; 
     secteur_activite: SecteurModel;
@@ -21,7 +21,7 @@ export interface BeneficiaireModel {
     compte_bancaire: string;
     adresse: string;
     
-    // montant_garantie: string; 
+    // montant_garantie: string;
     credit_accorde: string;
     interet_beneficiaire: string;
     montant_a_debourser: string; // Montant à rembourser c'est le montant que les beneficieres doivent rembourser donc credit + interet

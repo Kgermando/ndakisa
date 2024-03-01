@@ -678,10 +678,11 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
                 this.banqueId = this.beneficiare.banque.id;
               }
               var body = {
-                cohorte: this.beneficiare.cohorte.id,
                 banque: this.banqueId,
+                cohorte: this.beneficiare.cohorte.id, 
                 beneficiaire: this.beneficiare.id,
                 secteur_activite: this.beneficiare.secteur_activite.id,
+                id_db_banque: this.planRemboursement.id_db_banque,
                 date_de_rembousement: date_de_rembousement,
                 credit_en_debut_periode: this.planRemboursement.credit_en_debut_periode,
                 interet: this.planRemboursement.interet,

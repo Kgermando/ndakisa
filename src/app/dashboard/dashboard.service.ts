@@ -63,12 +63,12 @@ export class DashboardService extends ApiService {
     return this.http.get(`${this.endpoint}/reste-a-rembourser/${start_date}/${end_date}`);
   }
 
-  statutCohorte(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/statut-cohorte/${start_date}/${end_date}`);
+  statutCohorte(): Observable<any> {
+    return this.http.get(`${this.endpoint}/statut-cohorte`);
   }
   
-  secteurActivite(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/secteurs-activites/${start_date}/${end_date}`);
+  secteurActivite(): Observable<any> {
+    return this.http.get(`${this.endpoint}/secteurs-activites`);
   }
 
 

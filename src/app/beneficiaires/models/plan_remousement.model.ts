@@ -5,6 +5,7 @@ import { SecteurModel } from "src/app/secteurs/models/secteur.model";
 
 export interface PlanRemboursementModel {
     id: number;
+    id_db_banque: number;
     cohorte: CohorteModel; 
     banque: BanqueModel;
     beneficiaire: BeneficiaireModel;
@@ -15,11 +16,13 @@ export interface PlanRemboursementModel {
     credit_en_debut_periode: string;
     // mensualite: string;  // somme de interet + capital
     interet: string;
-    capital: string; 
+    capital: string;
+
     montant_payer: string; 
     observation: string; 
     date_paiement: Date; 
     file_scan: string;
+    
     signature: string;
     created: Date;
     update_created: Date;

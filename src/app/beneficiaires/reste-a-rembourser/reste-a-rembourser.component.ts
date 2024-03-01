@@ -8,7 +8,7 @@ import { PlanRemboursementService } from '../plan_remboursement.service';
   styleUrls: ['./reste-a-rembourser.component.scss']
 })
 export class ResteARembourserComponent implements OnChanges {
-  @Input('item') item: BeneficiaireModel;
+  @Input('id') id: number;
   reste = 0;
 
   constructor( 
@@ -16,7 +16,7 @@ export class ResteARembourserComponent implements OnChanges {
 
 
   ngOnChanges(): void {
-    this.planRemboursementService.totalResteARembourser(this.item.id).subscribe((res) => {
+    this.planRemboursementService.totalResteARembourser(this.id).subscribe((res) => {
       this.reste = res[0].reste_a_rembourser; 
       }
     );

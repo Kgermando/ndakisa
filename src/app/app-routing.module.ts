@@ -30,6 +30,9 @@ import { SupportSectionComponent } from './helps/support-section/support-section
 import { SupportDocumentationComponent } from './helps/support-documentation/support-documentation.component';
 import { SuppurtAddComponent } from './helps/support/suppurt-add/suppurt-add.component';
 import { SuppurtEditComponent } from './helps/support/suppurt-edit/suppurt-edit.component';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationViewComponent } from './notification/notification-view/notification-view.component';
+import { BenListComponent } from './beneficiaires/ben-list/ben-list.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent, children: [
@@ -56,7 +59,7 @@ const routes: Routes = [
     { path: 'banques/:id/banque-list', component: BanqueListComponent, canActivate: [banquesGuard]},
     { path: 'banques/config', component: BanqueConfigComponent, canActivate: [configurationGuard]},
 
-    { path: 'beneficiaires/beneficiaire-list', component: BeneficiareListComponent, canActivate: [beneficiairesGuard]},
+    { path: 'beneficiaires/beneficiaire-list', component: BenListComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-add', component: BeneficiareAddComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-view', component: BeneficiareViewComponent, canActivate: [beneficiairesGuard]},
     { path: 'beneficiaires/:id/beneficiaire-edit', component: BeneficiareEditComponent, canActivate: [beneficiairesGuard]},
@@ -73,6 +76,8 @@ const routes: Routes = [
     { path: 'helps/support/:id/edit', component: SuppurtEditComponent },
     
 
+    { path: 'notifications/notification-list', component: NotificationComponent, },
+    { path: 'notifications/:id/notification', component: NotificationViewComponent, },
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   ]},
 

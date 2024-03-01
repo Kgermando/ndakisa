@@ -44,7 +44,6 @@
                         <i class="ri-group-line"></i>
                         <span class="title">Beneficiaires</span>
                     </a>
- 
                     <span class="sub-title gray-color" *ngIf="currentUser.roles.includes('Banques')">INSTITUTIONS</span>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true"
                         *ngIf="currentUser.roles.includes('Banques')">
@@ -94,7 +93,7 @@
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Banques
                                 </a>
-                            </li>
+                            </li>   
                             <li class="sidemenu-item">
                                 <a  routerLink="/layouts/users/logs" class="sidebar-menu-link" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">

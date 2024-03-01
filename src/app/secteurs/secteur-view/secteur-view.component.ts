@@ -104,16 +104,15 @@ export class SecteurViewComponent implements OnInit {
       this.logService.createLog(
         this.currentUser.id, 
         'Delete', 
-        'User', 
+        'Secteur', 
         `${this.secteur.name_secteur}`,
-        'Suppression de la banque.'
+        'Suppression du secteur.'
       ).subscribe(() => {
         this.secteurService
         .delete(id)
         .subscribe({
           next: () => {
-            this.toastr.info('Supprimé avec succès!', 'Success!');
-            this.router.navigate(['/layouts/users/user-list']);
+            this.toastr.info('Supprimé avec succès!', 'Success!'); 
           },
           error: err => {
             this.toastr.error('Une erreur s\'est produite!', 'Oupss!');

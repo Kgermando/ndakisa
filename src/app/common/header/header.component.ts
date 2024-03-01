@@ -7,6 +7,9 @@ import { CustomizerSettingsService } from '../customizer-settings/customizer-set
 import { Auth } from '../classes/auth';
 import { UserModel } from 'src/app/users/models/user.model';
 import { LogUserService } from 'src/app/logs/log-user.service';
+import { NotificationService } from 'src/app/notification/notification.service';
+import { NotificationModel } from 'src/app/notification/models/notification.model';
+import { BeneficiaireModel } from 'src/app/beneficiaires/models/beneficiaire.model';
 
 
 @Component({
@@ -26,15 +29,15 @@ export class HeaderComponent {
         }
     }
 
+    isNotify = false;
+
     isToggled = false;
 
     loading = false;
     currentUser: UserModel | any;
-
-    isNotify = false; 
-
-    formGroup!: FormGroup;
-    isLoading = false;
+ 
+    notificationList: any[] = [];
+    isLoading: boolean = false;
     
     constructor(
         private toggleService: ToggleService,
@@ -42,6 +45,7 @@ export class HeaderComponent {
         public themeService: CustomizerSettingsService,
         private authService: AuthService, 
         private logService: LogUserService,
+        private notificationService: NotificationService
     ) {
         this.toggleService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
@@ -49,14 +53,22 @@ export class HeaderComponent {
     }
 
     ngOnInit(): void {
-        this.loading = true; 
+        this.loading = true;
         Auth.userEmitter.subscribe(
             user => {
               this.currentUser = user; 
-               
+              this.isLoading = true;
+                this.notificationService.getCurrentDate().subscribe(res => {
+                    this.notificationList = res;
+                    if (this.notificationList.length > 0) {
+                        this.isNotify = true;
+                        console.log("notificationList", this.notificationList)
+                    }
+                    this.isLoading = false;
+                });
+              this.loading = false; 
             }
-          );
-        this.loading = false;
+        );
     }
   
     logOut() {

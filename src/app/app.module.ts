@@ -41,7 +41,7 @@ import { BanqueListComponent, CreateBanqueDialogBox, EditBanqueDialogBox } from 
 import { CohorteViewComponent, EditCohorteDialogBox } from './cohortes/cohorte-view/cohorte-view.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CredentialInterceptor } from './common/interceptors/credential.interceptor';
-import { BeneficiareListComponent } from './beneficiaires/beneficiare-list/beneficiare-list.component';
+import { BeneficiareListComponent, RemboursementUploadCSVDialogBox } from './beneficiaires/beneficiare-list/beneficiare-list.component';
 import { CohorteService } from './cohortes/cohorte.service';
 import { BanqueService } from './banques/banque.service';
 import { BeneficiareViewComponent } from './beneficiaires/beneficiare-view/beneficiare-view.component';
@@ -92,6 +92,9 @@ import { BanqueCohorteService } from './banques/banque-cohorte.service';
 import { SecteurService } from './secteurs/secteur.service';
 import { LogUserService } from './logs/log-user.service';
 import { BanqueGarantieComponent, CreateBanqueCohorteDialogBox, EditBanqueCohorteDialogBox } from './banques/banque-garantie/banque-garantie.component';
+import { NotificationComponent } from './notification/notification.component';
+import { ConfirmatioRappelDialogBox, NotificationViewComponent } from './notification/notification-view/notification-view.component';
+import { BenListComponent } from './beneficiaires/ben-list/ben-list.component';
 
 registerLocaleData(localeFr);
 
@@ -187,7 +190,12 @@ registerLocaleData(localeFr);
     CreateBanqueCohorteDialogBox,
     BanqueGarantieComponent,
     EditBanqueCohorteDialogBox,
-    PlanRemboursementUploadCSVDialogBox
+    PlanRemboursementUploadCSVDialogBox,
+    RemboursementUploadCSVDialogBox,
+    NotificationComponent,
+    NotificationViewComponent,
+    ConfirmatioRappelDialogBox,
+    BenListComponent,
   ],
   imports: [
     BrowserModule,

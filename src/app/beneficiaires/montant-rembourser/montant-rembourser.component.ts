@@ -9,7 +9,7 @@ import { PlanRemboursementService } from '../plan_remboursement.service';
 })
 export class MontantRembourserComponent implements OnChanges {
 
-  @Input('item') item: BeneficiaireModel;
+  @Input('id') id: number;
 
   total = 0;
 
@@ -18,7 +18,7 @@ export class MontantRembourserComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.planRemboursementService.totalRemboursE(this.item.id).subscribe((res) => {
+    this.planRemboursementService.totalRemboursE(this.id).subscribe((res) => {
       this.total = res[0].montant_payer;
       }
     ); 
