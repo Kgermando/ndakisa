@@ -1,14 +1,14 @@
 <div class="create-dialog-box">
     <div class="title d-flex align-items-center justify-content-space-between">
-        <h4 class="mb-0">Crée une cohorte</h4>
+        <h4 class="mb-0">Ajouter un portefeuille</h4>
         <button class="close-btn bg-transparent p-0 border-none" (click)="close()"><i class="flaticon-close"></i></button>
     </div>
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label class="d-block fw-semibold">Nom de la cohorte</label>
-                    <input type="text" class="input-control" placeholder="name_cohorte" formControlName="name_cohorte">
+                    <label class="d-block fw-semibold">Nom du portefeuille</label>
+                    <input type="text" class="input-control" placeholder="portefeuille" formControlName="name_cohorte">
                     <mat-error *ngIf="formGroup.controls['name_cohorte'].hasError('required')">
                         Ce champs est obligatoire
                     </mat-error>
@@ -16,7 +16,7 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
-                    <label class="d-block fw-semibold">Contrat ref</label>
+                    <label class="d-block fw-semibold">Numero ref.</label>
                     <input type="text" class="input-control" placeholder="contrat_ref" formControlName="contrat_ref">
                     <mat-error *ngIf="formGroup.controls['contrat_ref'].hasError('required')">
                         Ce champs est obligatoire
