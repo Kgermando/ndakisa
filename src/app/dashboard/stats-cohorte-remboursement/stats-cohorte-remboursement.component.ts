@@ -46,7 +46,7 @@ export class StatsCohorteRemboursementComponent implements OnChanges {
  
  
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    
     this.getCohorteChart();
   }
 

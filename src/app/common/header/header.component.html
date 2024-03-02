@@ -30,7 +30,7 @@
                     </div>
                     <ul class="menu-body">
                         <li class="position-relative" *ngFor="let notify of notificationList">
-                            <a [routerLink]="['/layouts/notifications', notify.id, 'notification']" class="fw-medium position-relative">
+                            <a [routerLink]="['/layouts/notifications', notify.id, notify.date_de_rembousement, 'notification']" class="fw-medium position-relative">
                                 <div class="d-flex">
                                     <i class="flaticon-bell-2 icon"></i>
                                     <div class="title">
@@ -41,7 +41,7 @@
                             </a>
                             <div class="d-flex justify-content-center" *ngIf="isLoading">
                                 <mat-spinner color="warn" [diameter]="5"></mat-spinner>
-                            </div> 
+                            </div>
                         </li>
                     </ul>
                     <div class="menu-footer">

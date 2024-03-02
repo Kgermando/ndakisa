@@ -89,10 +89,14 @@
     <div class="col-lg-8">
         <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
 
-        <app-stats-progress 
+        <!-- <app-stats-progress 
             [progressionRemboursementHommeList]="progressionRemboursementHommeList"
             [progressionRemboursementFemmeList]="progressionRemboursementFemmeList" 
             [progressionRemboursementDateList]="progressionRemboursementDateList"
+            [isLoading]="isLoading">
+        </app-stats-progress>   -->
+
+        <app-stats-progress 
             [progressionRemboursementParSexeList]="progressionRemboursementParSexeList"
             [isLoading]="isLoading">
         </app-stats-progress>  

@@ -43,7 +43,7 @@ export class StatsGarantieRemboursementComponent implements OnChanges {
   public chartOptions: Partial<ChartOptions>;  
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    
     this.getRemboursement();
   }
 

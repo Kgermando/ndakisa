@@ -44,6 +44,12 @@
                                         {{ pourcentRemboursement }} %
                                     </span>
                                 </li>  
+                                <li class="gray-color fw-semibold">
+                                    Echéance
+                                    <span class="d-block fw-semibold position-relative">
+                                        {{ date_de_rembousement | date: 'dd/MM/yyyy' }}
+                                    </span>
+                                </li> 
                             </ul> 
                         </div>  
                     </mat-expansion-panel> 
@@ -140,6 +146,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    
                 </div> 
             </mat-card-content>
         </mat-card>

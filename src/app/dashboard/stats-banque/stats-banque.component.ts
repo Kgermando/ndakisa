@@ -35,7 +35,7 @@ export class StatsBanqueComponent implements OnChanges {
   
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    
     this.getPieBanque();
   }
 

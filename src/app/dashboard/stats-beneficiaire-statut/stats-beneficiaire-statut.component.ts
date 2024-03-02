@@ -32,7 +32,7 @@ export class StatsBeneficiaireStatutComponent implements OnChanges {
     public chartOptions: Partial<ChartOptions>; 
 
     ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes); 
+     
         this.getPieStatut();
     }
 

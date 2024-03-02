@@ -58,7 +58,7 @@ export class StatsChorteStatutComponent implements OnChanges {
 
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
+        
 
 
        this.chartOptions = {

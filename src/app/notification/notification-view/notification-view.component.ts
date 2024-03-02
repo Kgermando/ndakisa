@@ -23,6 +23,8 @@ export class NotificationViewComponent implements OnInit {
 
   beneficiaire: BeneficiaireModel;
   notificationList: NotificationModel[] = [];
+
+  date_de_rembousement: Date;
  
   isLoadingForm = false;
   formGroup!: FormGroup;
@@ -61,11 +63,12 @@ export class NotificationViewComponent implements OnInit {
     this.authService.user().subscribe({
       next: (user) => {
         this.currentUser = user;
-        this.route.params.subscribe(routeParams => { 
+        this.route.params.subscribe(routeParams => {
           this.beneficiaireServce.refreshDataList$.subscribe(() => {
             this.loadData(routeParams['id']);
           });
           this.id = routeParams['id'];
+          this.date_de_rembousement = routeParams['date-de-rembousement'];
           this.loadData(routeParams['id']);
         });
       },

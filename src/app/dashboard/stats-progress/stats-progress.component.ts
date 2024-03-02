@@ -32,9 +32,6 @@ export type ChartOptions = {
   styleUrls: ['./stats-progress.component.scss']
 })
 export class StatsProgressComponent implements OnChanges {
-    @Input() progressionRemboursementHommeList: any[] = [];
-    @Input() progressionRemboursementFemmeList: any[] = [];
-    @Input() progressionRemboursementDateList: any[] = [];
     @Input() isLoading: boolean;
 
     @Input() progressionRemboursementParSexeList: any[] = [];
@@ -44,22 +41,26 @@ export class StatsProgressComponent implements OnChanges {
   public chartOptions: Partial<ChartOptions>;  
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
+        
         this.getProgression();
     }
 
     getProgression() {
-        this.chartOptions = {  
-            // series: [
-            //     {
-            //         name: "Homme",
-            //         data: this.progressionRemboursementHommeList.map((item: any) => parseFloat(item.montant_payer)),
-            //     },
-            //     {
-            //         name: "Femme",
-            //         data: this.progressionRemboursementFemmeList.map((item: any) => parseFloat(item.montant_payer)),
-            //     } 
-            // ],
+        var dd = this.progressionRemboursementParSexeList.filter(f => f.sexe == "Femme").map((item: any) => parseFloat(item.montant_payer));
+        // console.log("Femme", dd)
+        var ddHomme = this.progressionRemboursementParSexeList.filter(f => f.sexe == "Homme").map((item: any) => parseFloat(item.montant_payer));
+        // console.log("Homme", ddHomme)
+
+        var mois = this.progressionRemboursementParSexeList.map((item: any) => item.mois)
+        // console.log("mois", mois)
+
+        var date = mois.filter((element, index) => {
+            return mois.indexOf(element) === index;
+        });
+
+        // console.log("date", date)
+
+        this.chartOptions = {
             series: [
                 {
                     name: "Homme",
@@ -117,7 +118,7 @@ export class StatsProgressComponent implements OnChanges {
                         fontSize: "14px",
                     },
                 },
-                categories: this.progressionRemboursementParSexeList.map((item: any) => item.date),
+                categories: date,
             },
             tooltip: {
                 y: {

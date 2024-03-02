@@ -79,19 +79,7 @@ export class DashboardService extends ApiService {
   beneficiaireParCohorte(): Observable<any> {
     return this.http.get(`${this.endpoint}/beneficiaire-cohorte`);
   }
-
-  progressionRemboursementSexeHomme(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/progression-cohorte-homme/${start_date}/${end_date}`);
-  }
-
-  progressionRemboursementSexeFemme(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/progression-cohorte-femme/${start_date}/${end_date}`);
-  }
-
-  progressionRemboursementSexeDate(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/progression-cohorte-date/${start_date}/${end_date}`);
-  }
-
+  
   progressionRemboursementParSexe(start_date: string, end_date: string): Observable<any> {
     return this.http.get(`${this.endpoint}/progression-remboursements-sexe/${start_date}/${end_date}`);
   }

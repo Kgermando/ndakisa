@@ -15,7 +15,7 @@ export class StatsNombreComponent implements OnChanges {
   
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    
     // this.getProgression();
   } 
 

@@ -77,7 +77,7 @@ const routes: Routes = [
     
 
     { path: 'notifications/notification-list', component: NotificationComponent, },
-    { path: 'notifications/:id/notification', component: NotificationViewComponent, },
+    { path: 'notifications/:id/:date-de-rembousement/notification', component: NotificationViewComponent, },
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   ]},
 

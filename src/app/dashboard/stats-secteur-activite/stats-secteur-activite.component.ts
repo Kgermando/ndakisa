@@ -33,7 +33,7 @@ export class StatsSecteurActiviteComponent implements OnChanges {
   public chartOptions: Partial<ChartOptions>;
   
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    
     this.getPieSecteurs();
   }
 

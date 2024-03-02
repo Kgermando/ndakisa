@@ -263,27 +263,11 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  getStatsProgress() { 
+  getStatsProgress() {
     this.dashboardService.progressionRemboursementParSexe(this.start_date, this.end_date).subscribe(res => {
       this.progressionRemboursementParSexeList = res;
-      console.log("progressionRemboursementParSexeList0", this.progressionRemboursementParSexeList)
-    })
-    this.dashboardService.progressionRemboursementSexeDate(this.start_date, this.end_date).subscribe(
-      date => {
-        this.dashboardService.progressionRemboursementSexeHomme(this.start_date, this.end_date).subscribe(
-          h => {
-            this.dashboardService.progressionRemboursementSexeFemme(this.start_date, this.end_date).subscribe(
-              f => {
-                this.progressionRemboursementDateList = date;
-                this.progressionRemboursementHommeList = h;
-                this.progressionRemboursementFemmeList = f;
-                this.isLoading = false; 
-              } 
-            );
-          } 
-        ); 
-      }
-    );
+      console.log("ParSexeList", this.progressionRemboursementParSexeList)
+    });
   }
 
   getStatsSecteurActitivte() { 
