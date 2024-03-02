@@ -89,13 +89,6 @@
     <div class="col-lg-8">
         <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
 
-        <!-- <app-stats-progress 
-            [progressionRemboursementHommeList]="progressionRemboursementHommeList"
-            [progressionRemboursementFemmeList]="progressionRemboursementFemmeList" 
-            [progressionRemboursementDateList]="progressionRemboursementDateList"
-            [isLoading]="isLoading">
-        </app-stats-progress>   -->
-
         <app-stats-progress 
             [progressionRemboursementParSexeList]="progressionRemboursementParSexeList"
             [isLoading]="isLoading">
@@ -117,8 +110,10 @@
     </div>
     <div class="col-lg-4">
 
+        <app-stats-insolvables [remboursementInterrompus]="remboursementInterrompus" [remboursementInterrompuPourcent]="remboursementInterrompuPourcent"></app-stats-insolvables>
+
         <app-stats-sexe [sexeList]="sexeList" [isLoading]="isLoading"></app-stats-sexe>
-        
+                
         <app-stats-chorte-statut 
             [totalOuverte]="totalOuverte" 
             [totalFermee]="totalFermee" 

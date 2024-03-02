@@ -83,8 +83,13 @@ export class DashboardService extends ApiService {
   progressionRemboursementParSexe(start_date: string, end_date: string): Observable<any> {
     return this.http.get(`${this.endpoint}/progression-remboursements-sexe/${start_date}/${end_date}`);
   }
- 
 
+  remboursementsInterrompus(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/remboursements-interrompus/${start_date}/${end_date}`);
+  }
 
+  remboursementsInterrompuPourcent(start_date: string, end_date: string): Observable<any> {
+    return this.http.get(`${this.endpoint}/remboursements-interrompu-pourcent/${start_date}/${end_date}`);
+  }
 
 }

@@ -46,12 +46,12 @@ export class DashboardComponent implements OnInit {
   statutCohorteList: any[] = [];
   secteurActiviteList:any[] = [];
   cohorteList: any = [];
-
-  progressionRemboursementHommeList: any[] = [];
-  progressionRemboursementFemmeList: any[] = [];
-  progressionRemboursementDateList: any[] = [];
-
+ 
   progressionRemboursementParSexeList: any[] = [];
+
+  remboursementsInterrompusList: any[] = [];
+  remboursementInterrompus = 0;
+  remboursementInterrompuPourcent = 0;
 
   totalOuverte = 0;
   totalFermee = 0;
@@ -91,6 +91,8 @@ export class DashboardComponent implements OnInit {
       this.getStatsSecteurActitivte();
       this.getStatsAge();
       this.getStatsSexe();
+      this.remboursementsInterrompus();
+      this.remboursementsInterrompuPourcent();
     }
 
     console.log('start_date 0', this.start_date);
@@ -129,6 +131,10 @@ export class DashboardComponent implements OnInit {
       this.getStatsAge();
 
       this.getStatsSexe();
+
+      this.remboursementsInterrompus();
+
+      this.remboursementsInterrompuPourcent();
     });
   }
 
@@ -278,8 +284,24 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  remboursementsInterrompus() { 
+    this.dashboardService.remboursementsInterrompus(this.start_date, this.end_date).subscribe(
+      res => {
+        this.remboursementsInterrompusList = res;
+        this.remboursementInterrompus = this.remboursementsInterrompusList[0].montant_payer;
+      }
+    )
+  }
 
 
+  remboursementsInterrompuPourcent() { 
+    this.dashboardService.remboursementsInterrompuPourcent(this.start_date, this.end_date).subscribe(
+      res => {
+        var remboursementInterrompuPourcentList = res;
+        this.remboursementInterrompuPourcent = remboursementInterrompuPourcentList[0].pourcent;
+      }
+    )
+  }
   
 
 

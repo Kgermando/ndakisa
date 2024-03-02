@@ -95,6 +95,7 @@ import { BanqueGarantieComponent, CreateBanqueCohorteDialogBox, EditBanqueCohort
 import { NotificationComponent } from './notification/notification.component';
 import { ConfirmatioRappelDialogBox, NotificationViewComponent } from './notification/notification-view/notification-view.component';
 import { BenListComponent } from './beneficiaires/ben-list/ben-list.component';
+import { StatsInsolvablesComponent } from './dashboard/stats-insolvables/stats-insolvables.component';
 
 registerLocaleData(localeFr);
 
@@ -196,6 +197,7 @@ registerLocaleData(localeFr);
     NotificationViewComponent,
     ConfirmatioRappelDialogBox,
     BenListComponent,
+    StatsInsolvablesComponent,
   ],
   imports: [
     BrowserModule,
