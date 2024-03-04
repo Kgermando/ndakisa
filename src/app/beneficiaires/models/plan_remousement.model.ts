@@ -5,7 +5,7 @@ import { SecteurModel } from "src/app/secteurs/models/secteur.model";
 
 export interface PlanRemboursementModel {
     id: number;
-    id_db_banque: number;
+    id_db_banque: number; // Ceci les identifiants qui proviendra de la banque
     cohorte: CohorteModel; 
     banque: BanqueModel;
     beneficiaire: BeneficiaireModel;

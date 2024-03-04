@@ -79,6 +79,7 @@ export class BeneficiareListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
@@ -156,13 +157,13 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
             this.toastr.info('Veuillez reduire les lignes en dessous de 100.', 'Success!');
           } else {
             for (let index = 0; index < this.remboursementList.length; index++) {
-              this.remboursement = this.remboursementList[index]; 
+              this.remboursement = this.remboursementList[index];
 
               var body = {
                 montant_payer: this.remboursement.montant_payer,
                 observation: this.remboursement.observation,
                 date_paiement: this.remboursement.date_paiement,
-                file_scan: this.remboursement.file_scan,
+                file_scan: this.remboursement.file_scan, 
 
                 signature: this.currentUser.matricule,
                 update_created: new Date(),
