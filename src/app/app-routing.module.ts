@@ -33,6 +33,7 @@ import { SuppurtEditComponent } from './helps/support/suppurt-edit/suppurt-edit.
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationViewComponent } from './notification/notification-view/notification-view.component';
 import { BenListComponent } from './beneficiaires/ben-list/ben-list.component';
+import { ArchiveComponent } from './archive/archive.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent, children: [
@@ -42,7 +43,6 @@ const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
   ]},
   { path: 'layouts', component: LayoutsComponent, children: [
-
     { path: 'profil', component: ProfileComponent },
     { path: 'reset-password', component: ResetPasswordComponent, canActivate: [usersGuard]},
     { path: 'users/user-list', component: UserListComponent, canActivate: [usersGuard]},
@@ -78,6 +78,9 @@ const routes: Routes = [
 
     { path: 'notifications/notification-list', component: NotificationComponent, },
     { path: 'notifications/:id/:date-de-rembousement/notification', component: NotificationViewComponent, },
+
+    { path: 'archives/reporting-list', component: ArchiveComponent, },
+
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   ]},
 

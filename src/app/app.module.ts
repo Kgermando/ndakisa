@@ -96,6 +96,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { ConfirmatioRappelDialogBox, NotificationViewComponent } from './notification/notification-view/notification-view.component';
 import { BenListComponent } from './beneficiaires/ben-list/ben-list.component';
 import { StatsInsolvablesComponent } from './dashboard/stats-insolvables/stats-insolvables.component';
+import { ArchiveComponent } from './archive/archive.component';
 
 registerLocaleData(localeFr);
 
@@ -198,6 +199,7 @@ registerLocaleData(localeFr);
     ConfirmatioRappelDialogBox,
     BenListComponent,
     StatsInsolvablesComponent,
+    ArchiveComponent,
   ],
   imports: [
     BrowserModule,

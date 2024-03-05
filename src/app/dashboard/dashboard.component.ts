@@ -63,9 +63,9 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void { 
-    const date = new Date();
-    const yestday = new Date(date);
-    const tomorrow = new Date(date);
+    const date = new Date('2022-01-01');
+    const yestday = new Date();
+    const tomorrow = new Date(yestday);
     yestday.setDate(date.getDate()-29);
     tomorrow.setDate(date.getDate()+1);
 
@@ -94,9 +94,6 @@ export class DashboardComponent implements OnInit {
       this.remboursementsInterrompus();
       this.remboursementsInterrompuPourcent();
     }
-
-    console.log('start_date 0', this.start_date);
-    console.log('end_date 0', this.end_date);
 
     this.onChanges();
   }
@@ -272,7 +269,6 @@ export class DashboardComponent implements OnInit {
   getStatsProgress() {
     this.dashboardService.progressionRemboursementParSexe(this.start_date, this.end_date).subscribe(res => {
       this.progressionRemboursementParSexeList = res;
-      console.log("ParSexeList", this.progressionRemboursementParSexeList)
     });
   }
 

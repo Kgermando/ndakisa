@@ -1,0 +1,49 @@
+
+<div class="row"> 
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <mat-card class="mb-25 tagus-card">
+            <mat-card-header class="border-bottom">
+                <h5 class="mb-0">Archive des rapports </h5> 
+            </mat-card-header>
+            <mat-card-content> 
+                <div class="reports-table table-responsive mb-25">
+                    <table class="table">
+                        <thead>
+                            <tr> 
+                                <th class="fw-semibold gray-color">N°</th>
+                                <th class="fw-semibold main-color">Ajouté le</th>  
+                                <th class="fw-semibold gray-color">Lien de telechargement</th>  
+                                <th class="fw-semibold gray-color">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let archive of archiveList; let i = index"> 
+                                <td class="gray-color">N {{ archive.id }}</td>
+                                <td class="gray-color">{{ archive.created | date: 'dd/MM/yyyy' }}</td> 
+                                <td>
+                                    <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
+                                        [matMenuTriggerFor]="actionMenu">
+                                        <i class="ri-more-fill"></i>
+                                    </button>
+                                    <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                                        <button mat-menu-item type="button" 
+                                            class="bg-transparent border-none position-relative" 
+                                                    (click)="delete(archive.id)" matTooltip="Supprimer cet archive">
+                                            <i class="ri-close-circle-line"></i> Supprimer
+                                        </button> 
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
+<app-paginator
+[lastPage]="lastPage"
+(pageChanged)="getAllData($event)"
+></app-paginator>

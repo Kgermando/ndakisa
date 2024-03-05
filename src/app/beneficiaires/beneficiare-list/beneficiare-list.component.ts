@@ -79,7 +79,6 @@ export class BeneficiareListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
@@ -111,6 +110,7 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
 
   systeme_remboursement: any;
 
+  
 
   pourcent = 0;
 
