@@ -302,7 +302,7 @@ export class BeneficiareEditComponent implements OnInit {
           var dateD = date[0];
           var dateM = date[1];
           var dateY = date[2];
-          var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));   
+          var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM) -1, parseInt(dateD));   
 
           if (!this.banqueId) {
             this.banqueId = this.beneficiare.banque.id;

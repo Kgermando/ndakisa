@@ -21,7 +21,7 @@ export interface PlanRemboursementModel {
     montant_payer: string; 
     observation: string; 
     date_paiement: Date; 
-    file_scan: string;
+    numero_transaction: string;
     
     signature: string;
     created: Date;

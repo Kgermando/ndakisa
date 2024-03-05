@@ -12,7 +12,7 @@
                 <th class="fw-semibold gray-color">Date paie</th>
                 <th class="fw-semibold gray-color">Montant payé</th>
                 <th class="fw-semibold gray-color">Indice</th>
-                <th class="fw-semibold gray-color">Bordereau</th>
+                <th class="fw-semibold gray-color">N° transaction</th>
                 <th class="fw-semibold gray-color">Observation</th>
                 <th class="fw-semibold gray-color">Add</th>
                 <th class="fw-semibold gray-color">Delai réajustement</th>
@@ -51,12 +51,8 @@
                 <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
                     --
                 </td>
-                <td class="gray-color" *ngIf="plan_remboursement.file_scan && plan_remboursement.montant_payer != '0'">
-                    <button mat-icon-button (click)="downloadBordereau(plan_remboursement.date_paiement, 
-                            plan_remboursement.file_scan)"
-                        matTooltip="Télécharger le bordereau de remboursement">
-                        <mat-icon>download</mat-icon>
-                    </button>
+                <td class="gray-color" *ngIf="plan_remboursement.numero_transaction && plan_remboursement.montant_payer != '0'">
+                    {{ plan_remboursement.numero_transaction }}
                 </td>
                 <td class="gray-color" *ngIf="plan_remboursement.montant_payer === '0'">
                     --

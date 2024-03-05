@@ -233,7 +233,7 @@ export class AddRemboursementDialogBox implements OnInit {
               date_paiement: item.date_paiement,
               montant_payer: item.montant_payer,
               observation: item.observation,
-              file_scan: item.file_scan,
+              numero_transaction: item.numero_transaction,
               signature: this.currentUser.matricule, 
               update_created: new Date(),
             });

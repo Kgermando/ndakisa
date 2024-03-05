@@ -27,18 +27,20 @@
             </div>
             <div class="col-lg-12 col-md-12">
                 <div class="form-group">
+                    <label class="d-block fw-semibold">Numero de transaction</label>
+                    <input type="text" class="input-control" placeholder="numero_transaction *" formControlName="numero_transaction" required>
+                    <mat-error *ngIf="formGroup.controls['numero_transaction'].hasError('required')">
+                        Ce champs est obligatoire
+                    </mat-error>
+                </div>
+            </div> 
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
                     <label class="d-block fw-semibold">Observation</label>
                     <input type="text" class="input-control" placeholder="Observation *" formControlName="observation" required>
                     <mat-error *ngIf="formGroup.controls['observation'].hasError('required')">
                         Ce champs est obligatoire
                     </mat-error>
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12">
-                <div class="form-group">
-                    <label class="d-block fw-semibold">Bordereau scanner</label>
-                    <input class="input-control" formControlName="file_scan">
-                    <app-upload (uploadedUrl)="formGroup.patchValue({'file_scan': $event})"></app-upload>
                 </div>
             </div> 
         </div>

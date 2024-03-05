@@ -163,7 +163,7 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
                 montant_payer: this.remboursement.montant_payer,
                 observation: this.remboursement.observation,
                 date_paiement: this.remboursement.date_paiement,
-                file_scan: this.remboursement.file_scan, 
+                numero_transaction: this.remboursement.numero_transaction, 
 
                 signature: this.currentUser.matricule,
                 update_created: new Date(),

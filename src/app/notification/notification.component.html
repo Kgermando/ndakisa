@@ -50,11 +50,11 @@
         </ng-container>
 
         <ng-container matColumnDef="reste_a_rembourser">
-            <th mat-header-cell *matHeaderCellDef>Reste à rembourser</th>
+            <th mat-header-cell *matHeaderCellDef>Indice de paiement</th>
             <td mat-cell *matCellDef="let element">
                 <app-notification-indice [id]="element.id"></app-notification-indice>
             </td>
-        </ng-container> 
+        </ng-container>
 
         <ng-container matColumnDef="statut">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
