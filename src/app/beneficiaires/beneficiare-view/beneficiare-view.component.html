@@ -113,10 +113,18 @@
                                         {{ beneficiaire.compte_bancaire }}
                                     </span>
                                 </li> 
-                               
-                              
-                               
-                              
+                                <li class="gray-color fw-semibold">
+                                    Reste à payer
+                                    <span class="d-block fw-semibold position-relative badge rounded-pill text-outline-success" 
+                                        *ngIf="reste_a_payer > 0">
+                                        {{ reste_a_payer }}
+                                    </span>
+                                    <span class="d-block fw-semibold position-relative badge rounded-pill text-outline-danger" 
+                                        *ngIf="reste_a_payer < 0">
+                                        {{ reste_a_payer }}
+                                    </span>
+                                    
+                                </li>  
                             </ul> 
                         </div> 
                         <div class="d-md-flex meta mb-25 pb-25 justify-content-space-between align-items-center">

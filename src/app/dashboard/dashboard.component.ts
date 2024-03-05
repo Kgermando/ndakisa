@@ -195,7 +195,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getStatsNombre() { 
-    this.dashboardService.totalGarantie(this.start_date, this.end_date).subscribe(
+    this.dashboardService.totalGarantie().subscribe(
       res =>  {
         this.totalGarantieList = res;
         this.totalGarantieList.map((item: any) => this.totalGarantie = parseFloat(item.montant_garantie));
@@ -284,11 +284,11 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  remboursementsInterrompus() { 
+  remboursementsInterrompus() {
     this.dashboardService.remboursementsInterrompus(this.start_date, this.end_date).subscribe(
       res => {
         this.remboursementsInterrompusList = res;
-        this.remboursementInterrompus = this.remboursementsInterrompusList[0].montant_payer;
+        this.remboursementInterrompus = this.remboursementsInterrompusList[0].reste_interrompu;
       }
     )
   }
@@ -298,7 +298,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.remboursementsInterrompuPourcent(this.start_date, this.end_date).subscribe(
       res => {
         var remboursementInterrompuPourcentList = res;
-        this.remboursementInterrompuPourcent = remboursementInterrompuPourcentList[0].pourcent;
+        this.remboursementInterrompuPourcent = remboursementInterrompuPourcentList[0].pourcent_interrompu;
       }
     )
   }
@@ -317,8 +317,8 @@ export class DashboardComponent implements OnInit {
 
 
   onSubmit() {
-    var dateNow = new Date();
-    var dateNowFormat = formatDate(dateNow, 'dd-MM-yyyy_HH:mm', 'en-US');
+    // var dateNow = new Date();
+    // var dateNowFormat = formatDate(dateNow, 'dd-MM-yyyy_HH:mm', 'en-US');
     this.start_date = formatDate(this.dateRange.value.start, 'yyyy-MM-dd', 'en-US');
     this.end_date = formatDate(this.dateRange.value.end, 'yyyy-MM-dd', 'en-US');
   } 

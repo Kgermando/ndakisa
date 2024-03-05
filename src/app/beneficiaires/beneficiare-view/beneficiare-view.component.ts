@@ -28,6 +28,7 @@ export class BeneficiareViewComponent implements OnInit {
 
   pourcent = 0;
   montant_payer = 0;
+  reste_a_payer = 0;
 
   constructor(
     public themeService: CustomizerSettingsService,
@@ -52,6 +53,9 @@ export class BeneficiareViewComponent implements OnInit {
               this.getAllDataPlan(this.beneficiaire.id);
             });
             this.getAllDataPlan(this.beneficiaire.id);
+            this.beneficiareService.resteAPayer(this.beneficiaire.id).subscribe(reste => {
+              this.reste_a_payer = reste[0].reste_a_payer;
+            });
             this.isLoading = false; 
           });
         },
@@ -84,6 +88,8 @@ export class BeneficiareViewComponent implements OnInit {
             this.date_maturite_reajustement = new Date(date);
             this.date_maturite_reajustement.setDate(date.getMonth() + days); 
           } 
+
+         
         }
       );
     }

@@ -31,8 +31,8 @@ export class DashboardService extends ApiService {
     return this.http.get(`${this.endpoint}/tranche-age`);
   }
 
-  totalGarantie(start_date: string, end_date: string): Observable<any> {
-    return this.http.get(`${this.endpoint}/total-garantie/${start_date}/${end_date}`);
+  totalGarantie(): Observable<any> {
+    return this.http.get(`${this.endpoint}/total-garantie`);
   }
 
   totalCreditAccorde(start_date: string, end_date: string): Observable<any> {

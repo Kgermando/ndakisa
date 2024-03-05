@@ -112,7 +112,7 @@ export class StatsGarantieRemboursementComponent implements OnChanges {
                 } else if (item.month == 12) {
                     return 'Dec';
                 } else {
-                    return '';
+                    return item.month;
                 }
             }),
             labels: {
