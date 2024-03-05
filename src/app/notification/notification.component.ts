@@ -40,7 +40,7 @@ export class NotificationComponent implements OnInit {
 
   montant_payer = 0;
 
-  month = '1';
+  month = '3';
   nombreBeneficiaireInsolvable = 0;
 
   constructor(
