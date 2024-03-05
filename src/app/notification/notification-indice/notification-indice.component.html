@@ -1,0 +1,16 @@
+ 
+
+<div class="indice">
+    <span class="badge fw-semibold" *ngIf="reste_a_payer >= 0">
+    <span class="text">
+        {{ reste_a_payer | numberFormat:'fr-FR' }} usd
+    </span>
+    <i class="flaticon-arrow-up"></i>
+</span>
+<span class="badge fw-semibold down" *ngIf="reste_a_payer < 0">
+    <span class="text">
+        {{ reste_a_payer | numberFormat:'fr-FR' }} usd
+    </span>
+    <i class="flaticon-down-filled-triangular-arrow"></i>
+</span>
+</div>

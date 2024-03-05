@@ -82,8 +82,8 @@ const routes: Routes = [
     { path: 'archives/reporting-list', component: ArchiveComponent, },
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  ]},
-
+  ]}, 
+  
   { path: '', redirectTo: 'auth', pathMatch: 'full'},
   { path: '**', redirectTo: 'auth', pathMatch: 'full'}
   

@@ -40,7 +40,7 @@
             <td mat-cell *matCellDef="let element">
                 {{element.montant_a_debourser | numberFormat:'fr-FR'}} usd
             </td>
-        </ng-container> 
+        </ng-container>
 
         <ng-container matColumnDef="montant_rembourser">
             <th mat-header-cell *matHeaderCellDef>Montant remboursé</th>
@@ -52,7 +52,7 @@
         <ng-container matColumnDef="reste_a_rembourser">
             <th mat-header-cell *matHeaderCellDef>Reste à rembourser</th>
             <td mat-cell *matCellDef="let element">
-                <app-reste-a-rembourser [id]="element.id"></app-reste-a-rembourser>
+                <app-notification-indice [id]="element.id"></app-notification-indice>
             </td>
         </ng-container> 
 

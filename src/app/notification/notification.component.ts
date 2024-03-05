@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NotificationService } from './notification.service';
-import { NotificationModel } from './models/notification.model';
+import { NotificationService } from './notification.service'; 
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { LiveAnnouncer } from '@angular/cdk/a11y'; 
 
 @Component({
   selector: 'app-notification',
@@ -43,13 +42,15 @@ export class NotificationComponent implements OnInit {
   month = '3';
   nombreBeneficiaireInsolvable = 0;
 
+  reste_a_payer = 0;
+
   constructor(
-    private _liveAnnouncer: LiveAnnouncer, 
+    private _liveAnnouncer: LiveAnnouncer,  
     private notificationService: NotificationService) {}
   
   ngOnInit(): void {
     this.isLoading = true;
-    if (this.month == '1') {
+    if (this.month == '3') {
       this.getAllData(this.month);
     }
   }
@@ -63,8 +64,7 @@ export class NotificationComponent implements OnInit {
     });
     this.getAllData(this.month);
     
-  }
-
+  } 
 
   getAllData(month: string) {
     this.notificationService.getInsolvables(month).subscribe(res => {
@@ -76,6 +76,9 @@ export class NotificationComponent implements OnInit {
       this.isLoading = false;
     }); 
   }
+
+ 
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

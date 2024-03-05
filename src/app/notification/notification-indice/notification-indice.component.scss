@@ -1,0 +1,37 @@
+
+.indice {
+    padding: 18px 20px; 
+    text-align: center;
+    white-space: nowrap;
+    border-bottom-color: #f7faff;
+    border-bottom: 1px solid #F7FAFF;
+    
+    .badge {
+        background: rgba(0, 182, 155, 0.1);
+        padding: 3px 28px 3px 10px;
+        position: relative;
+        border-radius: 4px;
+        color: #00B69B !important;
+        font-size: 14px;
+        i {
+            top: 50%;
+            right: 10px;
+            line-height: 1;
+            font-size: 10px;
+            position: absolute;
+            transform: translateY(-50%);
+        }
+        &.down {
+            color: #EE368C !important;
+            background: rgba(238, 54, 140, 0.1);
+        }
+    }
+    &:first-child {
+        text-align: start;
+        font-family: var(--headingFontFamily);
+    }
+
+}
+.text {
+    padding-right: 15px;
+}
