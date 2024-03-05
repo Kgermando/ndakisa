@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../shared/services/api.service';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,12 @@ import { Observable } from 'rxjs';
 export class PlanRemboursementService extends ApiService {
   endpoint: string = `${environment.apiURL}/plan_remboursements`;
 
+  updateRemboursenent(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.endpoint}/${id}`, data).pipe(tap(() => {
+      // this._refreshDataList$.next();
+      // this._refreshData$.next();
+    }));
+  }
 
   getAllData(id: number): Observable<any> {
     return this.http.get(`${this.endpoint}/get-all/${id}`);

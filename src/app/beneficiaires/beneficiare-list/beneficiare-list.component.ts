@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
@@ -87,11 +87,7 @@ export class BeneficiareListComponent implements OnInit {
         this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
- 
-
 }
-
 
 
 
@@ -110,7 +106,6 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
 
   systeme_remboursement: any;
 
-  
 
   pourcent = 0;
 
@@ -163,18 +158,17 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
                 montant_payer: this.remboursement.montant_payer,
                 observation: this.remboursement.observation,
                 date_paiement: this.remboursement.date_paiement,
-                numero_transaction: this.remboursement.numero_transaction, 
+                numero_transaction: this.remboursement.numero_transaction,
 
                 signature: this.currentUser.matricule,
                 update_created: new Date(),
               };
-              this.planRemboursementService.update(this.remboursement.id_db_banque, body).subscribe({
+              this.planRemboursementService.updateRemboursenent(this.remboursement.numero_transaction, body).subscribe({
                 next: () => {
                   var pourcents = (index + 1) * 100 / this.remboursementList.length;
                   this.pourcent = parseInt(pourcents.toFixed(0));
-                  if (this.pourcent == 100) {  
+                  if (this.pourcent == 100) {
                     this.isLoading = false;
-                    console.log("All done!");
                     this.toastr.success('Importation effectuée avec succès!', 'Success!');
                   }
                 },
@@ -184,7 +178,7 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
                   console.log(err);
                   this.close();
                 }
-              }); 
+              });
             }
             this.logService.createLog(
               this.currentUser.id, 
