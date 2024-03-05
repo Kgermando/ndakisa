@@ -63,9 +63,9 @@ export class TrancheAgeComponent implements OnChanges {
                 y: this.trancheAgeList.map((item: any) => parseFloat(item['De 45-55 ans'])),
               },
               {
-                x: "De 55-65 ans",
-                y: this.trancheAgeList.map((item: any) => parseFloat(item['De 55-65 ans'])),
-              }
+                x: "De 55 ans et plus",
+                y: this.trancheAgeList.map((item: any) => parseFloat(item['De 55 ans et plus'])),
+              } 
             ]
           }
         ],
