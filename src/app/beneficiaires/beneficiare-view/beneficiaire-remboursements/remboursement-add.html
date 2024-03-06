@@ -44,23 +44,21 @@
                 </div>
             </div> 
         </div>
-        <div class="text-end">
+        <div class="text-end" *ngIf="!isLoading">
             <button type="button" class="gray" (click)="close()">
                 <i class="ri-close-fill"></i> 
                 Annuler
             </button>
             <button type="submit">
-                <span *ngIf="isLoading">
-                    <mat-progress-spinner [diameter]="30"
-                        color="primary" 
-                        mode="indeterminate">
-                    </mat-progress-spinner>
-                </span>
-                <span *ngIf="!isLoading">
-                    <i class="ri-add-fill"></i> 
+                <i class="ri-add-fill"></i> 
                     Soumettre
-                </span> 
-            </button>
+            </button> 
+        </div>
+        <div class="text-end">
+            <div class="d-flex justify-content-center" *ngIf="isLoading">
+                <mat-spinner color="warn" [diameter]="30"></mat-spinner> <p class="ml-2"> Patientez-svp...</p>
+            </div>
         </div>
     </form>
 </div>
+

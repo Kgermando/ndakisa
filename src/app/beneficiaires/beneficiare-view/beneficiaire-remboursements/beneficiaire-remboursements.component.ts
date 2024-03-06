@@ -221,7 +221,7 @@ export class AddRemboursementDialogBox implements OnInit {
       date_paiement: ['', Validators.required],
       montant_payer: ['', Validators.required],
       observation: [''],
-      file_scan: [''],
+      numero_transaction: [''],
     });
     
     this.authService.user().subscribe({
