@@ -9,7 +9,8 @@ import {
     ApexYAxis,
     ApexGrid,
     ApexTitleSubtitle,
-    ApexLegend
+    ApexLegend,
+    ApexPlotOptions
 } from "ng-apexcharts"; 
 
 export type ChartOptions = {
@@ -18,6 +19,7 @@ export type ChartOptions = {
     xaxis: ApexXAxis;
     stroke: ApexStroke;
     dataLabels: ApexDataLabels;
+    plotOptions: ApexPlotOptions;
     tooltip: any;
     yaxis: ApexYAxis;
     grid: ApexGrid;
@@ -46,17 +48,17 @@ export class StatsProgressComponent implements OnChanges {
     }
 
     getProgression() {
-        var dd = this.progressionRemboursementParSexeList.filter(f => f.sexe == "Femme").map((item: any) => parseFloat(item.montant_payer));
-        // console.log("Femme", dd)
-        var ddHomme = this.progressionRemboursementParSexeList.filter(f => f.sexe == "Homme").map((item: any) => parseFloat(item.montant_payer));
-        // console.log("Homme", ddHomme)
+        // var dd = this.progressionRemboursementParSexeList.filter(f => f.sexe == "Femme").map((item: any) => parseFloat(item.montant_payer));
+        // // console.log("Femme", dd)
+        // var ddHomme = this.progressionRemboursementParSexeList.filter(f => f.sexe == "Homme").map((item: any) => parseFloat(item.montant_payer));
+        // // console.log("Homme", ddHomme)
 
-        var mois = this.progressionRemboursementParSexeList.map((item: any) => item.mois)
+        var mois_annee = this.progressionRemboursementParSexeList.map((item: any) => item.mois_annee)
         // console.log("mois", mois)
 
-        var date = mois.filter((element, index) => {
-            return mois.indexOf(element) === index;
-        });
+        // var date = mois.filter((element, index) => {
+        //     return mois.indexOf(element) === index;
+        // });
 
         // console.log("date", date)
 
@@ -64,25 +66,32 @@ export class StatsProgressComponent implements OnChanges {
             series: [
                 {
                     name: "Homme",
-                    data: this.progressionRemboursementParSexeList.filter(f => f.sexe == "Homme").map((item: any) => parseFloat(item.montant_payer)),
+                    data: this.progressionRemboursementParSexeList.map((item: any) => parseFloat(item.hommes)),
                 },
                 {
                     name: "Femme",
-                    data: this.progressionRemboursementParSexeList.filter(f => f.sexe == "Femme").map((item: any) => parseFloat(item.montant_payer)),
+                    data: this.progressionRemboursementParSexeList.map((item: any) => parseFloat(item.femmes)),
                 }
             ],
-            chart: {
-                height: 300,
+            chart: { 
                 type: "line",
+                height: 350,
                 toolbar: {
                     show: false,
                 }
             },
             colors: ["#757fef", "#ee368c"],
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: "55%",
+                }
+            },
             dataLabels: {
                 enabled: false
             },
             stroke: {
+                show: true,
                 width: 3,
                 curve: "smooth",
             },
@@ -118,7 +127,7 @@ export class StatsProgressComponent implements OnChanges {
                         fontSize: "14px",
                     },
                 },
-                categories: date,
+                categories: mois_annee,
             },
             tooltip: {
                 y: {

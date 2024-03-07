@@ -87,33 +87,34 @@ export class StatsGarantieRemboursementComponent implements OnChanges {
         },
         xaxis: {
             categories: this.remboursementList.map((item: any) => {
-                if (item.month == 1) {
-                    return 'Jan';
-                } else if (item.month == 2) {
-                    return 'Fev';
-                } else if (item.month == 3) {
-                    return 'Mar';
-                } else if (item.month == 4) {
-                    return 'Avr';
-                } else if (item.month == 5) {
-                    return 'Mai';
-                } else if (item.month == 6) {
-                    return 'Jui';
-                } else if (item.month == 7) {
-                    return 'Juil';
-                } else if (item.month == 8) {
-                    return 'Aout';
-                } else if (item.month == 9) {
-                    return 'Sep';
-                } else if (item.month == 10) {
-                    return 'Oct';
-                } else if (item.month == 11) {
-                    return 'Nov';
-                } else if (item.month == 12) {
-                    return 'Dec';
-                } else {
-                    return item.month;
-                }
+                // if (item.month == 1) {
+                //     return 'Jan';
+                // } else if (item.month == 2) {
+                //     return 'Fev';
+                // } else if (item.month == 3) {
+                //     return 'Mar';
+                // } else if (item.month == 4) {
+                //     return 'Avr';
+                // } else if (item.month == 5) {
+                //     return 'Mai';
+                // } else if (item.month == 6) {
+                //     return 'Jui';
+                // } else if (item.month == 7) {
+                //     return 'Juil';
+                // } else if (item.month == 8) {
+                //     return 'Aout';
+                // } else if (item.month == 9) {
+                //     return 'Sep';
+                // } else if (item.month == 10) {
+                //     return 'Oct';
+                // } else if (item.month == 11) {
+                //     return 'Nov';
+                // } else if (item.month == 12) {
+                //     return 'Dec';
+                // } else {
+                //     return '';
+                // }
+                return item.month;
             }),
             labels: {
                 style: {
@@ -142,7 +143,7 @@ export class StatsGarantieRemboursementComponent implements OnChanges {
         tooltip: {
             y: {
                 formatter: function(val) {
-                    return val + " " + "usd";
+                    return val + " usd";
                 }
             }
         },

@@ -3,6 +3,11 @@
 >
     <mat-card-content>
         <h6>Remboursements interrompus</h6>
-        <h3>usd {{ remboursementInterrompus | numberFormat:'fr-FR' }} <span><i class="ri-arrow-down-s-fill"></i> {{ remboursementInterrompuPourcent | numberFormat:'fr-FR' }} %</span></h3> 
+        <h3>$ {{ remboursementInterrompus | numberFormat:'fr-FR' }} 
+            <span style="font-size: medium;">
+                <i class="ri-arrow-down-s-fill"></i> 
+                {{ remboursementInterrompuPourcent | numberFormat:'fr-FR' }} %
+            </span>
+        </h3> 
     </mat-card-content>
 </mat-card>
