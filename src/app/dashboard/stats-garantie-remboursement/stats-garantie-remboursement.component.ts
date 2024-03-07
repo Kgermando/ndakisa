@@ -52,15 +52,15 @@ export class StatsGarantieRemboursementComponent implements OnChanges {
         series: [
             {
                 name: "Total à rembourser",
-                data: this.remboursementList.map((item: any) => parseFloat(item.total_a_rembourse)),
+                data: this.remboursementList.map((item: any) => parseFloat(item.montant_a_rembourser)),
             },
             {
                 name: "Total remboursé",
-                data: this.remboursementList.map((item: any) => parseFloat(item.total_rembourse)),
+                data: this.remboursementList.map((item: any) => parseFloat(item.montant_rembourse)),
             },
             {
                 name: "Reste à rembourser",
-                data: this.remboursementList.map((item: any) => parseFloat(item.reste_a_rembourse)),
+                data: this.remboursementList.map((item: any) => parseFloat(item.reste_a_rembourser)),
             }
         ],
         chart: {

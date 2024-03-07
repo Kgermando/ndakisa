@@ -66,7 +66,7 @@
                                 <li class="gray-color fw-semibold">
                                     Reste à rembourser
                                     <span class="d-block fw-semibold position-relative"> 
-                                        <app-reste-a-rembourser-view [item]="beneficiaire"></app-reste-a-rembourser-view>
+                                        <app-reste-a-rembourser-view [item]="beneficiaire"></app-reste-a-rembourser-view> 
                                     </span>
                                 </li> 
                             </ul>
@@ -117,11 +117,11 @@
                                     Indice de paiement
                                     <span class="d-block fw-semibold position-relative badge rounded-pill text-outline-success" 
                                         *ngIf="reste_a_payer > 0">
-                                        {{ reste_a_payer }}
+                                        {{ reste_a_payer }} usd
                                     </span>
                                     <span class="d-block fw-semibold position-relative badge rounded-pill text-outline-danger" 
                                         *ngIf="reste_a_payer < 0">
-                                        {{ reste_a_payer }}
+                                        {{ reste_a_payer }} usd
                                     </span>
                                 </li>  
                             </ul> 

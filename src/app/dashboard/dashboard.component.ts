@@ -281,7 +281,7 @@ export class DashboardComponent implements OnInit {
   }
 
   remboursementsInterrompus() {
-    this.dashboardService.remboursementsInterrompus(this.start_date, this.end_date).subscribe(
+    this.dashboardService.remboursementsInterrompus().subscribe(
       res => {
         this.remboursementsInterrompusList = res;
         this.remboursementInterrompus = this.remboursementsInterrompusList[0].reste_interrompu;
@@ -291,7 +291,7 @@ export class DashboardComponent implements OnInit {
 
 
   remboursementsInterrompuPourcent() { 
-    this.dashboardService.remboursementsInterrompuPourcent(this.start_date, this.end_date).subscribe(
+    this.dashboardService.remboursementsInterrompuPourcent().subscribe(
       res => {
         var remboursementInterrompuPourcentList = res;
         this.remboursementInterrompuPourcent = remboursementInterrompuPourcentList[0].pourcent_interrompu;
