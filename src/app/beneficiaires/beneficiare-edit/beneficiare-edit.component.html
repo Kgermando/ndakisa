@@ -227,7 +227,7 @@
                                 <mat-form-field appearance="fill" class="date-input">
                                     <mat-label>DD/MM/YYYY</mat-label>
                                     <input matInput [matDatepicker]="pickerDateSoumission" id="date_soumission" 
-                                            formControlName="date_soumission" required>
+                                            formControlName="date_soumission" readonly="true" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDateSoumission"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerDateSoumission></mat-datepicker>  
                                 </mat-form-field> 
@@ -239,7 +239,7 @@
                                 <mat-form-field appearance="fill" class="date-input">
                                     <mat-label>DD/MM/YYYY</mat-label>
                                     <input matInput [matDatepicker]="pickerDateValeur" id="date_valeur" 
-                                            formControlName="date_valeur" required>
+                                            formControlName="date_valeur" readonly="true" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDateValeur"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerDateValeur></mat-datepicker>  
                                 </mat-form-field> 
@@ -259,7 +259,7 @@
                                 <mat-form-field appearance="fill" class="date-input">
                                     <mat-label>DD/MM/YYYY</mat-label>
                                     <input matInput [matDatepicker]="pickerDateMaturite" id="date_maturite" 
-                                            formControlName="date_maturite" required>
+                                            formControlName="date_maturite" readonly="true" required>
                                     <mat-datepicker-toggle matIconSuffix [for]="pickerDateMaturite"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerDateMaturite></mat-datepicker>  
                                 </mat-form-field> 

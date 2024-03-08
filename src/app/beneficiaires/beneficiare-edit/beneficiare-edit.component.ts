@@ -9,7 +9,7 @@ import { ProvinceList } from 'src/app/shared/tools/province-list';
 import { BanqueModel } from 'src/app/banques/models/banque.model';
 import { BanqueService } from 'src/app/banques/banque.service';
 import { PlanRemboursementService } from '../plan_remboursement.service';
-import { PlanRemboursementModel } from '../models/plan_remousement.model';
+import { PlanRemboursementModel, PlanRemboursementUploadModel } from '../models/plan_remousement.model';
 import { BeneficiaireModel } from '../models/beneficiaire.model';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LogUserService } from 'src/app/logs/log-user.service';
@@ -249,14 +249,14 @@ export class BeneficiareEditComponent implements OnInit {
         next: (res) => {
           this.banqueId = res.banque.id
           this.duree_credit = res.duree_credit;
-          this.systeme_remboursement = res.systeme_remboursement;
+          this.systeme_remboursement = res.systeme_remboursement; 
           
           this.logService.createLog(
             this.currentUser.id, 
             'Update', 
             'Beneficiaire', 
             `${this.beneficiare.name_beneficiaire}`,
-            'Modification des infos du Beneficiaire.'
+            'Modification des finances du Beneficiaire.'
           ).subscribe(
             () => {
               this.isLoading = false;
@@ -283,83 +283,6 @@ export class BeneficiareEditComponent implements OnInit {
   }
 
 
-  upload(event: any) { 
-    this.isLoadingPlanRemboursement = true;
-    const file = event.target.files[0];
-    if (this.isValidCSVFile(file)) {
-      this.papa.parse(file, {
-        worker: true,
-        header: true,
-        delimiter: ';',
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        encoding: 'utf-8',
-        withCredentials: true,
-        step: (row) => {
-          this.planRemboursement = row.data;
-
-          var date = this.planRemboursement.date_de_rembousement.toString().split('/');
-          var dateD = date[0];
-          var dateM = date[1];
-          var dateY = date[2];
-          var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));
-
-          console.log("date[1]", date[1])
-          console.log("dateM", dateM)
-          console.log("date_de_rembousement", date_de_rembousement)
-          if (!this.banqueId) {
-            this.banqueId = this.beneficiare.banque.id;
-          }
-          var body = {
-            cohorte: this.beneficiare.cohorte.id,
-            banque: this.banqueId,
-            beneficiaire: this.beneficiare.id,
-            secteur_activite: this.beneficiare.secteur_activite.id,
-            date_de_rembousement: date_de_rembousement,
-            credit_en_debut_periode: this.planRemboursement.credit_en_debut_periode,
-            interet: this.planRemboursement.interet,
-            capital: this.planRemboursement.capital,
-            signature: this.currentUser.matricule,
-            created: new Date(),
-            update_created: new Date(),
-          };
-          this.planRemboursementService.create(body).subscribe({
-            next: () => {},
-            error: (err) => {
-              this.isLoadingPlanRemboursement = false;
-              this.toastr.error(`${err.error.message}`, 'Oupss!');
-              console.log(err);
-            }
-          });
-        },
-        complete: () => {
-
-          this.logService.createLog(
-            this.currentUser.id, 
-            'Create', 
-            'Plan de remboursement', 
-            `${this.beneficiare.name_beneficiaire}`, 
-            'Création du plan de remboursement'
-          ).subscribe(() => {
-            this.isLoadingPlanRemboursement = false;
-            this.formGroup3.reset();
-            console.log("All done!");
-            this.toastr.success('Ajouter avec succès!', 'Success!');
-          });
-        },
-        error: (error, file) => {
-          this.isLoadingPlanRemboursement = false;
-          this.toastr.error(`${error}`, 'Oupss!');
-          console.log(error);
-          console.log("file", file); 
-        },
-      });
-    } else {  
-      alert("Please import valid .csv file."); 
-    }
-      this.isLoadingPlanRemboursement = false;  
-    }
- 
 
   onSubmit3() {
     try {
@@ -610,8 +533,8 @@ export class EditPlanRemboursementDialogBox implements OnInit{
 })
 export class PlanRemboursementUploadCSVDialogBox implements OnInit {
   isLoading = false;
-  PlanRemboursementList: PlanRemboursementModel[] = [];
-  planRemboursement: PlanRemboursementModel;
+  PlanRemboursementList: PlanRemboursementUploadModel[] = [];
+  planRemboursement: PlanRemboursementUploadModel;
   currentUser: UserModel; 
   beneficiare: BeneficiaireModel;
 
@@ -643,6 +566,7 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
         this.currentUser = user;
         this.beneficiareService.get(parseInt(this.data['id'])).subscribe(res => {
           this.beneficiare = res;
+          this.duree_credit = this.beneficiare.duree_credit;
         })
       },
       error: (error) => { 
@@ -664,18 +588,21 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
         skipEmptyLines: true,
         // encoding: 'utf-8',
         complete: (results) => {
-          this.PlanRemboursementList = results.data;
-          if (this.PlanRemboursementList.length > 100) {
+          this.PlanRemboursementList = results.data; 
+          
+          if (this.PlanRemboursementList.length > 50) {
             this.isLoading = false;
-            this.toastr.info('Veuillez reduire les lignes en dessous de 100.', 'Success!');
+            this.toastr.info('Veuillez reduire les lignes en dessous de 50.', 'Success!');
           } else {
-            for (let index = 0; index < this.PlanRemboursementList.length; index++) {
+            for (let index = 0; index < this.duree_credit; index++) {
               this.planRemboursement = this.PlanRemboursementList[index]; 
+              console.log("date_de_rembousement", this.planRemboursement.date_de_rembousement);
               var date = this.planRemboursement.date_de_rembousement.toString().split('/');
               var dateD = date[0];
               var dateM = date[1];
               var dateY = date[2];
               var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));   
+              
     
               if (!this.banqueId) {
                 this.banqueId = this.beneficiare.banque.id;
@@ -685,7 +612,7 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
                 cohorte: this.beneficiare.cohorte.id, 
                 beneficiaire: this.beneficiare.id,
                 secteur_activite: this.beneficiare.secteur_activite.id,
-                id_db_banque: this.planRemboursement.id_db_banque,
+                id_db_banque: this.planRemboursement.id,
                 date_de_rembousement: date_de_rembousement,
                 credit_en_debut_periode: this.planRemboursement.credit_en_debut_periode,
                 interet: this.planRemboursement.interet,
@@ -696,7 +623,7 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
               };
               this.planRemboursementService.create(body).subscribe({
                 next: () => {
-                  var pourcents = (index + 1) * 100 / this.PlanRemboursementList.length;
+                  var pourcents = (index + 1) * 100 / this.duree_credit;
                   this.pourcent = parseInt(pourcents.toFixed(0));
                   if (this.pourcent == 100) {  
                     this.isLoading = false;
@@ -746,4 +673,4 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
   }
 
 }
-
+ 

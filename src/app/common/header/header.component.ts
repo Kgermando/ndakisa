@@ -62,7 +62,7 @@ export class HeaderComponent {
                     this.notificationList = res;
                     if (this.notificationList.length > 0) {
                         this.isNotify = true;
-                        console.log("notificationList", this.notificationList)
+                        // console.log("notificationList", this.notificationList)
                     }
                     this.isLoading = false;
                 });
