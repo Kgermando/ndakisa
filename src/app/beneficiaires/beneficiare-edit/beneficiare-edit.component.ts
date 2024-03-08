@@ -596,7 +596,7 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
           } else {
             for (let index = 0; index < this.duree_credit; index++) {
               this.planRemboursement = this.PlanRemboursementList[index]; 
-              console.log("date_de_rembousement", this.planRemboursement.date_de_rembousement);
+              
               var date = this.planRemboursement.date_de_rembousement.toString().split('/');
               var dateD = parseInt(date[0]);
               var dateM = parseInt(date[1]);
@@ -626,8 +626,7 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
                 next: () => {
                   var pourcents = (index + 1) * 100 / this.duree_credit;
                   this.pourcent = parseInt(pourcents.toFixed(0));
-                  if (this.pourcent == 100) {  
-                    this.isLoading = false;
+                  if (this.pourcent === 100) {
                     console.log("All done!");
                     this.toastr.success('Importation effectuée avec succès!', 'Success!');
                   }

@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { BeneficiareService } from '../beneficiare.service';
 import { UserModel } from 'src/app/users/models/user.model'; 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PlanRemboursementModel } from '../models/plan_remousement.model';
+import { PlanRemboursementModel, PlanRemboursementUploadModel } from '../models/plan_remousement.model';
 import { ToastrService } from 'ngx-toastr';
 import { LogUserService } from 'src/app/logs/log-user.service';
 import { Papa } from 'ngx-papaparse';
@@ -97,8 +97,8 @@ export class BeneficiareListComponent implements OnInit {
 })
 export class RemboursementUploadCSVDialogBox implements OnInit {
   isLoading = false;
-  remboursementList: PlanRemboursementModel[] = [];
-  remboursement: PlanRemboursementModel;
+  remboursementList: PlanRemboursementUploadModel[] = [];
+  remboursement: PlanRemboursementUploadModel;
   currentUser: UserModel; 
   beneficiare: BeneficiaireModel;
  
@@ -147,9 +147,9 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
         // encoding: 'utf-8',
         complete: (results) => {
           this.remboursementList = results.data;
-          if (this.remboursementList.length > 100) {
+          if (this.remboursementList.length > 50) {
             this.isLoading = false;
-            this.toastr.info('Veuillez reduire les lignes en dessous de 100.', 'Success!');
+            this.toastr.info('Veuillez reduire les lignes en dessous de 50.', 'Success!');
           } else {
             for (let index = 0; index < this.remboursementList.length; index++) {
               this.remboursement = this.remboursementList[index];
@@ -163,7 +163,7 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
                 signature: this.currentUser.matricule,
                 update_created: new Date(),
               };
-              this.planRemboursementService.updateRemboursenent(this.remboursement.numero_transaction, body).subscribe({
+              this.planRemboursementService.updateRemboursenent(this.remboursement.id, body).subscribe({
                 next: () => {
                   var pourcents = (index + 1) * 100 / this.remboursementList.length;
                   this.pourcent = parseInt(pourcents.toFixed(0));

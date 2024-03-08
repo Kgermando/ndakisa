@@ -9,13 +9,6 @@ import { Observable, tap } from 'rxjs';
 export class PlanRemboursementService extends ApiService {
   endpoint: string = `${environment.apiURL}/plan_remboursements`;
 
-  updateRemboursenent(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.endpoint}/${id}`, data).pipe(tap(() => {
-      // this._refreshDataList$.next();
-      // this._refreshData$.next();
-    }));
-  }
-
   getAllData(id: number): Observable<any> {
     return this.http.get(`${this.endpoint}/get-all/${id}`);
   }

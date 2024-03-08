@@ -53,6 +53,13 @@ export abstract class ApiService {
     }));
   }
 
+  updateRemboursenent(id_db_banque: number, data: any): Observable<any> {
+    return this.http.put(`${this.endpoint}/remboursements/${id_db_banque}`, data).pipe(tap(() => {
+      this._refreshDataList$.next();
+      this._refreshData$.next();
+    }));
+  } 
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.endpoint}/${id}`).pipe(tap(() => {
       this._refreshDataList$.next();
