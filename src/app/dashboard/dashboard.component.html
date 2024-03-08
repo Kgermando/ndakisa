@@ -87,13 +87,13 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
-
         <app-stats-progress 
             [progressionRemboursementParSexeList]="progressionRemboursementParSexeList"
             [isLoading]="isLoading">
         </app-stats-progress>  
 
+        <app-stats-garantie-remboursement [remboursementList]="remboursementList" [isLoading]="isLoading"></app-stats-garantie-remboursement>
+ 
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-6"> 
                 <app-stats-banque [banqueList]="banqueList" [isLoading]="isLoading"></app-stats-banque>

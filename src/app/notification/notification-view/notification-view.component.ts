@@ -100,7 +100,8 @@ export class NotificationViewComponent implements OnInit {
       var total = item[0];
       this.totalRembourser = total.totalarembourser;
       this.totalPayer = total.totalpayer;
-      this.pourcentRemboursement = this.totalPayer * 100 / this.totalRembourser;
+      var pourcent = this.totalPayer * 100 / this.totalRembourser;
+      this.pourcentRemboursement = parseFloat(pourcent.toFixed(2));
     });
   }
 
