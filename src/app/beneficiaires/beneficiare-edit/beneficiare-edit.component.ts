@@ -331,8 +331,8 @@ export class BeneficiareEditComponent implements OnInit {
   downloadExcel() {
     let link = document.createElement('a');
     link.setAttribute('type', 'hidden');
-    link.href = '/assets/excel/remboursement_model.xlsx';
-    link.download = 'Model_remboursement.xlsx';
+    link.href = '/assets/excel/plan_de_remboursement.xlsx';
+    link.download = 'plan_de_remboursement.xlsx';
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -598,10 +598,11 @@ export class PlanRemboursementUploadCSVDialogBox implements OnInit {
               this.planRemboursement = this.PlanRemboursementList[index]; 
               console.log("date_de_rembousement", this.planRemboursement.date_de_rembousement);
               var date = this.planRemboursement.date_de_rembousement.toString().split('/');
-              var dateD = date[0];
-              var dateM = date[1];
-              var dateY = date[2];
-              var date_de_rembousement = new Date(parseInt(dateY), parseInt(dateM), parseInt(dateD));   
+              var dateD = parseInt(date[0]);
+              var dateM = parseInt(date[1]);
+              var dateY = parseInt(date[2]);
+              var month = dateM - 1;
+              var date_de_rembousement = new Date(dateY, month, dateD);
               
     
               if (!this.banqueId) {

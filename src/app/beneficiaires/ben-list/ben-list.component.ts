@@ -47,8 +47,8 @@ export class BenListComponent {
   downloadExcel() {
     let link = document.createElement('a');
     link.setAttribute('type', 'hidden');
-    link.href = '/assets/excel/remboursement_model.xlsx';
-    link.download = 'Model_remboursement.xlsx';
+    link.href = '/assets/excel/model_de_remboursement.xlsx';
+    link.download = 'model_de_remboursement.xlsx';
     document.body.appendChild(link);
     link.click();
     link.remove();
