@@ -18,14 +18,20 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let archive of archiveList; let i = index"> 
-                                <td class="gray-color">N {{ archive.id }}</td>
+                                <td class="gray-color">{{ archive.id }}</td>
                                 <td class="gray-color">{{ archive.created | date: 'dd/MM/yyyy' }}</td> 
+                                <td class="gray-color">{{ archive.archive_url }}</td>
                                 <td>
                                     <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
                                         [matMenuTriggerFor]="actionMenu">
                                         <i class="ri-more-fill"></i>
                                     </button>
                                     <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                                        <button mat-menu-item type="button" 
+                                            class="bg-transparent border-none position-relative" 
+                                                    (click)="downloadURL(archive.archive_url)" matTooltip="Telecharger le document">
+                                            <i class="ri-close-circle-line"></i> Telecharger
+                                        </button> 
                                         <button mat-menu-item type="button" 
                                             class="bg-transparent border-none position-relative" 
                                                     (click)="delete(archive.id)" matTooltip="Supprimer cet archive">
@@ -37,13 +43,11 @@
                         </tbody>
                     </table>
                 </div> 
+                <app-paginator
+                    [lastPage]="lastPage"
+                    (pageChanged)="getAllData($event)"
+                ></app-paginator>
             </mat-card-content>
         </mat-card>
     </div>
-</div>
-
-
-<app-paginator
-[lastPage]="lastPage"
-(pageChanged)="getAllData($event)"
-></app-paginator>
+</div> 

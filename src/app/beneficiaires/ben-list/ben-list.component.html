@@ -5,29 +5,37 @@
     [class.card-border-radius]="themeService.isCardBorderRadius()" >
     <mat-card-header>
         <h4 class="mb-0">Liste des bénéficiaires</h4> 
-        <div> 
-            <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none" 
-                    [matMenuTriggerFor]="iconMenu">
-                    <i class="ri-menu-line"></i>
-            </button>
-            <mat-menu #iconMenu="matMenu" class="dotMenu monthMenu m-5 p-5" xPosition="before">
-                <button mat-menu-item type="button" 
-                class="bg-transparent border-none position-relative"
-                (click)="openExportDialog('300ms', '100ms')">
-                    <i class="ri-printer-line"></i> Exportation bénéficiaires
+        <div class="d-flex justify-content-end mb-0">
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item class="submitBtnMenu" (click)="openExportDialog('300ms', '100ms')"> 
+                    <span class="submitBtnMenuSpan">
+                        <i class="ri-printer-line"></i> Exporter bénéficiaires
+                    </span>
                 </button>
-                <button mat-menu-item type="button" 
-                 (click)="UploadDialog('300ms', '100ms')"
-                    class="bg-transparent border-none position-relative">
-                    <i class="ri-upload-line"></i> Importation remboursements
+                <mat-divider></mat-divider>
+                <button mat-menu-item class="submitBtnMenu" (click)="UploadDialog('300ms', '100ms')"> 
+                    <span class="submitBtnMenuSpan">
+                        <i class="ri-upload-fill"></i> Importer les remboursements
+                    </span>
                 </button>
-                <button mat-menu-item type="button" 
-                 (click)="downloadExcel()"
-                    class="bg-transparent border-none position-relative">
-                    <i class="ri-arrow-down-fill"></i> Telecharger le modele
+                <mat-divider></mat-divider>
+                <button mat-menu-item class="submitBtnMenu" (click)="downloadExcel()"> 
+                    <span class="submitBtnMenuSpan">
+                        <i class="ri-download-fill"></i> Telecharger le modele
+                    </span>
                 </button>
             </mat-menu>
-        </div>
+            <mat-button-toggle-group>
+                <mat-button-toggle class="submitBtn">
+                    <div class="d-flex justify-content-center">
+                        <i class="ri-menu-line"></i>
+                    </div>
+                </mat-button-toggle>
+                <mat-button-toggle [matMenuTriggerFor]="appMenu" class="submitBtnDrop">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div> 
     </mat-card-header>
     <mat-card-content>
 

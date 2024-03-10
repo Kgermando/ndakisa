@@ -36,10 +36,7 @@ export class BenListComponent {
     this.dialog.open(RemboursementUploadCSVDialogBox, {
       width: '600px',
       enterAnimationDuration,
-      exitAnimationDuration, 
-      // data: {
-      //   banque: this.banque
-      // }
+      exitAnimationDuration,
     }); 
   }
 

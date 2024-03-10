@@ -504,6 +504,7 @@ export class EditPlanRemboursementDialogBox implements OnInit{
             this.isLoading = false;
             this.toastr.success('Modification enregistré!', 'Success!');
             // window.location.reload();
+            this.close();
             
           });
         },

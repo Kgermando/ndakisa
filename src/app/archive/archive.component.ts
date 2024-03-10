@@ -25,20 +25,29 @@ export class ArchiveComponent implements OnInit {
     private toastr: ToastrService) {}
 
 
-  ngOnInit(): void {  
-    this.archiveService.refreshDataList$.subscribe(() => {
-      this.getAllData();
-    });
+  ngOnInit(): void {
     this.getAllData();  
   }
 
   getAllData(page = 1) {
+    this.isLoading = true;
     this.archiveService.all(page).subscribe((res) => {
         this.archiveList = res.data;
         this.lastPage = res.meta.last_page;
         this.isLoading = false;
       }
     );
+  }
+
+
+  downloadURL(url: string) {
+    let link = document.createElement('a');
+    link.setAttribute('type', 'hidden');
+    link.href = url;
+    link.download = 'model_de_remboursement.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
  
 

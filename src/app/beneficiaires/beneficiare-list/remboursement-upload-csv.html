@@ -13,8 +13,7 @@
         <div class="row" *ngIf="!isLoading && pourcent < 100">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="tagus-form-group">
-                    <input type="file" class="upload" (change)="upload($event)" accept=".csv">  
-                    <!-- <app-upload (uploadedUrl)="formGroup.patchValue({'archive_url': $event})"></app-upload> -->
+                    <input type="file" class="upload" (change)="upload($event)" accept=".csv">   
                 </div>
             </div>
         </div>

@@ -15,6 +15,10 @@ import { ToastrService } from 'ngx-toastr';
 import { LogUserService } from 'src/app/logs/log-user.service';
 import { Papa } from 'ngx-papaparse';
 import { PlanRemboursementService } from '../plan_remboursement.service';
+import { ArchiveService } from 'src/app/archive/archive.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { environment } from 'src/environments/environment.development';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-beneficiare-list',
@@ -111,7 +115,10 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
 
   @ViewChild('csvReader') csvReader: any;
 
+  archive_url: string;
+
   constructor( 
+    private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any,
       public dialogRef: MatDialogRef<RemboursementUploadCSVDialogBox>, 
       private toastr: ToastrService,
@@ -120,9 +127,11 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
       private planRemboursementService: PlanRemboursementService,
       private papa: Papa,
       private logService: LogUserService, 
+      private archiveService: ArchiveService, 
+      private _formBuilder: FormBuilder,
   ) {}
 
-  ngOnInit() { 
+  ngOnInit() {  
     this.authService.user().subscribe({
       next: (user) => {
         this.currentUser = user; 
@@ -137,68 +146,88 @@ export class RemboursementUploadCSVDialogBox implements OnInit {
   
   async upload(event: any) {
     const file = event.target.files[0];
+
     if (this.isValidCSVFile(file)) {
-      this.isLoading = true;
-      this.papa.parse(file, {
-        worker: true,
-        header: true,
-        delimiter: ';',
-        skipEmptyLines: true,
-        // encoding: 'utf-8',
-        complete: (results) => {
-          this.remboursementList = results.data;
-          if (this.remboursementList.length > 50) {
-            this.isLoading = false;
-            this.toastr.info('Veuillez reduire les lignes en dessous de 50.', 'Success!');
-          } else {
-            for (let index = 0; index < this.remboursementList.length; index++) {
-              this.remboursement = this.remboursementList[index];
+      this.isLoading = true; 
+      const data = new FormData();
+      data.append('image', file);
+      this.http.post(`${environment.apiURL}/image/upload`, data)
+        .subscribe((res: any) => { 
+          this.archive_url = res.url;
+          console.log("archive_url", this.archive_url);
 
-              var body = {
-                montant_payer: this.remboursement.montant_payer,
-                observation: this.remboursement.observation,
-                date_paiement: this.remboursement.date_paiement,
-                numero_transaction: this.remboursement.numero_transaction,
-
-                signature: this.currentUser.matricule,
-                update_created: new Date(),
-              };
-              this.planRemboursementService.updateRemboursenent(this.remboursement.id, body).subscribe({
-                next: () => {
-                  var pourcents = (index + 1) * 100 / this.remboursementList.length;
-                  this.pourcent = parseInt(pourcents.toFixed(0));
-                  if (this.pourcent == 100) {
-                    this.isLoading = false;
-                    this.toastr.success('Importation effectuée avec succès!', 'Success!');
-                  }
-                },
-                error: (err) => {
+          var body = {
+            archive_url: this.archive_url, 
+            signature: this.currentUser.matricule,
+            created: new Date(),
+            update_created: new Date()
+          };
+          this.archiveService.create(body).subscribe(() => {
+            this.papa.parse(file, {
+              worker: true,
+              header: true,
+              delimiter: ';',
+              skipEmptyLines: true,
+              // encoding: 'utf-8',
+              complete: (results) => {
+                this.remboursementList = results.data;
+                if (this.remboursementList.length > 50) {
                   this.isLoading = false;
-                  this.toastr.error(`${err.error.message}`, 'Oupss!');
-                  console.log(err);
-                  this.close();
-                }
-              });
-            }
-            this.logService.createLog(
-              this.currentUser.id, 
-              'Create', 
-              'Plan de remboursement', 
-              `${this.beneficiare.name_beneficiaire}`, 
-              'Création du plan de remboursement'
-            ).subscribe(() => {
-              console.log("All done!");
-              this.toastr.success('Ajouter avec succès!', 'Success!');
+                  this.toastr.info('Veuillez reduire les lignes en dessous de 50.', 'Success!');
+                } else {
+                  for (let index = 0; index < this.remboursementList.length; index++) {
+                    this.remboursement = this.remboursementList[index];
+      
+                    var body = {
+                      montant_payer: this.remboursement.montant_payer,
+                      observation: this.remboursement.observation,
+                      date_paiement: this.remboursement.date_paiement,
+                      numero_transaction: this.remboursement.numero_transaction,
+      
+                      signature: this.currentUser.matricule,
+                      update_created: new Date(),
+                    };
+                    this.planRemboursementService.updateRemboursenent(this.remboursement.id, body).subscribe({
+                      next: () => {
+                        this.isLoading = false;
+                        var pourcents = (index + 1) * 100 / this.remboursementList.length;
+                        this.pourcent = parseInt(pourcents.toFixed(0));
+                        if (this.pourcent == 100) {
+                          this.isLoading = false;
+                          this.toastr.success('Importation effectuée avec succès!', 'Success!');
+                        }
+                      },
+                      error: (err) => {
+                        this.isLoading = false;
+                        this.toastr.error(`${err.error.message}`, 'Oupss!');
+                        console.log(err);
+                        this.close();
+                      }
+                    });
+                  }
+                  this.logService.createLog(
+                    this.currentUser.id, 
+                    'Create', 
+                    'Remboursements', 
+                    `Remboursements des beneficiaires`, 
+                    'Création des differents remboursements'
+                  ).subscribe(() => {
+                    console.log("All done!");
+                    this.toastr.success('Ajouter avec succès!', 'Success!');
+                  });
+                } 
+              },
+              error: (error, file) => { 
+                this.toastr.error(`${error}`, 'Oupss!');
+                console.log(error);
+                console.log("file", file);
+                // this.close();
+              },
             });
-          } 
-        },
-        error: (error, file) => { 
-          this.toastr.error(`${error}`, 'Oupss!');
-          console.log(error);
-          console.log("file", file);
-          // this.close();
-        },
-      });
+          });  
+        }
+      );
+     
     } else {  
       alert("Please import valid .csv file."); 
     }      

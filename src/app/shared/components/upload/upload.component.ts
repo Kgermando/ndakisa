@@ -27,6 +27,7 @@ export class UploadComponent {
     this.http.post(`${environment.apiURL}/image/upload`, data)
       .subscribe((res: any) => {
         this.uploadedUrl.emit(res.url);
+        console.log("URL", res.url);
       });
   }
 
