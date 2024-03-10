@@ -5,6 +5,8 @@ import { ArchiveService } from './archive.service';
 import { LogUserService } from '../logs/log-user.service';
 import { UserModel } from '../users/models/user.model';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-archive',
@@ -20,13 +22,28 @@ export class ArchiveComponent implements OnInit {
 
   constructor(
     public themeService: CustomizerSettingsService,   
+    private router: Router, 
+    private authService: AuthService,
     private archiveService: ArchiveService, 
     private logService: LogUserService,
     private toastr: ToastrService) {}
 
 
   ngOnInit(): void {
-    this.getAllData();  
+    this.authService.user().subscribe({
+      next: (user) => {
+        this.currentUser = user;  
+        this.archiveService.refreshDataList$.subscribe(() => {
+          this.getAllData();
+        });
+        this.getAllData();  
+      },
+      error: (error) => {
+        this.router.navigate(['/auth/login']);
+        console.log(error);
+      }
+    });
+    
   }
 
   getAllData(page = 1) {
