@@ -15,7 +15,7 @@ import { LogUserService } from '../../logs/log-user.service';
 export class UserViewComponent implements OnInit {
   isLoading = false;
 
-  user: UserModel;
+  user: UserModel | any;
 
   currentUser: UserModel | any;
 

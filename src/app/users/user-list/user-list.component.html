@@ -88,16 +88,19 @@
                         </button>
                         <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
                             <button mat-menu-item type="button" class="bg-transparent border-none position-relative" >
-                                <i class="ri-mail-send-line"></i> Mail
+                                <a href="mailto:{{element.email}}">
+                                    <i class="ri-mail-send-line"></i> Mail
+                                </a>
                             </button>
                             <button mat-menu-item type="button" class="bg-transparent border-none position-relative">
-                                <a href="tel:{{element.email}}">
+                                <a href="tel:{{element.telephone}}">
                                     <i class="ri-phone-line"></i> Appel
                                 </a>
                             </button>
                         </mat-menu>
                     </td>
                 </ng-container> 
+                
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
